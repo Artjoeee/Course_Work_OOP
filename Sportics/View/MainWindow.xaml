@@ -1,0 +1,109 @@
+﻿<Window x:Class="Sportics.View.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:svg="http://sharpvectors.codeplex.com/svgc/"
+        xmlns:vm="clr-namespace:Sportics.ViewModel"
+        mc:Ignorable="d"
+        Title="Sportics"
+        MinHeight="500" MinWidth="800"
+        Width="1250" Height="650"
+        WindowStartupLocation="CenterScreen">
+
+    <Window.DataContext>
+        <vm:MainViewModel />
+    </Window.DataContext>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Верхняя панель -->
+            <RowDefinition Height="*"/>
+            <!-- Контент -->
+            <RowDefinition Height="Auto"/>
+            <!-- Нижняя панель -->
+        </Grid.RowDefinitions>
+
+        <!-- Верхняя панель -->
+        <Grid Grid.Row="0" Background="WhiteSmoke" Height="60">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <!-- Лево: логотип -->
+                <ColumnDefinition Width="Auto" />
+                <!-- Центр: кнопки -->
+                <ColumnDefinition Width="*" />
+                <!-- Право: иконки -->
+            </Grid.ColumnDefinitions>
+
+            <!-- Левая часть: логотип и название -->
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="40,0" Grid.Column="0">
+                <svg:SvgViewbox Source="/Resources/Images/dumbbell.svg" Height="40" Width="40" />
+                <Label Content="SPORTICS" FontSize="24" VerticalAlignment="Center" Margin="10,0"/>
+            </StackPanel>
+
+            <!-- Центральная часть: кнопки -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1">
+                <Button Content="Абонементы" FontSize="16" Margin="0,0,10,0" Width="150"/>
+                <Button Content="Расписание" FontSize="16" Margin="10,0" Width="150"/>
+                <Button Content="Тренеры" FontSize="16" Margin="10,0" Width="150"/>
+            </StackPanel>
+
+            <!-- Правая часть: иконки -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0" Grid.Column="2">
+                <Border Cursor="Hand" Margin="10">
+                    <Border.InputBindings>
+                        <MouseBinding Gesture="LeftClick" Command="{Binding OpenLoginCommand}" />
+                    </Border.InputBindings>
+                    <svg:SvgViewbox Source="/Resources/Images/bell-regular.svg" Height="30" Width="30"/>
+                </Border>
+
+                <Border Cursor="Hand" Margin="10">
+                    <Border.InputBindings>
+                        <MouseBinding Gesture="LeftClick" Command="{Binding OpenLoginCommand}" />
+                    </Border.InputBindings>
+                    <svg:SvgViewbox Source="Resources\Images\circle-user-regular.svg" Height="30" Width="30"/>
+                </Border>
+            </StackPanel>
+        </Grid>
+
+        <!-- Основной контент -->
+        <ScrollViewer Grid.Row="1" Margin="0">
+            <StackPanel Background="LightGray">
+                <Label Content="Предложения недели" FontSize="32" HorizontalAlignment="Center" Margin="0,20"/>
+
+                <WrapPanel HorizontalAlignment="Center" Margin="0,20" ItemWidth="270" ItemHeight="Auto">
+                    <!-- Карточка 1 -->
+                    <Border Width="250" Background="WhiteSmoke" Margin="0,0,0,0">
+                        <StackPanel Margin="10">
+                            <Grid Height="120" Background="LightGray" Margin="5"/>
+                            <TextBlock Text="Месяц (24/7)" FontSize="16" FontWeight="SemiBold" TextAlignment="Center" Margin="0,10"/>
+                            <TextBlock Text="90 руб." FontSize="16" FontWeight="Bold" TextAlignment="Center" Margin="0,5"/>
+                            <Button Content="Подробнее" HorizontalAlignment="Center" Margin="0,10"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Карточка 2 -->
+                    <Border Width="250" Background="WhiteSmoke" Margin="0,0,0,0">
+                        <StackPanel Margin="10">
+                            <Grid Height="120" Background="LightGray" Margin="5"/>
+                            <TextBlock Text="Месяц (8:00 - 16:00)" FontSize="16" FontWeight="SemiBold" TextAlignment="Center" Margin="0,10"/>
+                            <TextBlock Text="50 руб." FontSize="16" FontWeight="Bold" TextAlignment="Center" Margin="0,5"/>
+                            <Button Content="Подробнее" HorizontalAlignment="Center" Margin="0,10"/>
+                        </StackPanel>
+                    </Border>
+                </WrapPanel>
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- Нижняя панель -->
+        <Border Grid.Row="2" Background="WhiteSmoke" Padding="10">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,15,0">
+                <svg:SvgViewbox Source="Resources\Images\Mail.svg" Height="20" Width="20" Margin="0,0,5,0"/>
+                <Label Content="sportics@gmail.com" VerticalAlignment="Center"/>
+                <svg:SvgViewbox Source="Resources\Images\Phone.svg" Height="20" Width="20" Margin="20,0,5,0"/>
+                <Label Content="+375 (44) 573-04-02" VerticalAlignment="Center"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>

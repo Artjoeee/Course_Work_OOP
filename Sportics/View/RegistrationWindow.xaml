@@ -1,0 +1,31 @@
+﻿<Window x:Class="Sportics.View.RegistrationWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:helper="clr-namespace:Sportics.Helper"
+        xmlns:vm="clr-namespace:Sportics.ViewModel"
+        xmlns:local="clr-namespace:Sportics.View"
+        mc:Ignorable="d"
+        Title="Регистрация" Height="380" Width="400" WindowStartupLocation="CenterScreen">
+
+    <Window.DataContext>
+        <vm:RegistrationViewModel/>
+    </Window.DataContext>
+
+    <Grid Background="WhiteSmoke" Margin="20">
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="300">
+            <TextBlock Text="Регистрация" FontSize="24" FontWeight="SemiBold" TextAlignment="Center"/>
+            <TextBox materialDesign:HintAssist.Hint="Имя" Text="{Binding Name}" Margin="0,10,0,0"/>
+            <TextBox materialDesign:HintAssist.Hint="Почта" Text="{Binding Email}" Margin="0,10,0,0"/>
+            <TextBox materialDesign:HintAssist.Hint="Телефон" Text="{Binding Phone}" Margin="0,10,0,0"/>
+            <PasswordBox materialDesign:HintAssist.Hint="Пароль" helper:PasswordBoxHelper.BindPassword="True"
+                        helper:PasswordBoxHelper.BoundPassword="{Binding Password, Mode=TwoWay}" Margin="0,10,0,0"/>
+            <PasswordBox materialDesign:HintAssist.Hint="Подтверждение пароля" helper:PasswordBoxHelper.BindPassword="True"
+                        helper:PasswordBoxHelper.BoundPassword="{Binding ConfirmPassword, Mode=TwoWay}" Margin="0,10,0,0"/>
+
+            <Button Content="Зарегистрироваться" Height="35" Margin="0,15,0,0" Command="{Binding RegisterCommand}" />
+        </StackPanel>
+    </Grid>
+</Window>
