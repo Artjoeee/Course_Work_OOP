@@ -26,24 +26,17 @@ namespace Sportics.ViewModel
         {
             if (DataWorker.CheckUser(Email, Password))
             {
-                Application.Current.Windows
-                .OfType<Window>()
-                .FirstOrDefault(w => w is LoginWindow)?
-                .Close();
-
-                MessageBox.Show($"Добро пожаловать, {Email}!", "Успешный вход", MessageBoxButton.OK, MessageBoxImage.Information);
-
                 if (DataWorker.SelectUser(Email, Password).Role == "Администратор")
                 {
-                    AdminWindow adminnWindow = new AdminWindow();
-                    adminnWindow.Owner = Application.Current.MainWindow;
-                    adminnWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-                    adminnWindow.ShowDialog();
+                    AdminWindow adminWindow = new AdminWindow();
+                    Application.Current.MainWindow = adminWindow;
 
                     Application.Current.Windows
                     .OfType<Window>()
-                    .FirstOrDefault(w => w is MainWindow)?
+                    .FirstOrDefault(w => w is LoginWindow)?
                     .Close();
+
+                    Application.Current.MainWindow.Show();
                 }
             }
             else if (string.IsNullOrWhiteSpace(Email) || string.IsNullOrWhiteSpace(Password))
@@ -60,15 +53,15 @@ namespace Sportics.ViewModel
 
         private void OpenRegister()
         {
+            RegistrationWindow registrationWindow = new RegistrationWindow();
+            Application.Current.MainWindow = registrationWindow;
+
             Application.Current.Windows
             .OfType<Window>()
             .FirstOrDefault(w => w is LoginWindow)?
             .Close();
 
-            RegistrationWindow registrationWindow = new RegistrationWindow();
-            registrationWindow.Owner = Application.Current.MainWindow;
-            registrationWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-            registrationWindow.ShowDialog();
+            Application.Current.MainWindow.Show();
         }
     }
 }

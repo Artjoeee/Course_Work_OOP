@@ -9,17 +9,17 @@ namespace Sportics.ViewModel
     {
         public RelayCommand OpenLoginCommand { get; }
 
-        public MainViewModel()
-        {
-            OpenLoginCommand = new RelayCommand(obj => OpenLogin());
-        }
+        //public MainViewModel()
+        //{
+        //    OpenLoginCommand = new RelayCommand(obj => OpenLogin());
+        //}
 
-        private void OpenLogin()
-        {
-            LoginWindow loginWindow = new LoginWindow();
-            loginWindow.Owner = Application.Current.MainWindow;
-            loginWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-            loginWindow.ShowDialog();
-        }
+        //private void OpenLogin()
+        //{
+        //    LoginWindow loginWindow = new LoginWindow();
+        //    loginWindow.Owner = Application.Current.MainWindow;
+        //    loginWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+        //    loginWindow.ShowDialog();
+        //}
     }
 }

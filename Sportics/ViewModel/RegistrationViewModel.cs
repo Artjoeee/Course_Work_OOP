@@ -48,12 +48,15 @@ namespace Sportics.ViewModel
             {
                 DataWorker.AddUser(Name, Email, Phone, Password);
 
+                MainWindow mainWindow = new MainWindow();
+                Application.Current.MainWindow = mainWindow;
+
                 Application.Current.Windows
                 .OfType<Window>()
                 .FirstOrDefault(w => w is RegistrationWindow)?
                 .Close();
 
-                MessageBox.Show("Регистрация успешна!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+                Application.Current.MainWindow.Show();
             }
         }
     }

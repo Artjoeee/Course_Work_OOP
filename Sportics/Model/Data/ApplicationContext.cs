@@ -10,6 +10,9 @@ namespace Sportics.Model.Data
     public class ApplicationContext: DbContext
     {
         public DbSet<User> Users { get; set; }
+        public DbSet<Coach> Coaches { get; set; }
+        public DbSet<Membership> Memberships { get; set; }
+
 
         public ApplicationContext() 
         {

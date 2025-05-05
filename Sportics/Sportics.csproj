@@ -207,15 +207,16 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Helper\PasswordBoxHelper.cs" />
-    <Compile Include="Migrations\20250429223904_Initial.cs" />
-    <Compile Include="Migrations\20250429223904_Initial.Designer.cs">
-      <DependentUpon>20250429223904_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\20250503175745_Initial.cs" />
+    <Compile Include="Migrations\20250503175745_Initial.Designer.cs">
+      <DependentUpon>20250503175745_Initial.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\AppContextModelSnapshot.cs" />
-    <Compile Include="Model\Coaches.cs" />
+    <Compile Include="Migrations\ApplicationContextModelSnapshot.cs" />
+    <Compile Include="Model\Coach.cs" />
     <Compile Include="Model\DataWorker.cs" />
-    <Compile Include="Model\Memberships.cs" />
+    <Compile Include="Model\Membership.cs" />
     <Compile Include="Model\RelayCommand.cs" />
+    <Compile Include="ViewModel\AdminViewModel.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />

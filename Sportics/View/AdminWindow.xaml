@@ -4,12 +4,16 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:svg="http://sharpvectors.codeplex.com/svgc/"
-        xmlns:local="clr-namespace:Sportics.View"
+        xmlns:vm="clr-namespace:Sportics.ViewModel"
         mc:Ignorable="d"
         Title="Sportics"
         MinHeight="500" MinWidth="800"
         Width="1250" Height="650"
         WindowStartupLocation="CenterScreen">
+    <Window.DataContext>
+        <vm:AdminViewModel />
+    </Window.DataContext>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -73,12 +77,12 @@
 
                         <DataGrid AutoGenerateColumns="False" CanUserAddRows="False">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="Id" Binding="{Binding Id}" />
-                                <DataGridTextColumn Header="Название" Binding="{Binding Name1}" />
-                                <DataGridTextColumn Header="Название" Binding="{Binding Name2}" />
-                                <DataGridTextColumn Header="Название" Binding="{Binding Name3}" />
-                                <DataGridTextColumn Header="Название" Binding="{Binding Name4}" />
-                                <DataGridTextColumn Header="Название" Binding="{Binding Name5}" />
+                                <DataGridTextColumn Header="Id" />
+                                <DataGridTextColumn Header="Название" />
+                                <DataGridTextColumn Header="Название" />
+                                <DataGridTextColumn Header="Название" />
+                                <DataGridTextColumn Header="Название" />
+                                <DataGridTextColumn Header="Название" />
                             </DataGrid.Columns>
                         </DataGrid>
                     </TabItem>
@@ -88,31 +92,31 @@
                             <TextBlock Text="Клиенты" />
                         </TabItem.Header>
 
-                        <DataGrid AutoGenerateColumns="False" CanUserAddRows="False">
+                        <DataGrid AutoGenerateColumns="False" CanUserAddRows="False" ItemsSource="{Binding Users}">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="Id" Binding="{Binding Id}" />
-                                <DataGridTextColumn Header="Название" Binding="{Binding Name1}" />
-                                <DataGridTextColumn Header="Название" Binding="{Binding Name2}" />
-                                <DataGridTextColumn Header="Название" Binding="{Binding Name3}" />
-                                <DataGridTextColumn Header="Название" Binding="{Binding Name4}" />
-                                <DataGridTextColumn Header="Название" Binding="{Binding Name5}" />
+                                <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+                                <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+                                <DataGridTextColumn Header="Email" Binding="{Binding Email}"/>
+                                <DataGridTextColumn Header="PhoneNumber" Binding="{Binding PhoneNumber}"/>
+                                <DataGridTextColumn Header="Password" Binding="{Binding Password}"/>
+                                <DataGridTextColumn Header="Role" Binding="{Binding Role}"/>
                             </DataGrid.Columns>
                         </DataGrid>
                     </TabItem>
                     
                     <TabItem Name="Coaches">
                         <TabItem.Header>
-                            <TextBlock Text="Пользователи" />
+                            <TextBlock Text="Тренеры" />
                         </TabItem.Header>
 
                         <DataGrid AutoGenerateColumns="False" CanUserAddRows="False">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="Id" Binding="{Binding Id}" />
-                                <DataGridTextColumn Header="Название" Binding="{Binding Name1}" />
-                                <DataGridTextColumn Header="Название" Binding="{Binding Name2}" />
-                                <DataGridTextColumn Header="Название" Binding="{Binding Name3}" />
-                                <DataGridTextColumn Header="Название" Binding="{Binding Name4}" />
-                                <DataGridTextColumn Header="Название" Binding="{Binding Name5}" />
+                                <DataGridTextColumn Header="Id" />
+                                <DataGridTextColumn Header="Название" />
+                                <DataGridTextColumn Header="Название" />
+                                <DataGridTextColumn Header="Название" />
+                                <DataGridTextColumn Header="Название" />
+                                <DataGridTextColumn Header="Название" />
                             </DataGrid.Columns>
                         </DataGrid>
                     </TabItem>
