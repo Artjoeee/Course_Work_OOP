@@ -206,31 +206,65 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Helper\HashHelper.cs" />
+    <Compile Include="Helper\ImageSourceConverter.cs" />
     <Compile Include="Helper\PasswordBoxHelper.cs" />
-    <Compile Include="Migrations\20250503175745_Initial.cs" />
-    <Compile Include="Migrations\20250503175745_Initial.Designer.cs">
-      <DependentUpon>20250503175745_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\20250506231132_InitialCreate.cs" />
+    <Compile Include="Migrations\20250506231132_InitialCreate.Designer.cs">
+      <DependentUpon>20250506231132_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20250507133619_Update.cs" />
+    <Compile Include="Migrations\20250507133619_Update.Designer.cs">
+      <DependentUpon>20250507133619_Update.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\ApplicationContextModelSnapshot.cs" />
     <Compile Include="Model\Coach.cs" />
     <Compile Include="Model\DataWorker.cs" />
     <Compile Include="Model\Membership.cs" />
     <Compile Include="Model\RelayCommand.cs" />
+    <Compile Include="ViewModel\AccountViewModel.cs" />
+    <Compile Include="ViewModel\AddViewModel.cs" />
     <Compile Include="ViewModel\AdminViewModel.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
+    <Compile Include="ViewModel\EditViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\MembershipInfoViewModel.cs" />
+    <Compile Include="ViewModel\MembershipsViewModel.cs" />
     <Compile Include="ViewModel\RegistrationViewModel.cs" />
+    <Compile Include="View\AddWindow.xaml.cs">
+      <DependentUpon>AddWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\AdminWindow.xaml.cs">
       <DependentUpon>AdminWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\EditWindow.xaml.cs">
+      <DependentUpon>EditWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\AccountWindow.xaml.cs">
+      <DependentUpon>AccountWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MembershipInfoWindow.xaml.cs">
+      <DependentUpon>MembershipInfoWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MembershipsWindow.xaml.cs">
+      <DependentUpon>MembershipsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\RegistrationWindow.xaml.cs">
       <DependentUpon>RegistrationWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="View\AddWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\AdminWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\EditWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -252,6 +286,18 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\AccountWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MembershipInfoWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MembershipsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\RegistrationWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

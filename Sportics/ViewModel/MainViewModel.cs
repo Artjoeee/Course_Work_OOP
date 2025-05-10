@@ -7,12 +7,14 @@ namespace Sportics.ViewModel
 {
     public class MainViewModel : BaseViewModel
     {
-        public RelayCommand OpenLoginCommand { get; }
+        public ICommand OpenLoginCommand { get; }
+        public ICommand OpenAccountCommand { get; }
 
-        //public MainViewModel()
-        //{
-        //    OpenLoginCommand = new RelayCommand(obj => OpenLogin());
-        //}
+        public MainViewModel()
+        {
+            //OpenLoginCommand = new RelayCommand(obj => OpenLogin());
+            OpenAccountCommand = new RelayCommand(obj => OpenAccount());
+        }
 
         //private void OpenLogin()
         //{
@@ -21,5 +23,13 @@ namespace Sportics.ViewModel
         //    loginWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
         //    loginWindow.ShowDialog();
         //}
+
+        private void OpenAccount()
+        {
+            AccountWindow accountWindow = new AccountWindow();
+            accountWindow.Owner = Application.Current.MainWindow;
+            accountWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            accountWindow.ShowDialog();
+        }
     }
 }

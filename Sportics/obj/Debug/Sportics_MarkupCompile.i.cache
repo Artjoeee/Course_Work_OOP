@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\HomeUser\Desktop\Курс 2\Семестр 2\КП\Sportics\Sportics\App.xaml
-4915291338
+9-1369472462
 
-24122279733
+38-1316531439
 66-24119799
-View\AdminWindow.xaml;View\LoginWindow.xaml;View\MainWindow.xaml;View\RegistrationWindow.xaml;
+View\AddWindow.xaml;View\AdminWindow.xaml;View\EditWindow.xaml;View\LoginWindow.xaml;View\MainWindow.xaml;View\AccountWindow.xaml;View\MembershipInfoWindow.xaml;View\MembershipsWindow.xaml;View\RegistrationWindow.xaml;
 
 False
 

@@ -43,23 +43,24 @@
 
             <!-- Центральная часть: кнопки -->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1">
-                <Button Content="Абонементы" FontSize="16" Margin="0,0,10,0" Width="150"/>
+                <Button Content="Абонементы" FontSize="16" Margin="0,0,10,0" Width="150" Command="{Binding OpenMembershipsCommand}"/>
                 <Button Content="Расписание" FontSize="16" Margin="10,0" Width="150"/>
                 <Button Content="Тренеры" FontSize="16" Margin="10,0" Width="150"/>
+                <Button Content="Добавить" FontSize="16" Margin="10,0" Width="150"/>
             </StackPanel>
 
             <!-- Правая часть: иконки -->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0" Grid.Column="2">
                 <Border Cursor="Hand" Margin="10">
                     <Border.InputBindings>
-                        <MouseBinding Gesture="LeftClick" Command="{Binding OpenLoginCommand}" />
+                        <MouseBinding Gesture="LeftClick" Command="{Binding }" />
                     </Border.InputBindings>
                     <svg:SvgViewbox Source="/Resources/Images/bell-regular.svg" Height="30" Width="30"/>
                 </Border>
 
                 <Border Cursor="Hand" Margin="10">
                     <Border.InputBindings>
-                        <MouseBinding Gesture="LeftClick" Command="{Binding OpenLoginCommand}" />
+                        <MouseBinding Gesture="LeftClick" Command="{Binding OpenAccountCommand}" />
                     </Border.InputBindings>
                     <svg:SvgViewbox Source="Resources\Images\circle-user-regular.svg" Height="30" Width="30"/>
                 </Border>
@@ -69,22 +70,30 @@
         <!-- Основной контент -->
         <ScrollViewer Grid.Row="1" Margin="0">
             <StackPanel Background="LightGray">
-                <TabControl>
+                <TabControl SelectedItem="{Binding SelectedTab}">
                     <TabItem Name="Memberships">
                         <TabItem.Header>
                             <TextBlock Text="Абонементы" />
                         </TabItem.Header>
 
-                        <DataGrid AutoGenerateColumns="False" CanUserAddRows="False">
+                        <TabItem.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Удалить" Command="{Binding DeleteMembershipCommand}"></MenuItem>
+                                <MenuItem Header="Редактировать" Command="{Binding EditorCommand}"></MenuItem>
+                            </ContextMenu>
+                        </TabItem.ContextMenu>
+
+                        <DataGrid AutoGenerateColumns="False" CanUserAddRows="False" ItemsSource="{Binding Memberships}" SelectedItem="{Binding SelectedItem}">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="Id" />
-                                <DataGridTextColumn Header="Название" />
-                                <DataGridTextColumn Header="Название" />
-                                <DataGridTextColumn Header="Название" />
-                                <DataGridTextColumn Header="Название" />
-                                <DataGridTextColumn Header="Название" />
+                                <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+                                <DataGridTextColumn Header="Полное название" Binding="{Binding FullName}"/>
+                                <DataGridTextColumn Header="Сокращенное название" Binding="{Binding ShortName}"/>
+                                <DataGridTextColumn Header="Категория" Binding="{Binding Category}"/>
+                                <DataGridTextColumn Header="Описание" Binding="{Binding Description}"/>
+                                <DataGridTextColumn Header="Цена" Binding="{Binding Price}"/>
                             </DataGrid.Columns>
                         </DataGrid>
+
                     </TabItem>
                     
                     <TabItem Name="Сlients">
@@ -92,14 +101,19 @@
                             <TextBlock Text="Клиенты" />
                         </TabItem.Header>
 
+                        <TabItem.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Заблокировать"></MenuItem>
+                            </ContextMenu>
+                        </TabItem.ContextMenu>
+
                         <DataGrid AutoGenerateColumns="False" CanUserAddRows="False" ItemsSource="{Binding Users}">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
-                                <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
-                                <DataGridTextColumn Header="Email" Binding="{Binding Email}"/>
-                                <DataGridTextColumn Header="PhoneNumber" Binding="{Binding PhoneNumber}"/>
-                                <DataGridTextColumn Header="Password" Binding="{Binding Password}"/>
-                                <DataGridTextColumn Header="Role" Binding="{Binding Role}"/>
+                                <DataGridTextColumn Header="Имя" Binding="{Binding Name}"/>
+                                <DataGridTextColumn Header="Почта" Binding="{Binding Email}"/>
+                                <DataGridTextColumn Header="Телефон" Binding="{Binding PhoneNumber}"/>
+                                <DataGridTextColumn Header="Статус" Binding="{Binding Status}"/>
                             </DataGrid.Columns>
                         </DataGrid>
                     </TabItem>
@@ -112,11 +126,11 @@
                         <DataGrid AutoGenerateColumns="False" CanUserAddRows="False">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Id" />
-                                <DataGridTextColumn Header="Название" />
-                                <DataGridTextColumn Header="Название" />
-                                <DataGridTextColumn Header="Название" />
-                                <DataGridTextColumn Header="Название" />
-                                <DataGridTextColumn Header="Название" />
+                                <DataGridTextColumn Header="Имя" />
+                                <DataGridTextColumn Header="Почта" />
+                                <DataGridTextColumn Header="Телефон" />
+                                <DataGridTextColumn Header="Специализация" />
+                                <DataGridTextColumn Header="Информация" />
                             </DataGrid.Columns>
                         </DataGrid>
                     </TabItem>

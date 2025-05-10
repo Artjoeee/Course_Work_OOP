@@ -38,6 +38,18 @@ namespace Sportics.ViewModel
 
                     Application.Current.MainWindow.Show();
                 }
+                else
+                {
+                    MainWindow mainWindow = new MainWindow();
+                    Application.Current.MainWindow = mainWindow;
+
+                    Application.Current.Windows
+                    .OfType<Window>()
+                    .FirstOrDefault(w => w is LoginWindow)?
+                    .Close();
+
+                    Application.Current.MainWindow.Show();
+                }
             }
             else if (string.IsNullOrWhiteSpace(Email) || string.IsNullOrWhiteSpace(Password))
             {

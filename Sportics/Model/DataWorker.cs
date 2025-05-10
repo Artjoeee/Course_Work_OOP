@@ -1,15 +1,13 @@
-﻿using Sportics.Model.Data;
+﻿using Sportics.Helper;
+using Sportics.Model.Data;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Windows.Documents;
 
 namespace Sportics.Model
 {
     public static class DataWorker
     {
-        public static void AdminAddMembership(string fullName, string shortName, string description, float price, string photoPath)
+        public static void AddMembership(string fullName, string shortName, string category, string description, int price, byte[] photo)
         {
             using (ApplicationContext db = new ApplicationContext())
             {
@@ -21,9 +19,10 @@ namespace Sportics.Model
                     {
                         FullName = fullName,
                         ShortName = shortName,
+                        Category = category,
                         Description = description,
                         Price = price,
-                        PhotoPath = photoPath
+                        Photo = photo
                     };
 
                     db.Memberships.Add(newMembership);
@@ -33,7 +32,8 @@ namespace Sportics.Model
         }
 
 
-        public static void AdminDeleteMembership(Membership membership)
+
+        public static void DeleteMembership(Membership membership)
         {
             using (ApplicationContext db = new ApplicationContext())
             {
@@ -43,7 +43,7 @@ namespace Sportics.Model
         }
 
 
-        public static void AdminDEditMembership(Membership oldMembership, string fullName, string shortName, string description, float price, string photoPath)
+        public static void EditMembership(Membership oldMembership, string fullName, string shortName, string description, string category, int price, byte[] photo)
         {
             using (ApplicationContext db = new ApplicationContext())
             {
@@ -51,8 +51,9 @@ namespace Sportics.Model
                 membership.FullName = fullName;
                 membership.ShortName = shortName;
                 membership.Description = description;
+                membership.Category = category;
                 membership.Price = price;
-                membership.PhotoPath = photoPath;
+                membership.Photo = photo;
                 db.SaveChanges();
             }
         }
@@ -67,12 +68,34 @@ namespace Sportics.Model
             }
         }
 
+
+        public static Membership SelectMembership(byte[] photo, string shortName, int price)
+        {
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                Membership membership = db.Memberships.FirstOrDefault(m => m.Photo == photo && m.ShortName == shortName && m.Price == price);
+
+                return membership;
+            }
+        }
+
         public static List<User> GetAllUsers()
         {
             using (ApplicationContext db = new ApplicationContext())
             {
-                List<User> result = db.Users.ToList();
-                return result;
+                List<User> users = db.Users.ToList();
+
+                List<User> clients = new List<User>();
+
+                foreach (var item in users)
+                {
+                    if (item.Role == "Клиент")
+                    {
+                        clients.Add(item);
+                    }
+                }
+
+                return clients;
             }
         }
 
@@ -85,13 +108,18 @@ namespace Sportics.Model
 
                 if (!checkIsExist)
                 {
+                    string salt;
+                    string hashedPassword = HashHelper.HashPassword(password, out salt);
+
                     User newUser = new User
                     {
                         Name = name,
                         Email = email,
                         PhoneNumber = phoneNumber,
-                        Password = password,
-                        Role = "Клиент"
+                        PasswordHash = hashedPassword,
+                        PasswordSalt = salt,
+                        Role = "Клиент",
+                        Status = "Активен"
                     };
 
                     db.Users.Add(newUser);
@@ -101,16 +129,19 @@ namespace Sportics.Model
         }
 
 
+
         public static bool CheckUser(string email, string password)
         {
             using (ApplicationContext db = new ApplicationContext())
             {
-                if (SelectUser(email, password) != null)
+                User user = db.Users.FirstOrDefault(u => u.Email == email);
+
+                if (user == null)
                 {
-                    return true;
+                    return false;
                 }
 
-                return false;
+                return HashHelper.VerifyPassword(password, user.PasswordSalt, user.PasswordHash);
             }
         }
 
@@ -119,11 +150,17 @@ namespace Sportics.Model
         {
             using (ApplicationContext db = new ApplicationContext())
             {
-                User client = db.Users.FirstOrDefault(user => user.Email == email && user.Password == password);
+                User user = db.Users.FirstOrDefault(u => u.Email == email);
 
-                return client;
+                if (user != null && HashHelper.VerifyPassword(password, user.PasswordSalt, user.PasswordHash))
+                {
+                    return user;
+                }
+
+                return null;
             }
         }
+
 
 
         public static bool CheckEmailAndPhoneNumber(string email, string phoneNumber)

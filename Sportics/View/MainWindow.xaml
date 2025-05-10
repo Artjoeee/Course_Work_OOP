@@ -53,14 +53,14 @@
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0" Grid.Column="2">
                 <Border Cursor="Hand" Margin="10">
                     <Border.InputBindings>
-                        <MouseBinding Gesture="LeftClick" Command="{Binding OpenLoginCommand}" />
+                        <MouseBinding Gesture="LeftClick" Command="{Binding }" />
                     </Border.InputBindings>
                     <svg:SvgViewbox Source="/Resources/Images/bell-regular.svg" Height="30" Width="30"/>
                 </Border>
 
                 <Border Cursor="Hand" Margin="10">
                     <Border.InputBindings>
-                        <MouseBinding Gesture="LeftClick" Command="{Binding OpenLoginCommand}" />
+                        <MouseBinding Gesture="LeftClick" Command="{Binding OpenAccountCommand}" />
                     </Border.InputBindings>
                     <svg:SvgViewbox Source="Resources\Images\circle-user-regular.svg" Height="30" Width="30"/>
                 </Border>
