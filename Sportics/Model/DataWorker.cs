@@ -1,7 +1,9 @@
-﻿using Sportics.Helper;
+﻿using Microsoft.EntityFrameworkCore;
+using Sportics.Helper;
 using Sportics.Model.Data;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Sportics.Model
 {
@@ -100,11 +102,11 @@ namespace Sportics.Model
         }
 
 
-        public static void AddUser(string name, string email, string phoneNumber, string password)
+        public static async Task AddUser(string name, string email, string phoneNumber, string password)
         {
             using (ApplicationContext db = new ApplicationContext())
             {
-                bool checkIsExist = db.Users.Any(user => user.Email == email);
+                bool checkIsExist = await db.Users.AnyAsync(user => user.Email == email);
 
                 if (!checkIsExist)
                 {
@@ -122,11 +124,12 @@ namespace Sportics.Model
                         Status = "Активен"
                     };
 
-                    db.Users.Add(newUser);
-                    db.SaveChanges();
+                    await db.Users.AddAsync(newUser);
+                    await db.SaveChangesAsync();
                 }
             }
         }
+
 
 
 
@@ -177,5 +180,14 @@ namespace Sportics.Model
                 return false;
             }
         }
+
+        public static List<MembershipOrder> GetAllMembershipOrders()
+        {
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                return db.MembershipOrders.ToList();
+            }
+        }
+
     }
 }

@@ -8,6 +8,7 @@
         xmlns:helper="clr-namespace:Sportics.Helper"
         xmlns:local="clr-namespace:Sportics.View"
         mc:Ignorable="d"
+        MinHeight="350" MinWidth="400"
         Title="Авторизация" Height="350" Width="400" WindowStartupLocation="CenterScreen">
 
     <Window.DataContext>

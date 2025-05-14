@@ -76,6 +76,34 @@ namespace Sportics.Migrations
                     b.ToTable("Memberships");
                 });
 
+            modelBuilder.Entity("Sportics.Model.MembershipOrder", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ClientId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ClientName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("MembershipId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("MembershipName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClientId");
+
+                    b.HasIndex("MembershipId");
+
+                    b.ToTable("MembershipOrders");
+                });
+
             modelBuilder.Entity("Sportics.Model.User", b =>
                 {
                     b.Property<int>("Id")
@@ -107,6 +135,21 @@ namespace Sportics.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("Sportics.Model.MembershipOrder", b =>
+                {
+                    b.HasOne("Sportics.Model.User", "Client")
+                        .WithMany("Orders")
+                        .HasForeignKey("ClientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Sportics.Model.Membership", "Membership")
+                        .WithMany("Orders")
+                        .HasForeignKey("MembershipId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

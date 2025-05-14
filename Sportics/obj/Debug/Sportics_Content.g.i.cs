@@ -8,6 +8,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/images/telefon.svg")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/arrow.cur")]
 
 

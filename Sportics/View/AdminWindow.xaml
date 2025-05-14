@@ -7,7 +7,7 @@
         xmlns:vm="clr-namespace:Sportics.ViewModel"
         mc:Ignorable="d"
         Title="Sportics"
-        MinHeight="500" MinWidth="800"
+        MinHeight="500" MinWidth="1160"
         Width="1250" Height="650"
         WindowStartupLocation="CenterScreen">
     <Window.DataContext>
@@ -25,7 +25,7 @@
         </Grid.RowDefinitions>
 
         <!-- Верхняя панель -->
-        <Grid Grid.Row="0" Background="WhiteSmoke" Height="60">
+        <Grid Grid.Row="0" Background="{DynamicResource MaterialDesignPaper}" Height="60">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <!-- Лево: логотип -->
@@ -43,37 +43,45 @@
 
             <!-- Центральная часть: кнопки -->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1">
-                <Button Content="Абонементы" FontSize="16" Margin="0,0,10,0" Width="150" Command="{Binding OpenMembershipsCommand}"/>
-                <Button Content="Расписание" FontSize="16" Margin="10,0" Width="150"/>
-                <Button Content="Тренеры" FontSize="16" Margin="10,0" Width="150"/>
-                <Button Content="Добавить" FontSize="16" Margin="10,0" Width="150"/>
+                <Button Content="{DynamicResource Memberships}" FontSize="16" Margin="0,0,10,0" Width="150" Command="{Binding OpenMembershipsCommand}"/>
+                <Button Content="{DynamicResource Schedule}" Margin="10,0" Width="150"/>
+                <Button Content="{DynamicResource Coaches}" FontSize="16" Margin="10,0" Width="150"/>
+                <Button Content="{DynamicResource Add}" FontSize="16" Margin="10,0" Width="150"/>
             </StackPanel>
 
             <!-- Правая часть: иконки -->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0" Grid.Column="2">
-                <Border Cursor="Hand" Margin="10">
+                <ToggleButton Content="🌙"
+                        IsChecked="{Binding IsDarkTheme, Mode=TwoWay}"
+                        ToolTip="Темная тема"
+                        Width="40" Height="40"
+                        VerticalAlignment="Center"
+                        Margin="10,0,10,0"/>
+                <ComboBox ItemsSource="{Binding Languages}"
+                    SelectedItem="{Binding SelectedLanguage}" Width="50" Foreground="{DynamicResource MaterialDesignBody}"/>
+                <Border Background="{DynamicResource MaterialDesignPaper}" Margin="20,10,0,10">
                     <Border.InputBindings>
                         <MouseBinding Gesture="LeftClick" Command="{Binding }" />
                     </Border.InputBindings>
-                    <svg:SvgViewbox Source="/Resources/Images/bell-regular.svg" Height="30" Width="30"/>
+                    <svg:SvgViewbox Source="/Resources/Images/bell.svg" Height="30" Width="30" />
                 </Border>
 
-                <Border Cursor="Hand" Margin="10">
+                <Border Background="{DynamicResource MaterialDesignPaper}" Margin="10">
                     <Border.InputBindings>
                         <MouseBinding Gesture="LeftClick" Command="{Binding OpenAccountCommand}" />
                     </Border.InputBindings>
-                    <svg:SvgViewbox Source="Resources\Images\circle-user-regular.svg" Height="30" Width="30"/>
+                    <svg:SvgViewbox Source="Resources\Images\user.svg" Height="30" Width="30"/>
                 </Border>
             </StackPanel>
         </Grid>
 
         <!-- Основной контент -->
         <ScrollViewer Grid.Row="1" Margin="0">
-            <StackPanel Background="LightGray">
-                <TabControl SelectedItem="{Binding SelectedTab}">
+            <StackPanel Background="{DynamicResource MaterialDesignToolBarBackground}">
+                <TabControl SelectedItem="{Binding SelectedTab}" >
                     <TabItem Name="Memberships">
                         <TabItem.Header>
-                            <TextBlock Text="Абонементы" />
+                            <TextBlock Text="{DynamicResource Memberships}" />
                         </TabItem.Header>
 
                         <TabItem.ContextMenu>
@@ -95,10 +103,10 @@
                         </DataGrid>
 
                     </TabItem>
-                    
+
                     <TabItem Name="Сlients">
                         <TabItem.Header>
-                            <TextBlock Text="Клиенты" />
+                            <TextBlock Text="{DynamicResource Clients}" />
                         </TabItem.Header>
 
                         <TabItem.ContextMenu>
@@ -117,10 +125,10 @@
                             </DataGrid.Columns>
                         </DataGrid>
                     </TabItem>
-                    
+
                     <TabItem Name="Coaches">
                         <TabItem.Header>
-                            <TextBlock Text="Тренеры" />
+                            <TextBlock Text="{DynamicResource Coaches}" />
                         </TabItem.Header>
 
                         <DataGrid AutoGenerateColumns="False" CanUserAddRows="False">
@@ -134,12 +142,24 @@
                             </DataGrid.Columns>
                         </DataGrid>
                     </TabItem>
+
+                    <TabItem Header="Заказы">
+                        <DataGrid AutoGenerateColumns="False" CanUserAddRows="False" ItemsSource="{Binding MembershipOrders}" SelectedItem="{Binding SelectedOrder}">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Id заказа" Binding="{Binding Id}" />
+                                <DataGridTextColumn Header="Название абонемента" Binding="{Binding MembershipName}" />
+                                <DataGridTextColumn Header="Id клиента" Binding="{Binding ClientId}" />
+                                <DataGridTextColumn Header="Имя клиента" Binding="{Binding ClientName}" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </TabItem>
+
                 </TabControl>
             </StackPanel>
         </ScrollViewer>
 
         <!-- Нижняя панель -->
-        <Border Grid.Row="2" Background="WhiteSmoke" Padding="10">
+        <Border Grid.Row="2" Background="{DynamicResource MaterialDesignPaper}" Padding="10">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,15,0">
                 <svg:SvgViewbox Source="Resources\Images\Mail.svg" Height="20" Width="20" Margin="0,0,5,0"/>
                 <Label Content="sportics@gmail.com" VerticalAlignment="Center"/>

@@ -1,9 +1,9 @@
-﻿using Sportics.Model;
+﻿using Sportics.Helper;
+using Sportics.Model;
 using Sportics.View;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Collections.ObjectModel;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -20,6 +20,43 @@ namespace Sportics.ViewModel
 
         public List<Membership> Memberships { get; set; }
 
+        public ObservableCollection<string> Languages { get; } = new ObservableCollection<string> { "RU", "EN" };
+
+        private string _selectedLanguage = "RU";
+        public string SelectedLanguage
+        {
+            get => _selectedLanguage;
+            set
+            {
+                if (_selectedLanguage != value)
+                {
+                    _selectedLanguage = value;
+                    OnPropertyChanged();
+                    LocalizationManager.ChangeCulture(value);
+                }
+            }
+        }
+
+        private readonly ThemeService ThemeService = ThemeService.Instance;
+
+        public bool IsDarkTheme
+        {
+            get => ThemeService.IsDarkTheme;
+            set
+            {
+                if (value)
+                    ThemeService.SetDarkTheme();
+                else
+                    ThemeService.SetLightTheme();
+
+                OnPropertyChanged();
+            }
+        }
+
+        public ObservableCollection<MembershipOrder> MembershipOrders { get; set; }
+        public MembershipOrder SelectedOrder { get; set; }
+
+
         public ICommand OpenAccountCommand { get; }
 
         public ICommand OpenMembershipsCommand { get; }
@@ -33,9 +70,11 @@ namespace Sportics.ViewModel
             OpenAccountCommand = new RelayCommand(obj => OpenAccount());
             OpenMembershipsCommand = new RelayCommand(obj => OpenMemberships());
             DeleteMembershipCommand = new RelayCommand(obj => DeleteMembership());
+            EditorCommand = new RelayCommand(obj => OpenEditor(SelectedItem));
+            MembershipOrders = new ObservableCollection<MembershipOrder>(DataWorker.GetAllMembershipOrders());
+
             AllMemberships();
             AllUsers();
-            EditorCommand = new RelayCommand(obj => OpenEditor(SelectedItem));
         }
 
         private void AllUsers()
@@ -83,10 +122,14 @@ namespace Sportics.ViewModel
         private void OpenEditor(Membership membership)
         {
             EditWindow window = new EditWindow();
-            window.DataContext = new EditViewModel(membership);
+            EditViewModel viewModel = new EditViewModel(membership);
+            window.DataContext = viewModel;
+            viewModel.RequestClose += () => window.Close();
             window.Owner = Application.Current.MainWindow;
             window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             window.ShowDialog();
+
+            AllMemberships();
         }
     }
 }

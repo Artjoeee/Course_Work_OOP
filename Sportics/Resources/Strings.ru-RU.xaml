@@ -1,0 +1,17 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <sys:String x:Key="Memberships">Абонементы</sys:String>
+    <sys:String x:Key="Schedule">Расписание</sys:String>
+    <sys:String x:Key="Clients">Клиенты</sys:String>
+    <sys:String x:Key="Coaches">Тренеры</sys:String>
+    <sys:String x:Key="Tables">Таблицы</sys:String>
+    <sys:String x:Key="Add">Добавить</sys:String>
+    <sys:String x:Key="Filter">Фильтрация</sys:String>
+    <sys:String x:Key="Category">Категория:</sys:String>
+    <sys:String x:Key="PriceFrom">Цена от:</sys:String>
+    <sys:String x:Key="PriceTo">Цена до:</sys:String>
+    <sys:String x:Key="ApplyFilter">Применить фильтр</sys:String>
+    <sys:String x:Key="Details">Подробнее</sys:String>
+</ResourceDictionary>

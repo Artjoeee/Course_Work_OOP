@@ -1,9 +1,13 @@
 ﻿
 
+using System.Collections.Generic;
+
 namespace Sportics.Model
 {
     public class User
     {
+        public List<MembershipOrder> Orders { get; set; }
+
         public int Id { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }

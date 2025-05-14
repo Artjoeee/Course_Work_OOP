@@ -12,11 +12,25 @@ namespace Sportics.Model.Data
         public DbSet<User> Users { get; set; }
         public DbSet<Coach> Coaches { get; set; }
         public DbSet<Membership> Memberships { get; set; }
+        public DbSet<MembershipOrder> MembershipOrders { get; set; }
 
 
         public ApplicationContext() 
         {
             Database.EnsureCreated();
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<MembershipOrder>()
+                .HasOne(mo => mo.Client)
+                .WithMany(u => u.Orders)
+                .HasForeignKey(mo => mo.ClientId);
+
+            modelBuilder.Entity<MembershipOrder>()
+                .HasOne(mo => mo.Membership)
+                .WithMany(m => m.Orders)
+                .HasForeignKey(mo => mo.MembershipId);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

@@ -17,6 +17,21 @@
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -208,7 +223,9 @@
     </ApplicationDefinition>
     <Compile Include="Helper\HashHelper.cs" />
     <Compile Include="Helper\ImageSourceConverter.cs" />
+    <Compile Include="Helper\LocalizationManager.cs" />
     <Compile Include="Helper\PasswordBoxHelper.cs" />
+    <Compile Include="Helper\ThemeService.cs" />
     <Compile Include="Migrations\20250506231132_InitialCreate.cs" />
     <Compile Include="Migrations\20250506231132_InitialCreate.Designer.cs">
       <DependentUpon>20250506231132_InitialCreate.cs</DependentUpon>
@@ -217,10 +234,15 @@
     <Compile Include="Migrations\20250507133619_Update.Designer.cs">
       <DependentUpon>20250507133619_Update.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20250514123610_NewUpdate.cs" />
+    <Compile Include="Migrations\20250514123610_NewUpdate.Designer.cs">
+      <DependentUpon>20250514123610_NewUpdate.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\ApplicationContextModelSnapshot.cs" />
     <Compile Include="Model\Coach.cs" />
     <Compile Include="Model\DataWorker.cs" />
     <Compile Include="Model\Membership.cs" />
+    <Compile Include="Model\MembershipOrder.cs" />
     <Compile Include="Model\RelayCommand.cs" />
     <Compile Include="ViewModel\AccountViewModel.cs" />
     <Compile Include="ViewModel\AddViewModel.cs" />
@@ -330,7 +352,16 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Page Include="Resources\Strings.en-US.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Strings.ru-RU.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\bell-regular.svg" />
     <Resource Include="Resources\Images\circle-user-regular.svg" />
@@ -339,6 +370,26 @@
     <Resource Include="Resources\Images\Mail.svg" />
     <Resource Include="Resources\Images\Phone.svg" />
   </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.7.2 %28x86 и x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\bell.svg" />
+    <Resource Include="Resources\Images\user.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\cursor.cur" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Data.SqlClient.SNI.1.1.0\build\net46\Microsoft.Data.SqlClient.SNI.targets" Condition="Exists('..\packages\Microsoft.Data.SqlClient.SNI.1.1.0\build\net46\Microsoft.Data.SqlClient.SNI.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

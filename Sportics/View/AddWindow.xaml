@@ -8,7 +8,8 @@
         xmlns:vm="clr-namespace:Sportics.ViewModel"
         xmlns:local="clr-namespace:Sportics.View"
         mc:Ignorable="d"
-        Title="Регистрация" Height="380" Width="400" WindowStartupLocation="CenterScreen">
+        MinHeight="420" MinWidth="400"
+        Title="" Height="420" Width="400" WindowStartupLocation="CenterScreen">
     <Window.DataContext>
         <vm:AddViewModel />
     </Window.DataContext>
