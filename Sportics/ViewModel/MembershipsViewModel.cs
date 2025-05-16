@@ -1,5 +1,4 @@
-﻿using MaterialDesignThemes.Wpf;
-using Sportics.Helper;
+﻿using Sportics.Helper;
 using Sportics.Model;
 using Sportics.View;
 using System.Collections.Generic;

@@ -13,6 +13,11 @@ namespace Sportics.Model.Data
         public DbSet<Coach> Coaches { get; set; }
         public DbSet<Membership> Memberships { get; set; }
         public DbSet<MembershipOrder> MembershipOrders { get; set; }
+        public DbSet<Schedule> Schedules { get; set; }
+        public DbSet<ClientSessionRecord> ClientSessionRecords { get; set; }
+        public DbSet<CoachReview> CoachReviews { get; set; }
+        public DbSet<SessionReview> SessionReviews { get; set; }
+
 
 
         public ApplicationContext() 
@@ -31,6 +36,12 @@ namespace Sportics.Model.Data
                 .HasOne(mo => mo.Membership)
                 .WithMany(m => m.Orders)
                 .HasForeignKey(mo => mo.MembershipId);
+
+            modelBuilder.Entity<Schedule>()
+                .HasOne(s => s.Coach)
+                .WithMany(c => c.Schedules)
+                .HasForeignKey(s => s.CoachId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

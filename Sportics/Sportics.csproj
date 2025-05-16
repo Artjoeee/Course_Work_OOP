@@ -238,16 +238,32 @@
     <Compile Include="Migrations\20250514123610_NewUpdate.Designer.cs">
       <DependentUpon>20250514123610_NewUpdate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20250514232009_LastUpdate.cs" />
+    <Compile Include="Migrations\20250514232009_LastUpdate.Designer.cs">
+      <DependentUpon>20250514232009_LastUpdate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20250515223434_NewTables.cs" />
+    <Compile Include="Migrations\20250515223434_NewTables.Designer.cs">
+      <DependentUpon>20250515223434_NewTables.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\ApplicationContextModelSnapshot.cs" />
+    <Compile Include="Model\ClientSessionRecord.cs" />
     <Compile Include="Model\Coach.cs" />
+    <Compile Include="Model\CoachReview.cs" />
     <Compile Include="Model\DataWorker.cs" />
     <Compile Include="Model\Membership.cs" />
     <Compile Include="Model\MembershipOrder.cs" />
     <Compile Include="Model\RelayCommand.cs" />
+    <Compile Include="Model\Schedule.cs" />
+    <Compile Include="Model\Session.cs" />
+    <Compile Include="Model\SessionReview.cs" />
     <Compile Include="ViewModel\AccountViewModel.cs" />
     <Compile Include="ViewModel\AddViewModel.cs" />
     <Compile Include="ViewModel\AdminViewModel.cs" />
+    <Compile Include="ViewModel\BalanceViewModel.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
+    <Compile Include="ViewModel\ClientMembershipInfoViewModel.cs" />
+    <Compile Include="ViewModel\ClientMembershipsViewModel.cs" />
     <Compile Include="ViewModel\EditViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
@@ -259,6 +275,15 @@
     </Compile>
     <Compile Include="View\AdminWindow.xaml.cs">
       <DependentUpon>AdminWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\BalanceWindow.xaml.cs">
+      <DependentUpon>BalanceWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ClientMembershipInfoWindow.xaml.cs">
+      <DependentUpon>ClientMembershipInfoWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ClientMembershipsWindow.xaml.cs">
+      <DependentUpon>ClientMembershipsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\EditWindow.xaml.cs">
       <DependentUpon>EditWindow.xaml</DependentUpon>
@@ -283,6 +308,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\AdminWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\BalanceWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ClientMembershipInfoWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ClientMembershipsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

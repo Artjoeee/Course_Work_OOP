@@ -4,6 +4,7 @@
 
     <sys:String x:Key="Memberships">Memberships</sys:String>
     <sys:String x:Key="Schedule">Schedule</sys:String>
+    <sys:String x:Key="Main">Main</sys:String>
     <sys:String x:Key="Clients">Clients</sys:String>
     <sys:String x:Key="Coaches">Coaches</sys:String>
     <sys:String x:Key="Tables">Tables</sys:String>

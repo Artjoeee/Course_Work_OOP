@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\HomeUser\Desktop\Курс 2\Семестр 2\КП\Sportics\Sportics\App.xaml
-11-1032513037
+1439346645
 
-42-506997969
+57216739156
 66-24119799
-View\AddWindow.xaml;View\AdminWindow.xaml;View\EditWindow.xaml;View\LoginWindow.xaml;View\MainWindow.xaml;View\AccountWindow.xaml;View\MembershipInfoWindow.xaml;View\MembershipsWindow.xaml;View\RegistrationWindow.xaml;Resources\Strings.en-US.xaml;Resources\Strings.ru-RU.xaml;
+View\AddWindow.xaml;View\AdminWindow.xaml;View\BalanceWindow.xaml;View\ClientMembershipInfoWindow.xaml;View\ClientMembershipsWindow.xaml;View\EditWindow.xaml;View\LoginWindow.xaml;View\MainWindow.xaml;View\AccountWindow.xaml;View\MembershipInfoWindow.xaml;View\MembershipsWindow.xaml;View\RegistrationWindow.xaml;Resources\Strings.en-US.xaml;Resources\Strings.ru-RU.xaml;
 
 False
 

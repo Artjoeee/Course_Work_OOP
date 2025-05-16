@@ -1,5 +1,7 @@
 ﻿
 
+using System.Collections.Generic;
+
 namespace Sportics.Model
 {
     public class Coach
@@ -10,5 +12,7 @@ namespace Sportics.Model
         public string PhoneNumber { get; set; }
         public string Specialization { get; set; }
         public string Information { get; set; }
+
+        public List<Schedule> Schedules { get; set; }
     }
 }

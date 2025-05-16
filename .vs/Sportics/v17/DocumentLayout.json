@@ -3,19 +3,43 @@
   "WorkspaceRootPath": "C:\\Users\\HomeUser\\Desktop\\\u041A\u0443\u0440\u0441 2\\\u0421\u0435\u043C\u0435\u0441\u0442\u0440 2\\\u041A\u041F\\Sportics\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{CAE060A2-71A4-47B1-A060-15FE61B86CF5}|Sportics\\Sportics.csproj|c:\\users\\homeuser\\desktop\\\u043A\u0443\u0440\u0441 2\\\u0441\u0435\u043C\u0435\u0441\u0442\u0440 2\\\u043A\u043F\\sportics\\sportics\\viewmodel\\adminviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{CAE060A2-71A4-47B1-A060-15FE61B86CF5}|Sportics\\Sportics.csproj|c:\\users\\homeuser\\desktop\\\u043A\u0443\u0440\u0441 2\\\u0441\u0435\u043C\u0435\u0441\u0442\u0440 2\\\u043A\u043F\\sportics\\sportics\\view\\accountwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{CAE060A2-71A4-47B1-A060-15FE61B86CF5}|Sportics\\Sportics.csproj|solutionrelative:sportics\\view\\accountwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CAE060A2-71A4-47B1-A060-15FE61B86CF5}|Sportics\\Sportics.csproj|C:\\Users\\HomeUser\\Desktop\\\u041A\u0443\u0440\u0441 2\\\u0421\u0435\u043C\u0435\u0441\u0442\u0440 2\\\u041A\u041F\\Sportics\\sportics\\viewmodel\\accountviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CAE060A2-71A4-47B1-A060-15FE61B86CF5}|Sportics\\Sportics.csproj|solutionrelative:sportics\\viewmodel\\accountviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CAE060A2-71A4-47B1-A060-15FE61B86CF5}|Sportics\\Sportics.csproj|C:\\Users\\HomeUser\\Desktop\\\u041A\u0443\u0440\u0441 2\\\u0421\u0435\u043C\u0435\u0441\u0442\u0440 2\\\u041A\u041F\\Sportics\\sportics\\view\\membershipinfowindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{CAE060A2-71A4-47B1-A060-15FE61B86CF5}|Sportics\\Sportics.csproj|solutionrelative:sportics\\view\\membershipinfowindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CAE060A2-71A4-47B1-A060-15FE61B86CF5}|Sportics\\Sportics.csproj|C:\\Users\\HomeUser\\Desktop\\\u041A\u0443\u0440\u0441 2\\\u0421\u0435\u043C\u0435\u0441\u0442\u0440 2\\\u041A\u041F\\Sportics\\sportics\\view\\clientmembershipswindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{CAE060A2-71A4-47B1-A060-15FE61B86CF5}|Sportics\\Sportics.csproj|solutionrelative:sportics\\view\\clientmembershipswindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CAE060A2-71A4-47B1-A060-15FE61B86CF5}|Sportics\\Sportics.csproj|C:\\Users\\HomeUser\\Desktop\\\u041A\u0443\u0440\u0441 2\\\u0421\u0435\u043C\u0435\u0441\u0442\u0440 2\\\u041A\u041F\\Sportics\\sportics\\view\\balancewindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{CAE060A2-71A4-47B1-A060-15FE61B86CF5}|Sportics\\Sportics.csproj|solutionrelative:sportics\\view\\balancewindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CAE060A2-71A4-47B1-A060-15FE61B86CF5}|Sportics\\Sportics.csproj|C:\\Users\\HomeUser\\Desktop\\\u041A\u0443\u0440\u0441 2\\\u0421\u0435\u043C\u0435\u0441\u0442\u0440 2\\\u041A\u041F\\Sportics\\sportics\\viewmodel\\balanceviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CAE060A2-71A4-47B1-A060-15FE61B86CF5}|Sportics\\Sportics.csproj|solutionrelative:sportics\\viewmodel\\balanceviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CAE060A2-71A4-47B1-A060-15FE61B86CF5}|Sportics\\Sportics.csproj|C:\\Users\\HomeUser\\Desktop\\\u041A\u0443\u0440\u0441 2\\\u0421\u0435\u043C\u0435\u0441\u0442\u0440 2\\\u041A\u041F\\Sportics\\sportics\\model\\dataworker.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CAE060A2-71A4-47B1-A060-15FE61B86CF5}|Sportics\\Sportics.csproj|solutionrelative:sportics\\model\\dataworker.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CAE060A2-71A4-47B1-A060-15FE61B86CF5}|Sportics\\Sportics.csproj|C:\\Users\\HomeUser\\Desktop\\\u041A\u0443\u0440\u0441 2\\\u0421\u0435\u043C\u0435\u0441\u0442\u0440 2\\\u041A\u041F\\Sportics\\sportics\\model\\session.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CAE060A2-71A4-47B1-A060-15FE61B86CF5}|Sportics\\Sportics.csproj|solutionrelative:sportics\\model\\session.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CAE060A2-71A4-47B1-A060-15FE61B86CF5}|Sportics\\Sportics.csproj|C:\\Users\\HomeUser\\Desktop\\\u041A\u0443\u0440\u0441 2\\\u0421\u0435\u043C\u0435\u0441\u0442\u0440 2\\\u041A\u041F\\Sportics\\sportics\\viewmodel\\adminviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{CAE060A2-71A4-47B1-A060-15FE61B86CF5}|Sportics\\Sportics.csproj|solutionrelative:sportics\\viewmodel\\adminviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CAE060A2-71A4-47B1-A060-15FE61B86CF5}|Sportics\\Sportics.csproj|c:\\users\\homeuser\\desktop\\\u043A\u0443\u0440\u0441 2\\\u0441\u0435\u043C\u0435\u0441\u0442\u0440 2\\\u043A\u043F\\sportics\\sportics\\viewmodel\\membershipsviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CAE060A2-71A4-47B1-A060-15FE61B86CF5}|Sportics\\Sportics.csproj|solutionrelative:sportics\\viewmodel\\membershipsviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CAE060A2-71A4-47B1-A060-15FE61B86CF5}|Sportics\\Sportics.csproj|c:\\users\\homeuser\\desktop\\\u043A\u0443\u0440\u0441 2\\\u0441\u0435\u043C\u0435\u0441\u0442\u0440 2\\\u043A\u043F\\sportics\\sportics\\helper\\themeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CAE060A2-71A4-47B1-A060-15FE61B86CF5}|Sportics\\Sportics.csproj|solutionrelative:sportics\\helper\\themeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CAE060A2-71A4-47B1-A060-15FE61B86CF5}|Sportics\\Sportics.csproj|c:\\users\\homeuser\\desktop\\\u043A\u0443\u0440\u0441 2\\\u0441\u0435\u043C\u0435\u0441\u0442\u0440 2\\\u043A\u043F\\sportics\\sportics\\view\\adminwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "AbsoluteMoniker": "D:0:0:{CAE060A2-71A4-47B1-A060-15FE61B86CF5}|Sportics\\Sportics.csproj|C:\\Users\\HomeUser\\Desktop\\\u041A\u0443\u0440\u0441 2\\\u0421\u0435\u043C\u0435\u0441\u0442\u0440 2\\\u041A\u041F\\Sportics\\sportics\\view\\adminwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{CAE060A2-71A4-47B1-A060-15FE61B86CF5}|Sportics\\Sportics.csproj|solutionrelative:sportics\\view\\adminwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     }
   ],
@@ -26,58 +50,123 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "MembershipsViewModel.cs",
-              "DocumentMoniker": "C:\\Users\\HomeUser\\Desktop\\\u041A\u0443\u0440\u0441 2\\\u0421\u0435\u043C\u0435\u0441\u0442\u0440 2\\\u041A\u041F\\Sportics\\Sportics\\ViewModel\\MembershipsViewModel.cs",
-              "RelativeDocumentMoniker": "Sportics\\ViewModel\\MembershipsViewModel.cs",
-              "ToolTip": "C:\\Users\\HomeUser\\Desktop\\\u041A\u0443\u0440\u0441 2\\\u0421\u0435\u043C\u0435\u0441\u0442\u0440 2\\\u041A\u041F\\Sportics\\Sportics\\ViewModel\\MembershipsViewModel.cs",
-              "RelativeToolTip": "Sportics\\ViewModel\\MembershipsViewModel.cs",
-              "ViewState": "AgIAAB0AAAAAAAAAAAAuwC4AAAAJAAAAAAAAAA==",
+              "DocumentIndex": 2,
+              "Title": "MembershipInfoWindow.xaml",
+              "DocumentMoniker": "C:\\Users\\HomeUser\\Desktop\\\u041A\u0443\u0440\u0441 2\\\u0421\u0435\u043C\u0435\u0441\u0442\u0440 2\\\u041A\u041F\\Sportics\\Sportics\\View\\MembershipInfoWindow.xaml",
+              "RelativeDocumentMoniker": "Sportics\\View\\MembershipInfoWindow.xaml",
+              "ToolTip": "C:\\Users\\HomeUser\\Desktop\\\u041A\u0443\u0440\u0441 2\\\u0421\u0435\u043C\u0435\u0441\u0442\u0440 2\\\u041A\u041F\\Sportics\\Sportics\\View\\MembershipInfoWindow.xaml",
+              "RelativeToolTip": "Sportics\\View\\MembershipInfoWindow.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-05-16T00:49:55.626Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "BalanceViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\HomeUser\\Desktop\\\u041A\u0443\u0440\u0441 2\\\u0421\u0435\u043C\u0435\u0441\u0442\u0440 2\\\u041A\u041F\\Sportics\\Sportics\\ViewModel\\BalanceViewModel.cs",
+              "RelativeDocumentMoniker": "Sportics\\ViewModel\\BalanceViewModel.cs",
+              "ToolTip": "C:\\Users\\HomeUser\\Desktop\\\u041A\u0443\u0440\u0441 2\\\u0421\u0435\u043C\u0435\u0441\u0442\u0440 2\\\u041A\u041F\\Sportics\\Sportics\\ViewModel\\BalanceViewModel.cs",
+              "RelativeToolTip": "Sportics\\ViewModel\\BalanceViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-14T21:50:23.705Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-16T00:15:07.189Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "BalanceWindow.xaml",
+              "DocumentMoniker": "C:\\Users\\HomeUser\\Desktop\\\u041A\u0443\u0440\u0441 2\\\u0421\u0435\u043C\u0435\u0441\u0442\u0440 2\\\u041A\u041F\\Sportics\\Sportics\\View\\BalanceWindow.xaml",
+              "RelativeDocumentMoniker": "Sportics\\View\\BalanceWindow.xaml",
+              "ToolTip": "C:\\Users\\HomeUser\\Desktop\\\u041A\u0443\u0440\u0441 2\\\u0421\u0435\u043C\u0435\u0441\u0442\u0440 2\\\u041A\u041F\\Sportics\\Sportics\\View\\BalanceWindow.xaml",
+              "RelativeToolTip": "Sportics\\View\\BalanceWindow.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-05-16T00:02:48.536Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ClientMembershipsWindow.xaml",
+              "DocumentMoniker": "C:\\Users\\HomeUser\\Desktop\\\u041A\u0443\u0440\u0441 2\\\u0421\u0435\u043C\u0435\u0441\u0442\u0440 2\\\u041A\u041F\\Sportics\\Sportics\\View\\ClientMembershipsWindow.xaml",
+              "RelativeDocumentMoniker": "Sportics\\View\\ClientMembershipsWindow.xaml",
+              "ToolTip": "C:\\Users\\HomeUser\\Desktop\\\u041A\u0443\u0440\u0441 2\\\u0421\u0435\u043C\u0435\u0441\u0442\u0440 2\\\u041A\u041F\\Sportics\\Sportics\\View\\ClientMembershipsWindow.xaml",
+              "RelativeToolTip": "Sportics\\View\\ClientMembershipsWindow.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-05-16T00:07:40.02Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Session.cs",
+              "DocumentMoniker": "C:\\Users\\HomeUser\\Desktop\\\u041A\u0443\u0440\u0441 2\\\u0421\u0435\u043C\u0435\u0441\u0442\u0440 2\\\u041A\u041F\\Sportics\\Sportics\\Model\\Session.cs",
+              "RelativeDocumentMoniker": "Sportics\\Model\\Session.cs",
+              "ToolTip": "C:\\Users\\HomeUser\\Desktop\\\u041A\u0443\u0440\u0441 2\\\u0421\u0435\u043C\u0435\u0441\u0442\u0440 2\\\u041A\u041F\\Sportics\\Sportics\\Model\\Session.cs",
+              "RelativeToolTip": "Sportics\\Model\\Session.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-15T00:11:29.465Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "AccountWindow.xaml",
+              "DocumentMoniker": "C:\\Users\\HomeUser\\Desktop\\\u041A\u0443\u0440\u0441 2\\\u0421\u0435\u043C\u0435\u0441\u0442\u0440 2\\\u041A\u041F\\Sportics\\Sportics\\View\\AccountWindow.xaml",
+              "RelativeDocumentMoniker": "Sportics\\View\\AccountWindow.xaml",
+              "ToolTip": "C:\\Users\\HomeUser\\Desktop\\\u041A\u0443\u0440\u0441 2\\\u0421\u0435\u043C\u0435\u0441\u0442\u0440 2\\\u041A\u041F\\Sportics\\Sportics\\View\\AccountWindow.xaml",
+              "RelativeToolTip": "Sportics\\View\\AccountWindow.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-05-15T23:52:11.707Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AccountViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\HomeUser\\Desktop\\\u041A\u0443\u0440\u0441 2\\\u0421\u0435\u043C\u0435\u0441\u0442\u0440 2\\\u041A\u041F\\Sportics\\Sportics\\ViewModel\\AccountViewModel.cs",
+              "RelativeDocumentMoniker": "Sportics\\ViewModel\\AccountViewModel.cs",
+              "ToolTip": "C:\\Users\\HomeUser\\Desktop\\\u041A\u0443\u0440\u0441 2\\\u0421\u0435\u043C\u0435\u0441\u0442\u0440 2\\\u041A\u041F\\Sportics\\Sportics\\ViewModel\\AccountViewModel.cs",
+              "RelativeToolTip": "Sportics\\ViewModel\\AccountViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAA2AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-15T23:52:02.474Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "DataWorker.cs",
+              "DocumentMoniker": "C:\\Users\\HomeUser\\Desktop\\\u041A\u0443\u0440\u0441 2\\\u0421\u0435\u043C\u0435\u0441\u0442\u0440 2\\\u041A\u041F\\Sportics\\Sportics\\Model\\DataWorker.cs",
+              "RelativeDocumentMoniker": "Sportics\\Model\\DataWorker.cs",
+              "ToolTip": "C:\\Users\\HomeUser\\Desktop\\\u041A\u0443\u0440\u0441 2\\\u0421\u0435\u043C\u0435\u0441\u0442\u0440 2\\\u041A\u041F\\Sportics\\Sportics\\Model\\DataWorker.cs",
+              "RelativeToolTip": "Sportics\\Model\\DataWorker.cs",
+              "ViewState": "AgIAAGoAAAAAAAAAAAAkwHIAAAAwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-14T23:27:13.888Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
               "Title": "AdminViewModel.cs",
               "DocumentMoniker": "C:\\Users\\HomeUser\\Desktop\\\u041A\u0443\u0440\u0441 2\\\u0421\u0435\u043C\u0435\u0441\u0442\u0440 2\\\u041A\u041F\\Sportics\\Sportics\\ViewModel\\AdminViewModel.cs",
               "RelativeDocumentMoniker": "Sportics\\ViewModel\\AdminViewModel.cs",
               "ToolTip": "C:\\Users\\HomeUser\\Desktop\\\u041A\u0443\u0440\u0441 2\\\u0421\u0435\u043C\u0435\u0441\u0442\u0440 2\\\u041A\u041F\\Sportics\\Sportics\\ViewModel\\AdminViewModel.cs",
               "RelativeToolTip": "Sportics\\ViewModel\\AdminViewModel.cs",
-              "ViewState": "AgIAABYAAAAAAAAAAAAkwCkAAAAfAAAAAAAAAA==",
+              "ViewState": "AgIAAGIAAAAAAAAAAAA4wG4AAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-14T21:14:45.104Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-14T21:14:45.104Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "ThemeService.cs",
-              "DocumentMoniker": "C:\\Users\\HomeUser\\Desktop\\\u041A\u0443\u0440\u0441 2\\\u0421\u0435\u043C\u0435\u0441\u0442\u0440 2\\\u041A\u041F\\Sportics\\Sportics\\Helper\\ThemeService.cs",
-              "RelativeDocumentMoniker": "Sportics\\Helper\\ThemeService.cs",
-              "ToolTip": "C:\\Users\\HomeUser\\Desktop\\\u041A\u0443\u0440\u0441 2\\\u0421\u0435\u043C\u0435\u0441\u0442\u0440 2\\\u041A\u041F\\Sportics\\Sportics\\Helper\\ThemeService.cs",
-              "RelativeToolTip": "Sportics\\Helper\\ThemeService.cs",
-              "ViewState": "AgIAAAIAAAAAAAAAAAAxwAsAAAAbAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-14T21:14:17.54Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 9,
               "Title": "AdminWindow.xaml",
               "DocumentMoniker": "C:\\Users\\HomeUser\\Desktop\\\u041A\u0443\u0440\u0441 2\\\u0421\u0435\u043C\u0435\u0441\u0442\u0440 2\\\u041A\u041F\\Sportics\\Sportics\\View\\AdminWindow.xaml",
               "RelativeDocumentMoniker": "Sportics\\View\\AdminWindow.xaml",
               "ToolTip": "C:\\Users\\HomeUser\\Desktop\\\u041A\u0443\u0440\u0441 2\\\u0421\u0435\u043C\u0435\u0441\u0442\u0440 2\\\u041A\u041F\\Sportics\\Sportics\\View\\AdminWindow.xaml",
               "RelativeToolTip": "Sportics\\View\\AdminWindow.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-05-14T21:11:52.823Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-14T21:11:52.823Z"
             }
           ]
         }

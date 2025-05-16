@@ -44,7 +44,7 @@
             <!-- Центральная часть: кнопки -->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1">
                 <Button Content="{DynamicResource Memberships}" FontSize="16" Margin="0,0,10,0" Width="150" Command="{Binding OpenMembershipsCommand}"/>
-                <Button Content="{DynamicResource Schedule}" Margin="10,0" Width="150"/>
+                <Button Content="{DynamicResource Schedule}" FontSize="16" Margin="10,0" Width="150"/>
                 <Button Content="{DynamicResource Coaches}" FontSize="16" Margin="10,0" Width="150"/>
                 <Button Content="{DynamicResource Add}" FontSize="16" Margin="10,0" Width="150"/>
             </StackPanel>
@@ -58,13 +58,7 @@
                         VerticalAlignment="Center"
                         Margin="10,0,10,0"/>
                 <ComboBox ItemsSource="{Binding Languages}"
-                    SelectedItem="{Binding SelectedLanguage}" Width="50" Foreground="{DynamicResource MaterialDesignBody}"/>
-                <Border Background="{DynamicResource MaterialDesignPaper}" Margin="20,10,0,10">
-                    <Border.InputBindings>
-                        <MouseBinding Gesture="LeftClick" Command="{Binding }" />
-                    </Border.InputBindings>
-                    <svg:SvgViewbox Source="/Resources/Images/bell.svg" Height="30" Width="30" />
-                </Border>
+                        SelectedItem="{Binding SelectedLanguage}" Width="50" Foreground="{DynamicResource MaterialDesignBody}"/>
 
                 <Border Background="{DynamicResource MaterialDesignPaper}" Margin="10">
                     <Border.InputBindings>
@@ -153,6 +147,36 @@
                             </DataGrid.Columns>
                         </DataGrid>
                     </TabItem>
+
+                    <!-- Таб для Расписания -->
+                    <TabItem Header="Расписание">
+                        <DataGrid AutoGenerateColumns="False" CanUserAddRows="False" ItemsSource="{Binding Schedules}" SelectedItem="{Binding SelectedSchedule}">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Id занятия" Binding="{Binding Id}" />
+                                <DataGridTextColumn Header="Категория" Binding="{Binding Category}" />
+                                <DataGridTextColumn Header="Id тренера" Binding="{Binding CoachId}" />
+                                <DataGridTextColumn Header="Имя тренера" Binding="{Binding Coach.Name}" />
+                                <DataGridTextColumn Header="Дата" Binding="{Binding Date}" />
+                                <DataGridTextColumn Header="Время" Binding="{Binding Time}" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </TabItem>
+
+                    <!-- Таб для Записей Клиентов -->
+                    <TabItem Header="Записи клиентов">
+                        <DataGrid AutoGenerateColumns="False" CanUserAddRows="False" ItemsSource="{Binding ClientSessionRecords}" SelectedItem="{Binding SelectedClientSessionRecord}">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Id записи" Binding="{Binding Id}" />
+                                <DataGridTextColumn Header="Id клиента" Binding="{Binding UserId}" />
+                                <DataGridTextColumn Header="Имя клиента" Binding="{Binding User.Name}" />
+                                <DataGridTextColumn Header="Id занятия" Binding="{Binding ScheduleId}" />
+                                <DataGridTextColumn Header="Категория занятия" Binding="{Binding Schedule.Category}" />
+                                <DataGridTextColumn Header="Дата" Binding="{Binding Schedule.Date}" />
+                                <DataGridTextColumn Header="Время" Binding="{Binding Schedule.Time}" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </TabItem>
+
 
                 </TabControl>
             </StackPanel>

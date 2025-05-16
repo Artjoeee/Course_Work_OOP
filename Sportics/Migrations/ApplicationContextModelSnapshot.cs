@@ -19,6 +19,47 @@ namespace Sportics.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("Sportics.Model.ClientSessionRecord", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Category")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ClientId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("MembershipId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("MembershipOrderId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ScheduleId")
+                        .HasColumnType("int");
+
+                    b.Property<TimeSpan>("Time")
+                        .HasColumnType("time");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClientId");
+
+                    b.HasIndex("MembershipId");
+
+                    b.HasIndex("MembershipOrderId");
+
+                    b.HasIndex("ScheduleId");
+
+                    b.ToTable("ClientSessionRecords");
+                });
+
             modelBuilder.Entity("Sportics.Model.Coach", b =>
                 {
                     b.Property<int>("Id")
@@ -46,6 +87,37 @@ namespace Sportics.Migrations
                     b.ToTable("Coaches");
                 });
 
+            modelBuilder.Entity("Sportics.Model.CoachReview", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CoachId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Comment")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Rating")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CoachId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("CoachReviews");
+                });
+
             modelBuilder.Entity("Sportics.Model.Membership", b =>
                 {
                     b.Property<int>("Id")
@@ -65,8 +137,8 @@ namespace Sportics.Migrations
                     b.Property<byte[]>("Photo")
                         .HasColumnType("varbinary(max)");
 
-                    b.Property<int>("Price")
-                        .HasColumnType("int");
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("ShortName")
                         .HasColumnType("nvarchar(max)");
@@ -104,12 +176,72 @@ namespace Sportics.Migrations
                     b.ToTable("MembershipOrders");
                 });
 
+            modelBuilder.Entity("Sportics.Model.Schedule", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Category")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CoachId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<TimeSpan>("Time")
+                        .HasColumnType("time");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CoachId");
+
+                    b.ToTable("Schedules");
+                });
+
+            modelBuilder.Entity("Sportics.Model.SessionReview", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Comment")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Rating")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ScheduleId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ScheduleId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("SessionReviews");
+                });
+
             modelBuilder.Entity("Sportics.Model.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<decimal>("Balance")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
@@ -137,6 +269,44 @@ namespace Sportics.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("Sportics.Model.ClientSessionRecord", b =>
+                {
+                    b.HasOne("Sportics.Model.User", "Client")
+                        .WithMany()
+                        .HasForeignKey("ClientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Sportics.Model.Membership", "Membership")
+                        .WithMany()
+                        .HasForeignKey("MembershipId");
+
+                    b.HasOne("Sportics.Model.MembershipOrder", "MembershipOrder")
+                        .WithMany()
+                        .HasForeignKey("MembershipOrderId");
+
+                    b.HasOne("Sportics.Model.Schedule", "Schedule")
+                        .WithMany("ClientSessionRecords")
+                        .HasForeignKey("ScheduleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Sportics.Model.CoachReview", b =>
+                {
+                    b.HasOne("Sportics.Model.Coach", "Coach")
+                        .WithMany()
+                        .HasForeignKey("CoachId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Sportics.Model.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Sportics.Model.MembershipOrder", b =>
                 {
                     b.HasOne("Sportics.Model.User", "Client")
@@ -148,6 +318,30 @@ namespace Sportics.Migrations
                     b.HasOne("Sportics.Model.Membership", "Membership")
                         .WithMany("Orders")
                         .HasForeignKey("MembershipId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Sportics.Model.Schedule", b =>
+                {
+                    b.HasOne("Sportics.Model.Coach", "Coach")
+                        .WithMany("Schedules")
+                        .HasForeignKey("CoachId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Sportics.Model.SessionReview", b =>
+                {
+                    b.HasOne("Sportics.Model.Schedule", "Schedule")
+                        .WithMany()
+                        .HasForeignKey("ScheduleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Sportics.Model.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

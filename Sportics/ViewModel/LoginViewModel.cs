@@ -26,7 +26,10 @@ namespace Sportics.ViewModel
         {
             if (DataWorker.CheckUser(Email, Password))
             {
-                if (DataWorker.SelectUser(Email, Password).Role == "Администратор")
+                User user = DataWorker.SelectUser(Email, Password);
+                Session.CurrentUser = user;
+
+                if (user.Role == "Администратор")
                 {
                     AdminWindow adminWindow = new AdminWindow();
                     Application.Current.MainWindow = adminWindow;

@@ -56,6 +56,15 @@ namespace Sportics.ViewModel
         public ObservableCollection<MembershipOrder> MembershipOrders { get; set; }
         public MembershipOrder SelectedOrder { get; set; }
 
+        public ObservableCollection<Schedule> Schedules { get; set; }
+        public Schedule SelectedSchedule { get; set; }
+
+        public ObservableCollection<ClientSessionRecord> ClientSessionRecords { get; set; }
+        public ClientSessionRecord SelectedClientSessionRecord { get; set; }
+
+        public ObservableCollection<CoachReview> CoachReviews { get; set; }
+        public ObservableCollection<SessionReview> SessionReviews { get; set; }
+
 
         public ICommand OpenAccountCommand { get; }
 
@@ -72,7 +81,11 @@ namespace Sportics.ViewModel
             DeleteMembershipCommand = new RelayCommand(obj => DeleteMembership());
             EditorCommand = new RelayCommand(obj => OpenEditor(SelectedItem));
             MembershipOrders = new ObservableCollection<MembershipOrder>(DataWorker.GetAllMembershipOrders());
-
+            Schedules = new ObservableCollection<Schedule>(DataWorker.GetAllSchedules());
+            ClientSessionRecords = new ObservableCollection<ClientSessionRecord>(DataWorker.GetAllClientSessionRecords());
+            CoachReviews = new ObservableCollection<CoachReview>(DataWorker.LoadCoachReviews());
+            SessionReviews = new ObservableCollection<SessionReview>(DataWorker.LoadSessionReviews());
+ 
             AllMemberships();
             AllUsers();
         }
