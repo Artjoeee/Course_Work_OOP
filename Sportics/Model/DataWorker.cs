@@ -1,10 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Sportics.Helper;
 using Sportics.Model.Data;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace Sportics.Model
 {
@@ -60,8 +62,6 @@ namespace Sportics.Model
                 }
             }
         }
-
-
 
 
         public static bool CheckUser(string email, string password)
@@ -137,7 +137,7 @@ namespace Sportics.Model
                     return true;
                 }
 
-                return false; // Недостаточно средств
+                return false;
             }
         }
 
@@ -221,13 +221,107 @@ namespace Sportics.Model
         #endregion
 
 
-        #region MembershipOrders
+        #region Coaches
+
+        public static void AddCoach(string name, string specialization, string phoneNumber, string email, string information, byte[] photo)
+        {
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                bool exists = db.Coaches.Any(c => c.Email == email);
+
+                if (!exists)
+                {
+                    Coach coach = new Coach
+                    {
+                        Name = name,
+                        Specialization = specialization,
+                        PhoneNumber = phoneNumber,
+                        Email = email,
+                        Information = information,
+                        Photo = photo
+                    };
+
+                    db.Coaches.Add(coach);
+                    db.SaveChanges();
+                }
+            }
+        }
+
+        public static void DeleteCoach(Coach coach)
+        {
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                db.Coaches.Remove(coach);
+                db.SaveChanges();
+            }
+        }
+
+        public static void EditCoach(Coach oldCoach, string name, string email, string phoneNumber, string specialization, string information, byte[] photo)
+        {
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                Coach coach = db.Coaches.FirstOrDefault(c => c.Id == oldCoach.Id);
+
+                if (coach != null)
+                {
+                    coach.Name = name;
+                    coach.Email = email;
+                    coach.PhoneNumber = phoneNumber;
+                    coach.Specialization = specialization;
+                    coach.Information = information;
+                    coach.Photo = photo;
+
+                    db.SaveChanges();
+                }
+            }
+        }
+
+        public static List<Coach> GetAllCoaches()
+        {
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                return db.Coaches.ToList();
+            }
+        }
+
+
+        #endregion
+
+
+        #region MembershipOrder
 
         public static List<MembershipOrder> GetAllMembershipOrders()
         {
             using (ApplicationContext db = new ApplicationContext())
             {
                 return db.MembershipOrders.ToList();
+            }
+        }
+
+        public static void SaveOrder(int userId, string clientName, int membershipId, string membershipName)
+        {
+            using (var db = new ApplicationContext())
+            {
+                var order = new MembershipOrder
+                {
+                    ClientName = clientName,
+                    ClientId = userId,
+                    MembershipName = membershipName,
+                    MembershipId = membershipId,
+                    PurchaseDate = DateTime.Now
+                };
+
+                db.MembershipOrders.Add(order);
+                db.SaveChanges();
+            }
+        }
+
+        public static void DeleteOrder(MembershipOrder order)
+        {
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                db.MembershipOrders.Remove(order);
+                db.SaveChanges();
             }
         }
 

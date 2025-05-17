@@ -12,6 +12,7 @@ namespace Sportics.Model
         public string PhoneNumber { get; set; }
         public string Specialization { get; set; }
         public string Information { get; set; }
+        public byte[] Photo { get; set; }
 
         public List<Schedule> Schedules { get; set; }
     }

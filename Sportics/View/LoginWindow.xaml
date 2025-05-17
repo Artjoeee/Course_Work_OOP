@@ -18,9 +18,12 @@
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="300">
             <TextBlock Text="Вход в аккаунт" FontSize="24" FontWeight="SemiBold" TextAlignment="Center"/>
 
-            <TextBox materialDesign:HintAssist.Hint="Почта" Text="{Binding Email}" Margin="0,10,0,0"/>
-            <PasswordBox materialDesign:HintAssist.Hint="Пароль" helper:PasswordBoxHelper.BindPassword="True"
-                        helper:PasswordBoxHelper.BoundPassword="{Binding Password, Mode=TwoWay}" Margin="0,10,0,0"/>
+            <TextBox materialDesign:HintAssist.Hint="Почта" Margin="0,10,0,15"
+                     Text="{Binding Email, ValidatesOnDataErrors=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}"/>
+
+            <PasswordBox materialDesign:HintAssist.Hint="Пароль" Margin="0,10,0,15"
+                         helper:PasswordBoxHelper.BindPassword="True"
+                         helper:PasswordBoxHelper.BoundPassword="{Binding Password, Mode=TwoWay, ValidatesOnDataErrors=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}"/>
 
             <Button Content="Войти" Height="35" Margin="0,15,0,0" Command="{Binding LoginCommand}" />
 

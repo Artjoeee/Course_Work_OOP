@@ -3,48 +3,114 @@ using Sportics.View;
 using System.Linq;
 using System.Windows.Input;
 using System.Windows;
+using System.ComponentModel;
+using System.Text.RegularExpressions;
+using System;
 
 namespace Sportics.ViewModel
 {
-    public class RegistrationViewModel : BaseViewModel
+    public class RegistrationViewModel : BaseViewModel, IDataErrorInfo
     {
-        public string Name { get; set; }
+        private string name;
+        public string Name
+        {
+            get => name;
+            set
+            {
+                name = value;
+                OnPropertyChanged(nameof(Name));
+                IsValidationActive = false;
+            }
+        }
 
-        public string Email { get; set; }
+        private string email;
+        public string Email
+        {
+            get => email;
+            set
+            {
+                email = value;
+                OnPropertyChanged(nameof(Email));
+                IsValidationActive = false;
+            }
+        }
 
-        public string Phone { get; set; }
+        private string phone;
+        public string Phone
+        {
+            get => phone;
+            set
+            {
+                phone = value;
+                OnPropertyChanged(nameof(Phone));
+                IsValidationActive = false;
+            }
+        }
 
-        public string Password { get; set; }
+        private string password;
+        public string Password
+        {
+            get => password;
+            set
+            {
+                password = value;
+                OnPropertyChanged(nameof(Password));
+                IsValidationActive = false;
+            }
+        }
 
-        public string ConfirmPassword { get; set; }
+        private string confirmPassword;
+        public string ConfirmPassword
+        {
+            get => confirmPassword;
+            set
+            {
+                confirmPassword = value;
+                OnPropertyChanged(nameof(ConfirmPassword));
+                IsValidationActive = false;
+            }
+        }
+
+        private bool isValidationActive = false;
+        public bool IsValidationActive
+        {
+            get => isValidationActive;
+            set
+            {
+                isValidationActive = value;
+                OnPropertyChanged(nameof(IsValidationActive));
+            }
+        }
 
         public ICommand RegisterCommand { get; }
+
+        public ICommand OpenLoginCommand { get; }
 
         public RegistrationViewModel()
         {
             RegisterCommand = new RelayCommand(obj => Register());
+            OpenLoginCommand = new RelayCommand(obj => OpenLogin());
         }
 
         private void Register()
         {
-            if (string.IsNullOrWhiteSpace(Name) || string.IsNullOrWhiteSpace(Email) ||
-                string.IsNullOrWhiteSpace(Phone) || string.IsNullOrWhiteSpace(Password) ||
-                string.IsNullOrWhiteSpace(ConfirmPassword))
+            isValidationActive = true;
+            OnPropertyChanged("");
+
+            if (!DataWorker.CheckEmailAndPhoneNumber(Email, Phone))
             {
-                MessageBox.Show("Пожалуйста, заполните все поля.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                string message = "Почта (телефон) уже зарегистрирована";
+
+                MessageWindow messageWindow = new MessageWindow();
+                MessageViewModel viewModel = new MessageViewModel(message);
+                messageWindow.DataContext = viewModel;
+                viewModel.RequestClose += () => messageWindow.Close();
+                messageWindow.Owner = Application.Current.MainWindow;
+                messageWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+                messageWindow.ShowDialog();
                 return;
             }
-            else if (Password != ConfirmPassword)
-            {
-                MessageBox.Show("Пароли не совпадают.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-            else if (!DataWorker.CheckEmailAndPhoneNumber(Email, Phone))
-            {
-                MessageBox.Show("Пользователь с такой почтой или телефоном уже существует", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-            else
+            else if (DataWorker.CheckUser(Email, Password))
             {
                 DataWorker.AddUser(Name, Email, Phone, Password);
 
@@ -52,11 +118,79 @@ namespace Sportics.ViewModel
                 Application.Current.MainWindow = mainWindow;
 
                 Application.Current.Windows
+                    .OfType<Window>()
+                    .FirstOrDefault(w => w is RegistrationWindow)?
+                    .Close();
+
+                Application.Current.MainWindow.Show();
+            }
+        }
+
+        private void OpenLogin()
+        {
+            LoginWindow window = new LoginWindow();
+            Application.Current.MainWindow = window;
+
+            Application.Current.Windows
                 .OfType<Window>()
                 .FirstOrDefault(w => w is RegistrationWindow)?
                 .Close();
 
-                Application.Current.MainWindow.Show();
+            Application.Current.MainWindow.Show();
+        }
+
+        public string Error => null;
+
+        public string this[string columnName]
+        {
+            get
+            {
+                if (!isValidationActive)
+                    return null;
+
+                switch (columnName)
+                {
+                    case nameof(Name):
+                        if (string.IsNullOrWhiteSpace(Name))
+                            return "Имя обязательно для заполнения.";
+
+                        if (Regex.IsMatch(Name, @"\d"))
+                            return "Имя не должно содержать цифры.";
+
+                        var nameParts = Name.Trim().Split(' ', (char)StringSplitOptions.RemoveEmptyEntries);
+                        if (nameParts.Length < 2 || nameParts.Length > 3)
+                            return "Введите имя и фамилию (отчество — при необходимости), разделённые пробелами.";
+
+                        var nameWithoutSpaces = string.Concat(nameParts);
+                        if (nameWithoutSpaces.Length < 4)
+                            return "Имя должно содержать не менее 4 символов (без учёта пробелов).";
+                        break;
+                    case nameof(Email):
+                        if (string.IsNullOrWhiteSpace(Email))
+                            return "Почта обязательна.";
+                        if (!Regex.IsMatch(Email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
+                            return "Неверный формат почты.";
+                        break;
+                    case nameof(Phone):
+                        if (string.IsNullOrWhiteSpace(Phone))
+                            return "Телефон обязателен.";
+                        if (!Regex.IsMatch(Phone, @"^\+?\d{10,15}$"))
+                            return "Неверный формат телефона.";
+                        break;
+                    case nameof(Password):
+                        if (string.IsNullOrWhiteSpace(Password))
+                            return "Пароль обязателен.";
+
+                        if (!Regex.IsMatch(Password, @"^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}$"))
+                            return "Пароль должен содержать 1 цифру, строчную и заглавную букву, длину не меньше 6.";
+                        break;
+                    case nameof(ConfirmPassword):
+                        if (ConfirmPassword != Password)
+                            return "Пароли не совпадают.";
+                        break;
+                }
+
+                return null;
             }
         }
     }

@@ -14,6 +14,7 @@ namespace Sportics.Model
         public string MembershipName { get; set; }
         public int ClientId { get; set; }
         public string ClientName { get; set; }
+        public DateTime PurchaseDate { get; set; }
 
         public Membership Membership { get; set; }
 

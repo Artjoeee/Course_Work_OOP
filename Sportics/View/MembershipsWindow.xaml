@@ -62,12 +62,6 @@
                     Margin="10,0,10,0"/>
                 <ComboBox ItemsSource="{Binding Languages}"
                     SelectedItem="{Binding SelectedLanguage}" Width="50" Foreground="{DynamicResource MaterialDesignBody}"/>
-                <Border Background="{DynamicResource MaterialDesignPaper}" Margin="20,10,0,10">
-                    <Border.InputBindings>
-                        <MouseBinding Gesture="LeftClick" Command="{Binding }" />
-                    </Border.InputBindings>
-                    <svg:SvgViewbox Source="/Resources/Images/bell.svg" Height="30" Width="30" />
-                </Border>
 
                 <Border Background="{DynamicResource MaterialDesignPaper}" Margin="10">
                     <Border.InputBindings>
@@ -87,8 +81,8 @@
             </Grid.ColumnDefinitions>
 
             <!-- Боковая панель фильтрации -->
-            <Border Grid.Column="0" Background="{DynamicResource MaterialDesignBackground}" Padding="15">
-                <StackPanel Grid.Column="0" Background="{DynamicResource MaterialDesignBackground}" >
+            <Border Grid.Column="0" Background="{DynamicResource MaterialDesignPaper}" Padding="15" Margin="0,0.1">
+                <StackPanel Grid.Column="0" Background="{DynamicResource MaterialDesignPaper}" >
                     <TextBlock Text="{DynamicResource Filter}" FontSize="18" FontWeight="Bold" 
                                Foreground="{DynamicResource MaterialDesignBody}"
                                Margin="0,0,0,10"/>
@@ -100,10 +94,14 @@
                                 Margin="0,0,0,10"/>
 
                     <TextBlock Text="Цена от:" Foreground="{DynamicResource MaterialDesignBody}" Margin="0,10,0,5"/>
-                    <TextBox Text="{Binding PriceFrom}" Foreground="{DynamicResource MaterialDesignBody}" Margin="0,0,0,10"/>
+                    <TextBox Text="{Binding PriceFrom, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                            Foreground="{DynamicResource MaterialDesignBody}" 
+                            Margin="0,0,0,10"/>
 
                     <TextBlock Text="Цена до:" Foreground="{DynamicResource MaterialDesignBody}" Margin="0,10,0,5"/>
-                    <TextBox Text="{Binding PriceTo}" Foreground="{DynamicResource MaterialDesignBody}" Margin="0,0,0,10"/>
+                    <TextBox Text="{Binding PriceTo, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                            Foreground="{DynamicResource MaterialDesignBody}" 
+                            Margin="0,0,0,10"/>
 
                     <Button Content="{DynamicResource ApplyFilter}"
                             Command="{Binding ApplyFilterCommand}"

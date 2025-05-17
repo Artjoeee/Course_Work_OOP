@@ -12,7 +12,7 @@ namespace Sportics.ViewModel
 {
     public class AdminViewModel: BaseViewModel
     {
-        public Membership SelectedItem { get; set; }
+        public Membership SelectedMembership { get; set; }
 
         public TabItem SelectedTab { get; set; }
 
@@ -70,7 +70,11 @@ namespace Sportics.ViewModel
 
         public ICommand OpenMembershipsCommand { get; }
 
+        public ICommand OpenCoachesCommand { get; }
+
         public ICommand DeleteMembershipCommand { get; }
+
+        public ICommand DeleteOrderCommand { get; }
 
         public ICommand EditorCommand { get; }
 
@@ -78,8 +82,10 @@ namespace Sportics.ViewModel
         {
             OpenAccountCommand = new RelayCommand(obj => OpenAccount());
             OpenMembershipsCommand = new RelayCommand(obj => OpenMemberships());
+            OpenCoachesCommand = new RelayCommand(obj => OpenCoaches());
             DeleteMembershipCommand = new RelayCommand(obj => DeleteMembership());
-            EditorCommand = new RelayCommand(obj => OpenEditor(SelectedItem));
+            DeleteOrderCommand = new RelayCommand(obj => DeleteOrder());
+            EditorCommand = new RelayCommand(obj => OpenEditor(SelectedMembership));
             MembershipOrders = new ObservableCollection<MembershipOrder>(DataWorker.GetAllMembershipOrders());
             Schedules = new ObservableCollection<Schedule>(DataWorker.GetAllSchedules());
             ClientSessionRecords = new ObservableCollection<ClientSessionRecord>(DataWorker.GetAllClientSessionRecords());
@@ -88,6 +94,7 @@ namespace Sportics.ViewModel
  
             AllMemberships();
             AllUsers();
+            AllOrders();
         }
 
         private void AllUsers()
@@ -102,12 +109,27 @@ namespace Sportics.ViewModel
             OnPropertyChanged(nameof(Memberships));
         }
 
+        private void AllOrders()
+        {
+            MembershipOrders = new ObservableCollection<MembershipOrder>(DataWorker.GetAllMembershipOrders());
+            OnPropertyChanged(nameof(MembershipOrders));
+        }
+
         private void DeleteMembership()
         {
             if (SelectedTab.Name == "Memberships")
             {
-                DataWorker.DeleteMembership(SelectedItem);
+                DataWorker.DeleteMembership(SelectedMembership);
                 AllMemberships();
+            }
+        }
+
+        private void DeleteOrder()
+        {
+            if (SelectedTab.Name == "Orders")
+            {
+                DataWorker.DeleteOrder(SelectedOrder);
+                AllOrders();
             }
         }
 
@@ -143,6 +165,19 @@ namespace Sportics.ViewModel
             window.ShowDialog();
 
             AllMemberships();
+        }
+
+        private void OpenCoaches()
+        {
+            CoachesWindow coachesWindow = new CoachesWindow();
+            Application.Current.MainWindow = coachesWindow;
+
+            Application.Current.Windows
+            .OfType<Window>()
+            .FirstOrDefault(w => w is AdminWindow)?
+            .Close();
+
+            Application.Current.MainWindow.Show();
         }
     }
 }

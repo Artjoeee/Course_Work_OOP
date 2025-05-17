@@ -3,13 +3,15 @@ using Sportics.Model;
 using Sportics.View;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
 
 namespace Sportics.ViewModel
 {
-    public class ClientMembershipsViewModel : BaseViewModel
+    public class ClientMembershipsViewModel : BaseViewModel, IDataErrorInfo
     {
         public List<Membership> Memberships { get; set; }
         public ObservableCollection<Membership> FilteredMemberships { get; set; }
@@ -18,10 +20,6 @@ namespace Sportics.ViewModel
         {
             "Все категории", "Фитнес", "Йога", "Бассейн", "Тренажерный зал", "Танцы"
         };
-
-        public string SelectedCategory { get; set; } = "Все категории";
-        public string PriceFrom { get; set; }
-        public string PriceTo { get; set; }
 
         public ObservableCollection<string> Languages { get; } = new ObservableCollection<string> { "RU", "EN" };
 
@@ -56,6 +54,76 @@ namespace Sportics.ViewModel
             }
         }
 
+        private string priceFrom;
+        public string PriceFrom
+        {
+            get => priceFrom;
+            set
+            {
+                priceFrom = value;
+                OnPropertyChanged(nameof(PriceFrom));
+                IsValidationActive = false;
+            }
+        }
+
+        private string priceTo;
+        public string PriceTo
+        {
+            get => priceTo;
+            set
+            {
+                priceTo = value;
+                OnPropertyChanged(nameof(PriceTo));
+                IsValidationActive = false;
+            }
+        }
+
+        private string selectedCategory = "Все категории";
+        public string SelectedCategory
+        {
+            get => selectedCategory;
+            set
+            {
+                selectedCategory = value;
+                OnPropertyChanged(nameof(SelectedCategory));
+            }
+        }
+
+        private bool isValidationActive = false;
+        public bool IsValidationActive
+        {
+            get => isValidationActive;
+            set
+            {
+                isValidationActive = value;
+                OnPropertyChanged(nameof(IsValidationActive));
+            }
+        }
+
+        public string Error => null;
+
+        public string this[string columnName]
+        {
+            get
+            {
+                if (!IsValidationActive) return null;
+
+                switch (columnName)
+                {
+                    case nameof(PriceFrom):
+                        if (!string.IsNullOrWhiteSpace(PriceFrom) && !Regex.IsMatch(PriceFrom, @"^\d+$"))
+                            return "Введите положительное число";
+                        break;
+                    case nameof(PriceTo):
+                        if (!string.IsNullOrWhiteSpace(PriceTo) && !Regex.IsMatch(PriceTo, @"^\d+$"))
+                            return "Введите положительное число";
+                        break;
+                }
+
+                return null;
+            }
+        }
+
         public ICommand DetailsCommand { get; }
         public ICommand ApplyFilterCommand { get; }
         public ICommand OpenMainCommand { get; }
@@ -79,6 +147,13 @@ namespace Sportics.ViewModel
 
         private void ApplyFilter()
         {
+            IsValidationActive = true;
+            OnPropertyChanged(nameof(PriceFrom));
+            OnPropertyChanged(nameof(PriceTo));
+
+            if (!string.IsNullOrEmpty(this[nameof(PriceFrom)]) || !string.IsNullOrEmpty(this[nameof(PriceTo)]))
+                return;
+
             decimal.TryParse(PriceFrom, out decimal from);
             decimal.TryParse(PriceTo, out decimal to);
 

@@ -17,10 +17,21 @@
     <Grid Background="WhiteSmoke" Margin="20">
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="300">
             <TextBlock Text="Добавить абонемент" FontSize="24" FontWeight="SemiBold" TextAlignment="Center"/>
-            <TextBox materialDesign:HintAssist.Hint="Полное название" Text="{Binding FullName}" Margin="0,10,0,0"/>
-            <TextBox materialDesign:HintAssist.Hint="Краткое название" Text="{Binding ShortName}" Margin="0,10,0,0"/>
-            <TextBox materialDesign:HintAssist.Hint="Описание" Text="{Binding Description}" Margin="0,10,0,0"/>
-            <ComboBox materialDesign:HintAssist.Hint="Категория" Margin="0,10,0,0" Text="{Binding Category}">
+            <TextBox materialDesign:HintAssist.Hint="Полное название"
+                Text="{Binding FullName, ValidatesOnDataErrors=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}"
+                Margin="0,10,0,0"/>
+
+            <TextBox materialDesign:HintAssist.Hint="Краткое название"
+                Text="{Binding ShortName, ValidatesOnDataErrors=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}"
+                Margin="0,10,0,0"/>
+
+            <TextBox materialDesign:HintAssist.Hint="Описание"
+                Text="{Binding Description, ValidatesOnDataErrors=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}"
+                Margin="0,10,0,0"/>
+
+            <ComboBox materialDesign:HintAssist.Hint="Категория"
+                SelectedValue="{Binding Category, ValidatesOnDataErrors=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}"
+                Margin="0,10,0,0">
                 <ComboBoxItem Content="Фитнес"/>
                 <ComboBoxItem Content="Йога"/>
                 <ComboBoxItem Content="Бассейн"/>
@@ -28,7 +39,10 @@
                 <ComboBoxItem Content="Танцы"/>
             </ComboBox>
 
-            <TextBox materialDesign:HintAssist.Hint="Цена" Text="{Binding Price}" Margin="0,10,0,15"/>
+            <TextBox materialDesign:HintAssist.Hint="Цена"
+                Text="{Binding Price, ValidatesOnDataErrors=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}"
+                Margin="0,10,0,15"/>
+
             <Button Content="Выбрать фото" Height="30" Width="150" Command="{Binding SelectPhotoCommand}"></Button>
 
             <Button Content="Создать" Height="35" Margin="0,20,0,0" Command="{Binding AddCommand}" />

@@ -79,6 +79,9 @@ namespace Sportics.Migrations
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<byte[]>("Photo")
+                        .HasColumnType("varbinary(max)");
+
                     b.Property<string>("Specialization")
                         .HasColumnType("nvarchar(max)");
 
@@ -166,6 +169,9 @@ namespace Sportics.Migrations
 
                     b.Property<string>("MembershipName")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("PurchaseDate")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 

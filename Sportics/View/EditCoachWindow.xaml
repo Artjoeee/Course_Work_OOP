@@ -1,0 +1,52 @@
+﻿<Window x:Class="Sportics.View.EditCoachWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:helper="clr-namespace:Sportics.Helper"
+        xmlns:vm="clr-namespace:Sportics.ViewModel"
+        mc:Ignorable="d"
+        Title="Редактировать тренера" Height="550" Width="800" WindowStartupLocation="CenterScreen">
+
+    <Window.DataContext>
+        <vm:EditCoachViewModel />
+    </Window.DataContext>
+
+    <Window.Resources>
+        <helper:ImageSourceConverter x:Key="ImageConverter"/>
+    </Window.Resources>
+
+    <Grid Background="WhiteSmoke" Margin="20" HorizontalAlignment="Stretch">
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="300" Margin="50,0">
+                <TextBlock Text="Редактировать тренера" FontSize="24" FontWeight="SemiBold" TextAlignment="Center"/>
+
+                <TextBox materialDesign:HintAssist.Hint="ФИО"
+                         Text="{Binding Name, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Margin="0,10,0,0"/>
+
+                <ComboBox
+                        materialDesign:HintAssist.Hint="Специализация"
+                        SelectedItem="{Binding Specialization, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
+                        ItemsSource="{Binding Specializations}"
+                        Margin="0,20,0,0"/>
+
+                <TextBox materialDesign:HintAssist.Hint="Телефон"
+                         Text="{Binding PhoneNumber, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Margin="0,10,0,0"/>
+
+                <TextBox materialDesign:HintAssist.Hint="Email"
+                         Text="{Binding Email, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Margin="0,10,0,15"/>
+
+                <TextBox materialDesign:HintAssist.Hint="Информация"
+                        Text="{Binding Information, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
+                        Margin="0,10,0,0" Height="60" AcceptsReturn="True" TextWrapping="Wrap"/>
+
+                <Button Content="Выбрать фото" Height="30" Width="150" Command="{Binding SelectPhotoCommand}" Margin="0,20,0,10"/>
+                <Button Content="Сохранить" Height="35" Command="{Binding EditCommand}" />
+            </StackPanel>
+
+            <Image Height="140" Width="250" Stretch="Fill" Margin="5"
+                   Source="{Binding Coach.Photo, Converter={StaticResource ImageConverter}}"/>
+        </StackPanel>
+    </Grid>
+</Window>

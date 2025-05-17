@@ -12,16 +12,19 @@
         Title="" Height="400" Width="500" WindowStartupLocation="CenterScreen">
 
     <Window.DataContext>
-        <vm:AccountViewModel/>
+        <vm:BalanceViewModel/>
     </Window.DataContext>
 
     <Grid Background="{DynamicResource MaterialDesignPaper}" Margin="20">
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="300">
             <TextBlock Text="Пополнение баланса" FontSize="24" FontWeight="SemiBold" TextAlignment="Center"/>
             <TextBlock Text="Введите сумму:" Foreground="{DynamicResource MaterialDesignBody}" Margin="0,30,0,5" />
-            <TextBox Text="{Binding Money}" Foreground="{DynamicResource MaterialDesignBody}" Margin="0,0,0,10" />
+            <TextBox Text="{Binding Money, ValidatesOnDataErrors=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}"
+                Foreground="{DynamicResource MaterialDesignBody}" 
+                Margin="0,0,0,10"
+                materialDesign:HintAssist.Hint="Сумма"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button Content="Пополнить" Height="35" Margin="0,15,5,0" Command="{Binding BalanceCommand}" Width="180"/>
+                <Button Content="Пополнить" Height="35" Margin="0,15,5,0" Command="{Binding AddBalanceCommand}" Width="180"/>
             </StackPanel>
         </StackPanel>
     </Grid>

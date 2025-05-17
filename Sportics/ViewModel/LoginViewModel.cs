@@ -3,17 +3,73 @@ using Sportics.View;
 using System.Linq;
 using System.Windows.Input;
 using System.Windows;
+using System.ComponentModel;
+using System.Text.RegularExpressions;
 
 namespace Sportics.ViewModel
 {
-    public class LoginViewModel : BaseViewModel
+    public class LoginViewModel : BaseViewModel, IDataErrorInfo
     {
-        public string Email { get; set; }
+        private string email;
+        public string Email
+        {
+            get => email;
+            set
+            {
+                email = value;
+                OnPropertyChanged(nameof(Email));
+                IsValidationActive = false;
+            }
+        }
 
-        public string Password { get; set; }
+        private string password;
+        public string Password
+        {
+            get => password;
+            set
+            {
+                password = value;
+                OnPropertyChanged(nameof(Password));
+                IsValidationActive = false;
+            }
+        }
+
+        private bool isValidationActive = false;
+        public bool IsValidationActive
+        {
+            get => isValidationActive;
+            set
+            {
+                isValidationActive = value;
+                OnPropertyChanged(nameof(IsValidationActive));
+            }
+        }
+
+        public string Error => null;
+
+        public string this[string columnName]
+        {
+            get
+            {
+                if (!IsValidationActive) return null;
+
+                switch (columnName)
+                {
+                    case nameof(Email):
+                        if (string.IsNullOrWhiteSpace(Email))
+                            return "Введите почту";
+                        if (!Regex.IsMatch(Email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
+                            return "Неверный формат почты.";
+                        break;
+
+                    case nameof(Password):
+                        return string.IsNullOrWhiteSpace(Password) ? "Введите пароль" : null;
+                }
+                return null;
+            }
+        }
 
         public ICommand LoginCommand { get; }
-
         public ICommand OpenRegisterCommand { get; }
 
         public LoginViewModel()
@@ -24,6 +80,13 @@ namespace Sportics.ViewModel
 
         private void Login()
         {
+            IsValidationActive = true;
+            OnPropertyChanged(nameof(Email));
+            OnPropertyChanged(nameof(Password));
+
+            if (!string.IsNullOrWhiteSpace(this[nameof(Email)]) || !string.IsNullOrWhiteSpace(this[nameof(Password)]))
+                return;
+
             if (DataWorker.CheckUser(Email, Password))
             {
                 User user = DataWorker.SelectUser(Email, Password);
@@ -54,27 +117,30 @@ namespace Sportics.ViewModel
                     Application.Current.MainWindow.Show();
                 }
             }
-            else if (string.IsNullOrWhiteSpace(Email) || string.IsNullOrWhiteSpace(Password))
-            {
-                MessageBox.Show("Пожалуйста, введите email и пароль", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
             else
             {
-                MessageBox.Show($"Неверный email или пароль", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Information);
+                string message = "Неверный email или пароль";
+
+                MessageWindow messageWindow = new MessageWindow();
+                MessageViewModel viewModel = new MessageViewModel(message);
+                messageWindow.DataContext = viewModel;
+                viewModel.RequestClose += () => messageWindow.Close();
+                messageWindow.Owner = Application.Current.MainWindow;
+                messageWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+                messageWindow.ShowDialog();
                 return;
             }
         }
 
         private void OpenRegister()
         {
-            RegistrationWindow registrationWindow = new RegistrationWindow();
-            Application.Current.MainWindow = registrationWindow;
+            RegistrationWindow regWindow = new RegistrationWindow();
+            Application.Current.MainWindow = regWindow;
 
             Application.Current.Windows
-            .OfType<Window>()
-            .FirstOrDefault(w => w is LoginWindow)?
-            .Close();
+                .OfType<Window>()
+                .FirstOrDefault(w => w is LoginWindow)?
+                .Close();
 
             Application.Current.MainWindow.Show();
         }

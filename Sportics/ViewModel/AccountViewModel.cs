@@ -8,8 +8,9 @@ namespace Sportics.ViewModel
 {
     public class AccountViewModel: BaseViewModel
     {
-        public User CurrentUser = Session.CurrentUser;
         public string UserName => Session.CurrentUser?.Name ?? "Админ";
+
+        public decimal UserBalance => Session.CurrentUser?.Balance ?? 0;
 
         public ICommand ExitCommand { get; }
         public ICommand BalanceCommand { get; }
@@ -17,7 +18,14 @@ namespace Sportics.ViewModel
         public AccountViewModel() 
         {
             ExitCommand = new RelayCommand(obj => Exit());
-            BalanceCommand = new RelayCommand(obj => Balance());
+            BalanceCommand = new RelayCommand(obj => OpenBalance());
+
+            Session.BalanceUpdated += OnBalanceUpdated;
+        }
+
+        private void OnBalanceUpdated()
+        {
+            OnPropertyChanged(nameof(UserBalance)); // Обновит текст в интерфейсе
         }
 
         private void Exit()
@@ -35,12 +43,31 @@ namespace Sportics.ViewModel
             Application.Current.MainWindow.Show();
         }
 
-        private void Balance()
+        private void OpenBalance()
         {
             BalanceWindow balanceWindow = new BalanceWindow();
+            BalanceViewModel balanceViewModel = new BalanceViewModel();
+            balanceWindow.DataContext = balanceViewModel;
+            balanceViewModel.RequestClose += () => balanceWindow.Close();
             balanceWindow.Owner = Application.Current.MainWindow;
             balanceWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             balanceWindow.ShowDialog();
+        }
+
+        private decimal _balance;
+        public decimal Balance
+        {
+            get => _balance;
+            set
+            {
+                _balance = value;
+                OnPropertyChanged();
+            }
+        }
+
+        ~AccountViewModel()
+        {
+        Session.BalanceUpdated -= OnBalanceUpdated;
         }
     }
 }

@@ -1,0 +1,45 @@
+﻿<Window x:Class="Sportics.View.AddCoachWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:vm="clr-namespace:Sportics.ViewModel"
+        mc:Ignorable="d"
+        Title="Добавить тренера" Height="440" Width="400" WindowStartupLocation="CenterScreen">
+    <Window.DataContext>
+        <vm:AddCoachViewModel />
+    </Window.DataContext>
+
+    <Grid Background="WhiteSmoke" Margin="20">
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="300">
+            <TextBlock Text="Добавить тренера" FontSize="24" FontWeight="SemiBold" TextAlignment="Center"/>
+
+            <TextBox materialDesign:HintAssist.Hint="ФИО"
+                     Text="{Binding Name, ValidatesOnDataErrors=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}"
+                     Margin="0,20,0,0"/>
+
+            <ComboBox
+                    materialDesign:HintAssist.Hint="Специализация"
+                    SelectedItem="{Binding Specialization, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
+                    ItemsSource="{Binding Specializations}"
+                    Margin="0,20,0,0"/>
+
+            <TextBox materialDesign:HintAssist.Hint="Телефон"
+                     Text="{Binding Phone, ValidatesOnDataErrors=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}"
+                     Margin="0,20,0,0"/>
+
+            <TextBox materialDesign:HintAssist.Hint="Email"
+                     Text="{Binding Email, ValidatesOnDataErrors=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}"
+                     Margin="0,20,0,0"/>
+
+            <TextBox materialDesign:HintAssist.Hint="Информация"
+                    Text="{Binding Information, ValidatesOnDataErrors=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}"
+                    Margin="0,20,0,20"/>
+
+            <Button Content="Выбрать фото" Height="30" Width="150" Command="{Binding SelectPhotoCommand}" />
+
+            <Button Content="Создать" Height="35" Margin="0,20,0,0" Command="{Binding AddCoachCommand}" />
+        </StackPanel>
+    </Grid>
+</Window>

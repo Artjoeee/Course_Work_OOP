@@ -4,6 +4,7 @@
 
     <sys:String x:Key="Memberships">Абонементы</sys:String>
     <sys:String x:Key="Schedule">Расписание</sys:String>
+    <sys:String x:Key="Orders">Заказы</sys:String>
     <sys:String x:Key="Main">Главная</sys:String>
     <sys:String x:Key="Clients">Клиенты</sys:String>
     <sys:String x:Key="Coaches">Тренеры</sys:String>

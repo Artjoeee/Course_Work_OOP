@@ -14,6 +14,8 @@ namespace Sportics.ViewModel
     {
         public Membership Membership { get; set; }
 
+        public bool CanBuy => Session.CurrentUser?.Balance >= Membership?.Price;
+
         public ICommand BuyMembershipCommand { get; }
 
         public ICommand ReviewCommand { get; }
@@ -23,6 +25,7 @@ namespace Sportics.ViewModel
             Membership = membership;
             BuyMembershipCommand = new RelayCommand(obj => BuyMembership());
             ReviewCommand = new RelayCommand(obj => OpenReview(Membership));
+            OnPropertyChanged(nameof(CanBuy));
         }
 
         public ClientMembershipInfoViewModel() { }
@@ -31,15 +34,24 @@ namespace Sportics.ViewModel
 
         private void BuyMembership()
         {
+            User user = Session.CurrentUser;
+
+            // Пытаемся списать баланс
+            bool success = DataWorker.DeductBalance(user.Id, Membership.Price);
+
+            Session.CurrentUser.Balance -= Membership.Price;
+
+            // Добавляем заказ
+            DataWorker.SaveOrder(user.Id, user.Name, Membership.Id, Membership.FullName);
+
             RequestClose?.Invoke();
         }
 
         private void OpenReview(Membership membership)
         {
-            EditWindow window = new EditWindow();
-            EditViewModel viewModel = new EditViewModel(membership);
+            ReviewWindow window = new ReviewWindow();
+            ReviewViewModel viewModel = new ReviewViewModel();
             window.DataContext = viewModel;
-            viewModel.RequestClose += () => window.Close();
             window.Owner = Application.Current.MainWindow;
             window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             window.ShowDialog();
