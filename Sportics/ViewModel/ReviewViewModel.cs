@@ -1,13 +1,86 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Sportics.Model;
+using System;
+using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
 
 namespace Sportics.ViewModel
 {
-    public class ReviewViewModel: BaseViewModel
+    public class ReviewViewModel : BaseViewModel
     {
+        public ObservableCollection<CoachReview> Reviews { get; set; }
 
+        public string NewComment { get; set; }
+        public int NewRating { get; set; }
+
+        public string CommentValidationError { get; set; }
+        public string RatingValidationError { get; set; }
+
+        public ICommand SubmitReviewCommand { get; }
+
+        private readonly Coach _coach;
+        private readonly User _user;
+
+        public bool CanSubmit => _user != null && !HasUserReviewed && string.IsNullOrEmpty(CommentValidationError) && string.IsNullOrEmpty(RatingValidationError);
+
+        public bool HasUserReviewed => Reviews.Any(r => r.UserId == _user.Id);
+
+        public ReviewViewModel(Coach coach)
+        {
+            _coach = coach;
+            _user = Session.CurrentUser;
+
+            Reviews = new ObservableCollection<CoachReview>(
+                DataWorker.LoadCoachReviews().Where(r => r.CoachId == coach.Id)
+            );
+
+            SubmitReviewCommand = new RelayCommand(obj => SubmitReview(), obj => CanSubmit);
+        }
+
+        public ReviewViewModel() { }
+
+        private void SubmitReview()
+        {
+            Validate();
+
+            if (!string.IsNullOrEmpty(CommentValidationError) || !string.IsNullOrEmpty(RatingValidationError))
+                return;
+
+            var review = new CoachReview
+            {
+                UserId = _user.Id,
+                CoachId = _coach.Id,
+                Rating = NewRating,
+                Comment = NewComment.Trim(),
+                Date = DateTime.Now
+            };
+
+            DataWorker.SaveCoachReview(review);
+
+            Reviews.Add(review);
+
+            // Очистка
+            NewComment = string.Empty;
+            NewRating = 0;
+            OnPropertyChanged(nameof(NewComment));
+            OnPropertyChanged(nameof(NewRating));
+            OnPropertyChanged(nameof(CanSubmit));
+        }
+
+        private void Validate()
+        {
+            CommentValidationError = string.IsNullOrWhiteSpace(NewComment)
+                ? "Комментарий не может быть пустым."
+                : null;
+
+            RatingValidationError = NewRating < 1 || NewRating > 5
+                ? "Оценка должна быть от 1 до 5."
+                : null;
+
+            OnPropertyChanged(nameof(CommentValidationError));
+            OnPropertyChanged(nameof(RatingValidationError));
+            OnPropertyChanged(nameof(CanSubmit));
+        }
     }
 }

@@ -1,0 +1,41 @@
+﻿<Window x:Class="Sportics.View.EditScheduleWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:vm="clr-namespace:Sportics.ViewModel"
+        Title="Информация о занятии" Height="400" Width="600" WindowStartupLocation="CenterScreen">
+
+    <Window.DataContext>
+        <vm:EditScheduleViewModel />
+    </Window.DataContext>
+
+    <Grid Background="WhiteSmoke" Margin="20">
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Width="300">
+            <TextBlock Text="Редактировать занятие" FontSize="24" FontWeight="SemiBold" TextAlignment="Center" Margin="0,0,0,20"/>
+
+            <ComboBox
+                materialDesign:HintAssist.Hint="Категория"
+                ItemsSource="{Binding Categories}"
+                SelectedItem="{Binding Category, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
+                Margin="0,0,0,10"/>
+
+            <DatePicker
+                SelectedDate="{Binding Date, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
+                materialDesign:HintAssist.Hint="Дата"
+                Margin="0,0,0,10"/>
+
+            <TextBox
+                materialDesign:HintAssist.Hint="Время (чч:мм)"
+                Text="{Binding TimeString, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
+                Margin="0,0,0,10"/>
+
+            <ComboBox
+                materialDesign:HintAssist.Hint="Тренер"
+                ItemsSource="{Binding CoachNames}"
+                SelectedItem="{Binding SelectedCoach, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
+                Margin="0,0,0,20"/>
+
+            <Button Content="Сохранить" Height="35" Command="{Binding SaveCommand}" />
+        </StackPanel>
+    </Grid>
+</Window>

@@ -298,6 +298,18 @@ namespace Sportics.Model
             }
         }
 
+        public static List<MembershipOrder> GetUserMembershipOrders(int userId)
+        {
+            using (var db = new ApplicationContext())
+            {
+                return db.MembershipOrders
+                    .Include(o => o.Membership)
+                    .Where(o => o.ClientId == userId)
+                    .ToList();
+            }
+        }
+
+
         public static void SaveOrder(int userId, string clientName, int membershipId, string membershipName)
         {
             using (var db = new ApplicationContext())
@@ -340,6 +352,74 @@ namespace Sportics.Model
             }
         }
 
+        public static void AddSchedule(string category, DateTime date, TimeSpan time, string coachFullName)
+        {
+            using (var context = new ApplicationContext())
+            {
+                var coach = context.Coaches.FirstOrDefault(c => c.Name == coachFullName);
+
+                var schedule = new Schedule
+                {
+                    Category = category,
+                    Date = date.Date,
+                    Time = time,
+                    CoachId = coach.Id,
+                    Coach = coach
+                };
+
+                context.Schedules.Add(schedule);
+                context.SaveChanges();
+            }
+        }
+
+        public static List<string> GetCoachNames()
+        {
+            using (var context = new ApplicationContext())
+            {
+                return context.Coaches
+                    .Select(c => c.Name)
+                    .ToList();
+            }
+        }
+
+        public static Coach GetCoachByName(string name)
+        {
+            using (var context = new ApplicationContext())
+            {
+                return context.Coaches.FirstOrDefault(c => c.Name == name);
+            }
+        }
+
+
+        public static void DeleteSchedule(Schedule schedule)
+        {
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                db.Schedules.Remove(schedule);
+                db.SaveChanges();
+            }
+        }
+
+        public static void EditSchedule(Schedule oldSchedule, string category, int coachId, DateTime date, TimeSpan time)
+        {
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                var schedule = db.Schedules.FirstOrDefault(s => s.Id == oldSchedule.Id);
+                var coach = db.Coaches.FirstOrDefault(c => c.Id == coachId);
+
+                if (schedule != null && coach != null)
+                {
+                    schedule.Category = category;
+                    schedule.CoachId = coachId;
+                    schedule.Date = date;
+                    schedule.Time = time;
+
+                    db.SaveChanges();
+                }
+            }
+        }
+
+
         #endregion
 
 
@@ -357,6 +437,16 @@ namespace Sportics.Model
             }
         }
 
+        public static void SaveClientSessionRecord(ClientSessionRecord record)
+        {
+            using (var db = new ApplicationContext())
+            {
+                db.ClientSessionRecords.Add(record);
+                db.SaveChanges();
+            }
+        }
+
+
         #endregion
 
 
@@ -367,10 +457,26 @@ namespace Sportics.Model
             using (var db = new ApplicationContext())
             {
                 return db.CoachReviews
-                                .Include(r => r.Coach)
-                                .Include(r => r.User)
-                                .ToList();
+                         .Include(r => r.User)
+                         .Include(r => r.Coach)
+                         .ToList();
+            }
+        }
 
+        public static void SaveCoachReview(CoachReview review)
+        {
+            using (var db = new ApplicationContext())
+            {
+                db.CoachReviews.Add(review);
+                db.SaveChanges();
+            }
+        }
+
+        public static bool HasUserReviewedCoach(int userId, int coachId)
+        {
+            using (var db = new ApplicationContext())
+            {
+                return db.CoachReviews.Any(r => r.UserId == userId && r.CoachId == coachId);
             }
         }
 

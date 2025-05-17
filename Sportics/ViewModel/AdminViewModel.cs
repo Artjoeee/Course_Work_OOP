@@ -72,6 +72,8 @@ namespace Sportics.ViewModel
 
         public ICommand OpenCoachesCommand { get; }
 
+        public ICommand OpenSchedulesCommand { get; }
+
         public ICommand DeleteMembershipCommand { get; }
 
         public ICommand DeleteOrderCommand { get; }
@@ -83,6 +85,7 @@ namespace Sportics.ViewModel
             OpenAccountCommand = new RelayCommand(obj => OpenAccount());
             OpenMembershipsCommand = new RelayCommand(obj => OpenMemberships());
             OpenCoachesCommand = new RelayCommand(obj => OpenCoaches());
+            OpenSchedulesCommand = new RelayCommand(obj => OpenSchedules());
             DeleteMembershipCommand = new RelayCommand(obj => DeleteMembership());
             DeleteOrderCommand = new RelayCommand(obj => DeleteOrder());
             EditorCommand = new RelayCommand(obj => OpenEditor(SelectedMembership));
@@ -170,6 +173,19 @@ namespace Sportics.ViewModel
         private void OpenCoaches()
         {
             CoachesWindow coachesWindow = new CoachesWindow();
+            Application.Current.MainWindow = coachesWindow;
+
+            Application.Current.Windows
+            .OfType<Window>()
+            .FirstOrDefault(w => w is AdminWindow)?
+            .Close();
+
+            Application.Current.MainWindow.Show();
+        }
+
+        private void OpenSchedules()
+        {
+            SchedulesWindow coachesWindow = new SchedulesWindow();
             Application.Current.MainWindow = coachesWindow;
 
             Application.Current.Windows

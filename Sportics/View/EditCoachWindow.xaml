@@ -29,7 +29,7 @@
                         materialDesign:HintAssist.Hint="Специализация"
                         SelectedItem="{Binding Specialization, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
                         ItemsSource="{Binding Specializations}"
-                        Margin="0,20,0,0"/>
+                        Margin="0,20,0,0" Text="{Binding Specialization, ValidatesOnDataErrors=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}"/>
 
                 <TextBox materialDesign:HintAssist.Hint="Телефон"
                          Text="{Binding PhoneNumber, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Margin="0,10,0,0"/>

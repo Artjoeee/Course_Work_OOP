@@ -112,38 +112,46 @@
 
 
             <!-- Список абонементов -->
-            <ScrollViewer Grid.Column="1">
-                <WrapPanel Background="{DynamicResource MaterialDesignBackground}">
-                    <ListView ItemsSource="{Binding FilteredMemberships}" Width="auto">
-                        <ListView.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <WrapPanel Width="1250" ItemWidth="305"/>
-                            </ItemsPanelTemplate>
-                        </ListView.ItemsPanel>
+            <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                <ItemsControl ItemsSource="{Binding FilteredMemberships}" Background="{DynamicResource MaterialDesignBackground}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
 
-                        <ListView.ItemContainerStyle>
-                            <Style TargetType="ListViewItem">
-                                <Setter Property="Background" Value="Transparent"/>
-                            </Style>
-                        </ListView.ItemContainerStyle>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Width="250" Margin="30">
+                                <Border.Style>
+                                    <Style TargetType="Border">
+                                        <Setter Property="BorderBrush" Value="Transparent"/>
+                                        <Setter Property="BorderThickness" Value="2"/>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="BorderBrush" Value="DodgerBlue"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
 
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <Border Width="250" Background="{DynamicResource MaterialDesignPaper}" Margin="18,10,18,10">
+                                <Border Background="{DynamicResource MaterialDesignPaper}" BorderThickness="1">
                                     <StackPanel Margin="10">
                                         <Image Height="120" Stretch="Fill" Margin="5"
-                                                Source="{Binding Photo, Converter={StaticResource ImageConverter}}"/>
-                                        <TextBlock Text="{Binding ShortName}" FontSize="16" FontWeight="SemiBold" TextAlignment="Center" Margin="0,10"/>
-                                        <TextBlock Text="{Binding Category}" FontSize="16" FontWeight="SemiBold" TextAlignment="Center" Margin="0,10"/>
-                                        <TextBlock Text="{Binding Price}" FontSize="16" FontWeight="Bold" TextAlignment="Center" Margin="0,5"/>
-                                        <Button Content="{DynamicResource Details}" Width="150" HorizontalAlignment="Center" Margin="0,10" Command="{Binding DataContext.DetailsCommand, RelativeSource={RelativeSource AncestorType=ListView}}"
+                                            Source="{Binding Photo, Converter={StaticResource ImageConverter}}"/>
+                                        <TextBlock Text="{Binding ShortName}" FontSize="16" FontWeight="SemiBold" TextAlignment="Center" Margin="0,10" Foreground="{DynamicResource MaterialDesignBody}"/>
+                                        <TextBlock Text="{Binding Category}" FontSize="16" FontWeight="SemiBold" TextAlignment="Center" Margin="0,10" Foreground="{DynamicResource MaterialDesignBody}"/>
+                                        <TextBlock Text="{Binding Price}" FontSize="16" FontWeight="Bold" TextAlignment="Center" Margin="0,5" Foreground="{DynamicResource MaterialDesignBody}"/>
+                                        <Button Content="{DynamicResource Details}" Width="150" HorizontalAlignment="Center" Margin="0,10"
+                                                Command="{Binding DataContext.DetailsCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                                 CommandParameter="{Binding}"/>
                                     </StackPanel>
                                 </Border>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                </WrapPanel>
+                            </Border>
+                        </DataTemplate>
+
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
             </ScrollViewer>
         </Grid>
 

@@ -267,15 +267,20 @@
     <Compile Include="Model\SessionReview.cs" />
     <Compile Include="ViewModel\AccountViewModel.cs" />
     <Compile Include="ViewModel\AddCoachViewModel.cs" />
+    <Compile Include="ViewModel\AddScheduleViewModel.cs" />
     <Compile Include="ViewModel\AddViewModel.cs" />
     <Compile Include="ViewModel\AdminViewModel.cs" />
     <Compile Include="ViewModel\BalanceViewModel.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
+    <Compile Include="ViewModel\ClientCoachesViewModel.cs" />
+    <Compile Include="ViewModel\ClientCoachInfoViewModel.cs" />
     <Compile Include="ViewModel\ClientMembershipInfoViewModel.cs" />
     <Compile Include="ViewModel\ClientMembershipsViewModel.cs" />
     <Compile Include="ViewModel\CoachesViewModel.cs" />
     <Compile Include="ViewModel\CoachInfoViewModel.cs" />
+    <Compile Include="ViewModel\CoachScheduleViewModel.cs" />
     <Compile Include="ViewModel\EditCoachViewModel.cs" />
+    <Compile Include="ViewModel\EditScheduleViewModel.cs" />
     <Compile Include="ViewModel\EditViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
@@ -284,8 +289,13 @@
     <Compile Include="ViewModel\MessageViewModel.cs" />
     <Compile Include="ViewModel\RegistrationViewModel.cs" />
     <Compile Include="ViewModel\ReviewViewModel.cs" />
+    <Compile Include="ViewModel\ScheduleInfoViewModel.cs" />
+    <Compile Include="ViewModel\SchedulesViewModel.cs" />
     <Compile Include="View\AddCoachWindow.xaml.cs">
       <DependentUpon>AddCoachWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\AddScheduleWindow.xaml.cs">
+      <DependentUpon>AddScheduleWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\AddWindow.xaml.cs">
       <DependentUpon>AddWindow.xaml</DependentUpon>
@@ -295,6 +305,12 @@
     </Compile>
     <Compile Include="View\BalanceWindow.xaml.cs">
       <DependentUpon>BalanceWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ClientCoachesWindow.xaml.cs">
+      <DependentUpon>ClientCoachesWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ClientCoachInfoWindow.xaml.cs">
+      <DependentUpon>ClientCoachInfoWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ClientMembershipInfoWindow.xaml.cs">
       <DependentUpon>ClientMembershipInfoWindow.xaml</DependentUpon>
@@ -308,8 +324,14 @@
     <Compile Include="View\CoachInfoWindow.xaml.cs">
       <DependentUpon>CoachInfoWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\CoachScheduleWindow.xaml.cs">
+      <DependentUpon>CoachScheduleWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\EditCoachWindow.xaml.cs">
       <DependentUpon>EditCoachWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\EditScheduleWindow.xaml.cs">
+      <DependentUpon>EditScheduleWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\EditWindow.xaml.cs">
       <DependentUpon>EditWindow.xaml</DependentUpon>
@@ -335,7 +357,17 @@
     <Compile Include="View\ReviewWindow.xaml.cs">
       <DependentUpon>ReviewWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\ScheduleInfoWindow.xaml.cs">
+      <DependentUpon>ScheduleInfoWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SchedulesWindow.xaml.cs">
+      <DependentUpon>SchedulesWindow.xaml</DependentUpon>
+    </Compile>
     <Page Include="View\AddCoachWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\AddScheduleWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -348,6 +380,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\BalanceWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ClientCoachesWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ClientCoachInfoWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -367,7 +407,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\CoachScheduleWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\EditCoachWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\EditScheduleWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -414,6 +462,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\ReviewWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ScheduleInfoWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SchedulesWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

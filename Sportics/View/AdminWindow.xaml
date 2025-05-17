@@ -44,7 +44,7 @@
             <!-- Центральная часть: кнопки -->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1">
                 <Button Content="{DynamicResource Memberships}" FontSize="16" Margin="0,0,10,0" Width="150" Command="{Binding OpenMembershipsCommand}"/>
-                <Button Content="{DynamicResource Schedule}" FontSize="16" Margin="10,0" Width="150"/>
+                <Button Content="{DynamicResource Schedule}" FontSize="16" Margin="10,0" Width="150" Command="{Binding OpenSchedulesCommand}"/>
                 <Button Content="{DynamicResource Coaches}" FontSize="16" Margin="10,0" Width="150" Command="{Binding OpenCoachesCommand}"/>
                 <Button Content="{DynamicResource Add}" FontSize="16" Margin="10,0" Width="150"/>
             </StackPanel>

@@ -21,32 +21,27 @@
         <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="300" Margin="50,0">
                 <TextBlock Text="Редактировать абонемент" FontSize="24" FontWeight="SemiBold" TextAlignment="Center"/>
-                <TextBlock Text="{Binding Membership.FullName}" FontSize="12" FontWeight="Regular" TextAlignment="Left" Margin="0,10,0,0"/>
                 <TextBox materialDesign:HintAssist.Hint="Полное название"
                         Text="{Binding FullName, ValidatesOnDataErrors=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}"
-                        Margin="0,10,0,0"/>
-                <TextBlock Text="{Binding Membership.ShortName}" FontSize="12" FontWeight="Regular" TextAlignment="Left" Margin="0,10,0,0"/>
+                        Margin="0,20,0,0"/>
                 <TextBox materialDesign:HintAssist.Hint="Краткое название"
                         Text="{Binding ShortName, ValidatesOnDataErrors=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}"
-                        Margin="0,10,0,0"/>
-                <TextBlock Text="{Binding Membership.Description}" FontSize="12" FontWeight="Regular" TextAlignment="Left" Margin="0,10,0,0"/>
+                        Margin="0,20,0,0"/>
                 <TextBox materialDesign:HintAssist.Hint="Описание"
                         Text="{Binding Description, ValidatesOnDataErrors=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}"
-                        Margin="0,10,0,0"/>
-                <TextBlock Text="{Binding Membership.Category}" FontSize="12" FontWeight="Regular" TextAlignment="Left" Margin="0,10,0,0"/>
+                        Margin="0,20,0,0"/>
                 <ComboBox materialDesign:HintAssist.Hint="Категория"
                         SelectedValue="{Binding Category, ValidatesOnDataErrors=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}"
-                        Margin="0,10,0,0">
+                        Margin="0,20,0,0" Text="{Binding Category, ValidatesOnDataErrors=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}">
                     <ComboBoxItem Content="Фитнес"/>
                     <ComboBoxItem Content="Йога"/>
                     <ComboBoxItem Content="Бассейн"/>
                     <ComboBoxItem Content="Тренажерный зал"/>
                     <ComboBoxItem Content="Танцы"/>
                 </ComboBox>
-                <TextBlock Text="{Binding Membership.Price}" FontSize="12" FontWeight="Regular" TextAlignment="Left" Margin="0,10,0,0"/>
                 <TextBox materialDesign:HintAssist.Hint="Цена"
                         Text="{Binding Price, ValidatesOnDataErrors=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}"
-                        Margin="0,10,0,15"/>
+                        Margin="0,20,0,20"/>
                 <Button Content="Выбрать фото" Height="30" Width="150" Command="{Binding SelectPhotoCommand}"></Button>
 
                 <Button Content="Редактировать" Height="35" Margin="0,20,0,0" Command="{Binding EditCommand}" />
