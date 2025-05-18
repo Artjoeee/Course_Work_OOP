@@ -13,6 +13,7 @@ namespace Sportics.ViewModel
 
         public ICommand DeleteScheduleCommand { get; }
         public ICommand EditScheduleCommand { get; }
+        public ICommand ReviewScheduleCommand { get; }
 
         public ScheduleInfoViewModel(Schedule schedule)
         {
@@ -20,6 +21,7 @@ namespace Sportics.ViewModel
 
             DeleteScheduleCommand = new RelayCommand(obj => DeleteSchedule());
             EditScheduleCommand = new RelayCommand(obj => OpenEditor(schedule));
+            ReviewScheduleCommand = new RelayCommand(obj => LeaveReview());
         }
 
         public ScheduleInfoViewModel() { }
@@ -46,6 +48,14 @@ namespace Sportics.ViewModel
                 .OfType<Window>()
                 .FirstOrDefault(w => w is ScheduleInfoWindow)?
                 .Close();
+        }
+
+        private void LeaveReview()
+        {
+            ReviewScheduleWindow window = new ReviewScheduleWindow();
+            window.Owner = Application.Current.MainWindow;
+            window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            window.ShowDialog();
         }
     }
 }

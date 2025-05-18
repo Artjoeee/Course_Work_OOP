@@ -225,9 +225,11 @@
     <Compile Include="Helper\BoolToVisibilityInverseConverter.cs" />
     <Compile Include="Helper\HashHelper.cs" />
     <Compile Include="Helper\ImageSourceConverter.cs" />
+    <Compile Include="Helper\InverseBooleanConverter.cs" />
     <Compile Include="Helper\LocalizationManager.cs" />
     <Compile Include="Helper\PasswordBoxHelper.cs" />
     <Compile Include="Helper\ThemeService.cs" />
+    <Compile Include="Helper\WeeklyOfferButtonTextConverter.cs" />
     <Compile Include="Migrations\20250506231132_InitialCreate.cs" />
     <Compile Include="Migrations\20250506231132_InitialCreate.Designer.cs">
       <DependentUpon>20250506231132_InitialCreate.cs</DependentUpon>
@@ -263,6 +265,10 @@
     <Compile Include="Migrations\20250518021912_Admin.cs" />
     <Compile Include="Migrations\20250518021912_Admin.Designer.cs">
       <DependentUpon>20250518021912_Admin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20250518143853_Offer.cs" />
+    <Compile Include="Migrations\20250518143853_Offer.Designer.cs">
+      <DependentUpon>20250518143853_Offer.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\ApplicationContextModelSnapshot.cs" />
     <Compile Include="Model\ClientSessionRecord.cs" />

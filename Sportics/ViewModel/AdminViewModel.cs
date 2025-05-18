@@ -53,6 +53,22 @@ namespace Sportics.ViewModel
             }
         }
 
+        private bool _isWeeklyOffer;
+        public bool IsWeeklyOffer
+        {
+            get => _isWeeklyOffer;
+            set
+            {
+                if (_isWeeklyOffer != value)
+                {
+                    _isWeeklyOffer = value;
+                    OnPropertyChanged(nameof(IsWeeklyOffer));
+
+                    DataWorker.UpdateMembership(SelectedMembership);
+                }
+            }
+        }
+
         public ObservableCollection<MembershipOrder> MembershipOrders { get; set; }
         public MembershipOrder SelectedOrder { get; set; }
 
@@ -66,7 +82,22 @@ namespace Sportics.ViewModel
         public ObservableCollection<SessionReview> SessionReviews { get; set; }
 
         public ObservableCollection<Coach> Coaches { get; set; }
+        public Coach SelectedCoach { get; set; }
 
+        private User _selectedUser;
+        public User SelectedUser
+        {
+            get => _selectedUser;
+            set { _selectedUser = value; OnPropertyChanged(); }
+        }
+
+        public ICommand DeleteCoachCommand { get; }
+
+        public ICommand EditCoachCommand { get; }
+
+        public ICommand BlockUserCommand { get; }
+
+        public ICommand DeleteUserCommand { get; }
 
         public ICommand OpenAccountCommand { get; }
 
@@ -81,6 +112,14 @@ namespace Sportics.ViewModel
         public ICommand DeleteOrderCommand { get; }
 
         public ICommand EditorCommand { get; }
+
+        public ICommand EditScheduleCommand { get; }
+
+        public ICommand DeleteScheduleCommand { get; }
+
+        public ICommand DeleteClientSessionRecordCommand { get; }
+
+        public ICommand SetAsWeeklyOfferCommand { get; }
 
         public AdminViewModel() 
         {
@@ -97,7 +136,16 @@ namespace Sportics.ViewModel
             ClientSessionRecords = new ObservableCollection<ClientSessionRecord>(DataWorker.GetAllClientSessionRecords());
             CoachReviews = new ObservableCollection<CoachReview>(DataWorker.LoadCoachReviews());
             SessionReviews = new ObservableCollection<SessionReview>(DataWorker.LoadSessionReviews());
- 
+            BlockUserCommand = new RelayCommand(obj => BlockUser());
+            DeleteUserCommand = new RelayCommand(obj => DeleteUser());
+            DeleteCoachCommand = new RelayCommand(obj => DeleteCoach());
+            EditCoachCommand = new RelayCommand(obj => EditCoach(SelectedCoach));
+            EditScheduleCommand = new RelayCommand(obj => EditSchedule(SelectedSchedule));
+            DeleteScheduleCommand = new RelayCommand(obj => DeleteSchedule());
+            DeleteClientSessionRecordCommand = new RelayCommand(obj => DeleteClientSessionRecord());
+            SetAsWeeklyOfferCommand = new RelayCommand(obj => SetAsWeeklyOffer(SelectedMembership));
+
+
             AllMemberships();
             AllUsers();
             AllOrders();
@@ -107,6 +155,127 @@ namespace Sportics.ViewModel
         {
             Users = DataWorker.GetAllUsers();
             OnPropertyChanged(nameof(Users));
+        }
+
+        private void BlockUser()
+        {
+            if (SelectedUser != null)
+            {
+                SelectedUser.Status = "Заблокирован";
+                DataWorker.UpdateUser(SelectedUser);
+                AllUsers();
+            }
+        }
+
+        private void DeleteUser()
+        {
+            if (SelectedUser != null)
+            {
+                DataWorker.DeleteUser(SelectedUser);
+                AllUsers();
+            }
+        }
+
+
+        private void DeleteCoach()
+        {
+            if (SelectedCoach != null)
+            {
+                DataWorker.DeleteCoach(SelectedCoach);
+                Coaches = new ObservableCollection<Coach>(DataWorker.GetAllCoaches());
+                OnPropertyChanged(nameof(Coaches));
+            }
+        }
+
+        private void EditCoach(Coach coach)
+        {
+            if (SelectedCoach != null)
+            {
+                if (SelectedTab.Name == "Coaches")
+                {
+                    EditCoachWindow window = new EditCoachWindow();
+                    EditCoachViewModel viewModel = new EditCoachViewModel(coach);
+                    window.DataContext = viewModel;
+                    viewModel.RequestClose += () => window.Close();
+                    window.Owner = Application.Current.MainWindow;
+                    window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+                    window.ShowDialog();
+
+                    AllMemberships();
+                }
+
+                Coaches = new ObservableCollection<Coach>(DataWorker.GetAllCoaches());
+                OnPropertyChanged(nameof(Coaches));
+            }
+        }
+
+        private void SetAsWeeklyOffer(Membership membership)
+        {
+            if (membership == null)
+                return;
+
+            if (!membership.IsWeeklyOffer)
+            {
+                int currentOffers = Memberships.Count(m => m.IsWeeklyOffer);
+                if (currentOffers >= 3)
+                {
+                    ShowMessage("Максимум 3 предложения недели могут быть активны одновременно.");
+                    return;
+                }
+
+                membership.IsWeeklyOffer = true;
+                DataWorker.UpdateMembership(membership);
+                ShowMessage($"{membership.ShortName} добавлен в предложения недели.");
+            }
+            else
+            {
+                membership.IsWeeklyOffer = false;
+                DataWorker.UpdateMembership(membership);
+                ShowMessage($"{membership.ShortName} удалён из предложений недели.");
+            }
+
+            AllMemberships(); // обновляем список
+        }
+
+
+        private void DeleteSchedule()
+        {
+            if (SelectedSchedule != null)
+            {
+                DataWorker.DeleteSchedule(SelectedSchedule);
+                Schedules = new ObservableCollection<Schedule>(DataWorker.GetAllSchedules());
+                OnPropertyChanged(nameof(Schedules));
+            }
+        }
+
+        private void EditSchedule(Schedule schedule)
+        {
+            if (SelectedSchedule != null)
+            {
+                if (SelectedTab.Name == "Schedule")
+                {
+                    EditScheduleWindow window = new EditScheduleWindow();
+                    EditScheduleViewModel viewModel = new EditScheduleViewModel(schedule);
+                    window.DataContext = viewModel;
+                    viewModel.RequestClose += () => window.Close();
+                    window.Owner = Application.Current.MainWindow;
+                    window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+                    window.ShowDialog();
+                }
+
+                Schedules = new ObservableCollection<Schedule>(DataWorker.GetAllSchedules());
+                OnPropertyChanged(nameof(Schedules));
+            }
+        }
+
+        private void DeleteClientSessionRecord()
+        {
+            if (SelectedClientSessionRecord != null)
+            {
+                DataWorker.DeleteClientSessionRecord(SelectedClientSessionRecord);
+                ClientSessionRecords = new ObservableCollection<ClientSessionRecord>(DataWorker.GetAllClientSessionRecords());
+                OnPropertyChanged(nameof(ClientSessionRecords));
+            }
         }
 
         private void AllMemberships()
@@ -162,15 +331,21 @@ namespace Sportics.ViewModel
 
         private void OpenEditor(Membership membership)
         {
-            EditWindow window = new EditWindow();
-            EditViewModel viewModel = new EditViewModel(membership);
-            window.DataContext = viewModel;
-            viewModel.RequestClose += () => window.Close();
-            window.Owner = Application.Current.MainWindow;
-            window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-            window.ShowDialog();
+            if (SelectedTab != null)
+            {
+                if (SelectedTab.Name == "Memberships")
+                {
+                    EditWindow window = new EditWindow();
+                    EditViewModel viewModel = new EditViewModel(membership);
+                    window.DataContext = viewModel;
+                    viewModel.RequestClose += () => window.Close();
+                    window.Owner = Application.Current.MainWindow;
+                    window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+                    window.ShowDialog();
 
-            AllMemberships();
+                    AllMemberships();
+                }
+            }
         }
 
         private void OpenCoaches()
@@ -197,6 +372,17 @@ namespace Sportics.ViewModel
             .Close();
 
             Application.Current.MainWindow.Show();
+        }
+
+        private void ShowMessage(string message)
+        {
+            var messageWindow = new MessageWindow();
+            var viewModel = new MessageViewModel(message);
+            messageWindow.DataContext = viewModel;
+            viewModel.RequestClose += () => messageWindow.Close();
+            messageWindow.Owner = System.Windows.Application.Current.MainWindow;
+            messageWindow.WindowStartupLocation = System.Windows.WindowStartupLocation.CenterOwner;
+            messageWindow.ShowDialog();
         }
     }
 }

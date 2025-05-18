@@ -5,11 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:svg="http://sharpvectors.codeplex.com/svgc/"
         xmlns:vm="clr-namespace:Sportics.ViewModel"
+        xmlns:helper="clr-namespace:Sportics.Helper"
         mc:Ignorable="d"
         Title="Sportics"
         MinHeight="500" MinWidth="1160"
         Width="1250" Height="650"
         WindowStartupLocation="CenterScreen">
+
+    <Window.Resources>
+        <helper:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
+        <helper:WeeklyOfferButtonTextConverter x:Key="WeeklyOfferButtonTextConverter"/>
+    </Window.Resources>
+
     <Window.DataContext>
         <vm:AdminViewModel />
     </Window.DataContext>
@@ -84,15 +91,25 @@
                             </ContextMenu>
                         </TabItem.ContextMenu>
 
-                        <DataGrid AutoGenerateColumns="False" CanUserAddRows="False" ItemsSource="{Binding Memberships}" SelectedItem="{Binding SelectedItem}">
+                        <DataGrid AutoGenerateColumns="False" CanUserAddRows="False" ItemsSource="{Binding Memberships}" SelectedItem="{Binding SelectedMembership, Mode=TwoWay}">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
                                 <DataGridTextColumn Header="Полное название" Binding="{Binding FullName}"/>
                                 <DataGridTextColumn Header="Сокращенное название" Binding="{Binding ShortName}"/>
                                 <DataGridTextColumn Header="Категория" Binding="{Binding Category}"/>
-                                <DataGridTextColumn Header="Описание" Binding="{Binding Description}"/>
                                 <DataGridTextColumn Header="Цена" Binding="{Binding Price}"/>
                                 <DataGridTextColumn Header="Продолжительность" Binding="{Binding DurationInDays}"/>
+                                <DataGridTemplateColumn Header="Предложение недели">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Content="{Binding IsWeeklyOffer, Converter={StaticResource WeeklyOfferButtonTextConverter}}"
+                                                    Command="{Binding DataContext.SetAsWeeklyOfferCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                                    CommandParameter="{Binding}"
+                                                    Margin="5" />
+
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
                             </DataGrid.Columns>
                         </DataGrid>
 
@@ -105,11 +122,13 @@
 
                         <TabItem.ContextMenu>
                             <ContextMenu>
-                                <MenuItem Header="Заблокировать"></MenuItem>
+                                <MenuItem Header="Заблокировать" Command="{Binding BlockUserCommand}" />
+                                <MenuItem Header="Удалить" Command="{Binding DeleteUserCommand}" />
                             </ContextMenu>
                         </TabItem.ContextMenu>
 
-                        <DataGrid AutoGenerateColumns="False" CanUserAddRows="False" ItemsSource="{Binding Users}">
+
+                        <DataGrid AutoGenerateColumns="False" CanUserAddRows="False" ItemsSource="{Binding Users}" SelectedItem="{Binding SelectedUser, Mode=TwoWay}">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
                                 <DataGridTextColumn Header="Имя" Binding="{Binding Name}"/>
@@ -125,7 +144,14 @@
                             <TextBlock Text="{DynamicResource Coaches}" />
                         </TabItem.Header>
 
-                        <DataGrid AutoGenerateColumns="False" CanUserAddRows="False" ItemsSource="{Binding Coaches}">
+                        <TabItem.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Удалить" Command="{Binding DeleteCoachCommand}" />
+                                <MenuItem Header="Редактировать" Command="{Binding EditCoachCommand}" />
+                            </ContextMenu>
+                        </TabItem.ContextMenu>
+
+                        <DataGrid AutoGenerateColumns="False" CanUserAddRows="False" ItemsSource="{Binding Coaches}" SelectedItem="{Binding SelectedCoach, Mode=TwoWay}">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
                                 <DataGridTextColumn Header="Имя" Binding="{Binding Name}"/>
@@ -146,8 +172,8 @@
                                 <MenuItem Header="Отменить заказ" Command="{Binding DeleteOrderCommand}"></MenuItem>
                             </ContextMenu>
                         </TabItem.ContextMenu>
-                        
-                        <DataGrid AutoGenerateColumns="False" CanUserAddRows="False" ItemsSource="{Binding MembershipOrders}" SelectedItem="{Binding SelectedOrder}">
+
+                        <DataGrid AutoGenerateColumns="False" CanUserAddRows="False" ItemsSource="{Binding MembershipOrders}" SelectedItem="{Binding SelectedOrder, Mode=TwoWay}" >
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Id заказа" Binding="{Binding Id}" />
                                 <DataGridTextColumn Header="Название абонемента" Binding="{Binding MembershipName}" />
@@ -160,8 +186,20 @@
                     </TabItem>
 
                     <!-- Таб для Расписания -->
-                    <TabItem Header="Расписание">
-                        <DataGrid AutoGenerateColumns="False" CanUserAddRows="False" ItemsSource="{Binding Schedules}" SelectedItem="{Binding SelectedSchedule}">
+                    <TabItem Name="Schedule">
+
+                        <TabItem.Header>
+                            <TextBlock Text="{DynamicResource Schedule}" />
+                        </TabItem.Header>
+
+                        <TabItem.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Редактировать" Command="{Binding EditScheduleCommand}" />
+                                <MenuItem Header="Удалить" Command="{Binding DeleteScheduleCommand}" />
+                            </ContextMenu>
+                        </TabItem.ContextMenu>
+
+                        <DataGrid AutoGenerateColumns="False" CanUserAddRows="False" ItemsSource="{Binding Schedules}" SelectedItem="{Binding SelectedSchedule, Mode=TwoWay}">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Id занятия" Binding="{Binding Id}" />
                                 <DataGridTextColumn Header="Категория" Binding="{Binding Category}" />
@@ -174,8 +212,20 @@
                     </TabItem>
 
                     <!-- Таб для Записей Клиентов -->
-                    <TabItem Header="Записи клиентов">
-                        <DataGrid AutoGenerateColumns="False" CanUserAddRows="False" ItemsSource="{Binding ClientSessionRecords}" SelectedItem="{Binding SelectedClientSessionRecord}">
+                    <TabItem Name="SessionRecord">
+
+                        <TabItem.Header>
+                            <TextBlock Text="{DynamicResource SessionRecord}" />
+                        </TabItem.Header>
+
+                        <TabItem.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Удалить запись" Command="{Binding DeleteClientSessionRecordCommand}" />
+                            </ContextMenu>
+                        </TabItem.ContextMenu>
+
+
+                        <DataGrid AutoGenerateColumns="False" CanUserAddRows="False" ItemsSource="{Binding ClientSessionRecords}" SelectedItem="{Binding SelectedClientSessionRecord, Mode=TwoWay}">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Id записи" Binding="{Binding Id}" />
                                 <DataGridTextColumn Header="Id клиента" Binding="{Binding ClientId}" />

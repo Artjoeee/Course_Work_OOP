@@ -10,6 +10,8 @@ namespace Sportics.ViewModel
 {
     public class MainViewModel : BaseViewModel
     {
+        public ObservableCollection<Membership> WeeklyOffers { get; set; }
+
         public ObservableCollection<string> Languages { get; } = new ObservableCollection<string> { "RU", "EN" };
 
         private string _selectedLanguage = "RU";
@@ -57,8 +59,16 @@ namespace Sportics.ViewModel
             OpenMembershipsCommand = new RelayCommand(obj => OpenMemberships());
             OpenCoachesCommand = new RelayCommand(obj => OpenCoaches());
             OpenSchedulesCommand = new RelayCommand(obj => OpenSchedules());
+
+            LoadWeeklyOffers();
         }
 
+        private void LoadWeeklyOffers()
+        {
+            WeeklyOffers = new ObservableCollection<Membership>(
+                DataWorker.GetAllMemberships().Where(m => m.IsWeeklyOffer)
+            );
+        }
         private void OpenAccount()
         {
             AccountWindow accountWindow = new AccountWindow();

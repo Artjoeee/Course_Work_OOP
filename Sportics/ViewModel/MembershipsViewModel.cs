@@ -125,6 +125,7 @@ namespace Sportics.ViewModel
             }
         }
 
+        public ICommand OpenAccountCommand { get; }
         public ICommand OpenAddMembershipCommand { get; }
         public ICommand OpenAdminCommand { get; }
         public ICommand DetailsCommand { get; }
@@ -132,6 +133,7 @@ namespace Sportics.ViewModel
 
         public MembershipsViewModel()
         {
+            OpenAccountCommand = new RelayCommand(obj => OpenAccount());
             OpenAddMembershipCommand = new RelayCommand(obj => OpenAddMembership());
             OpenAdminCommand = new RelayCommand(obj => OpenAdmin());
             DetailsCommand = new RelayCommand(obj => GetDetails((Membership)obj));
@@ -193,6 +195,14 @@ namespace Sportics.ViewModel
                 .Close();
 
             Application.Current.MainWindow.Show();
+        }
+
+        private void OpenAccount()
+        {
+            AccountWindow accountWindow = new AccountWindow();
+            accountWindow.Owner = Application.Current.MainWindow;
+            accountWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            accountWindow.ShowDialog();
         }
 
         private void GetDetails(Membership membership)

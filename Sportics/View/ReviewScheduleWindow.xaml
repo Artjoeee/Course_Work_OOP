@@ -1,12 +1,17 @@
 ﻿<Window x:Class="Sportics.View.ReviewScheduleWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:Sportics.ViewModel"
         xmlns:helper="clr-namespace:Sportics.Helper"
-        Title="Отзывы о занятии" Height="600" Width="800" WindowStartupLocation="CenterScreen">
+        mc:Ignorable="d"
+        Title="Отзывы о расписании" Height="600" Width="800"
+        WindowStartupLocation="CenterScreen">
 
     <Window.Resources>
         <helper:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+        <helper:BoolToVisibilityInverseConverter x:Key="BoolToVisibilityInverseConverter"/>
     </Window.Resources>
 
     <Window.DataContext>
@@ -19,11 +24,11 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <!-- Таблица -->
-        <DataGrid ItemsSource="{Binding Reviews}" 
-                  SelectedItem="{Binding SelectedReview, Mode=TwoWay}" 
-                  AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True"
-                  Grid.Row="0" Margin="0,0,0,10">
+        <!-- Таблица отзывов -->
+        <DataGrid ItemsSource="{Binding Reviews}"
+                SelectedItem="{Binding SelectedReview, Mode=TwoWay}"
+                AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True"
+                Grid.Row="0" Margin="0,0,0,10">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="50"/>
                 <DataGridTextColumn Header="Пользователь" Binding="{Binding User.Name}" Width="150"/>
@@ -33,20 +38,46 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <!-- Админская панель -->
-        <GroupBox Header="Ответ администратора" Grid.Row="1"
-                  Visibility="{Binding IsAdmin, Converter={StaticResource BoolToVisibilityConverter}}">
-            <StackPanel>
-                <TextBlock Text="Выбранный отзыв:" FontWeight="Bold" />
-                <TextBlock Text="{Binding SelectedReview.Comment}" FontStyle="Italic" TextWrapping="Wrap" Margin="0,3,0,8"/>
+        <!-- Нижняя панель -->
+        <StackPanel Grid.Row="1" Margin="0" Orientation="Vertical" >
 
-                <TextBox Text="{Binding AdminReplyText, UpdateSourceTrigger=PropertyChanged}" 
-                         AcceptsReturn="True" Height="60" TextWrapping="Wrap"/>
+            <!-- Добавление отзыва пользователем -->
+            <GroupBox Header="Оставьте отзыв"
+                    Visibility="{Binding IsAdmin, Converter={StaticResource BoolToVisibilityInverseConverter}, ConverterParameter=invert}">
+                <StackPanel>
+                    <TextBox Text="{Binding NewComment, UpdateSourceTrigger=PropertyChanged}" 
+                             AcceptsReturn="True" Height="60" TextWrapping="Wrap"/>
+                    <TextBlock Text="{Binding CommentValidationError}" Foreground="Red" FontSize="12" Margin="0,3,0,0"/>
 
-                <Button Content="Сохранить ответ" Width="150" Height="30" Margin="0,10,0,0"
-                        Command="{Binding SubmitAdminReplyCommand}" 
-                        IsEnabled="{Binding SelectedReview}" HorizontalAlignment="Left"/>
-            </StackPanel>
-        </GroupBox>
+                    <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                        
+                        <ComboBox Width="80"
+                                  SelectedItem="{Binding NewRating, UpdateSourceTrigger=PropertyChanged}"
+                                  ItemsSource="{Binding RatingOptions}" />
+                        
+                    </StackPanel>
+
+                    <Button Content="Оставить отзыв" Width="150" Height="30" Margin="0,10,0,0"
+                            Command="{Binding SubmitReviewCommand}" HorizontalAlignment="Left" />
+                </StackPanel>
+            </GroupBox>
+
+            <!-- Админская панель ответа -->
+            <GroupBox Header="Ответ администратора" Margin="0,0,0,0"
+                      Visibility="{Binding IsAdmin, Converter={StaticResource BoolToVisibilityConverter}}">
+                <StackPanel Margin="0,10,0,0">
+                    <TextBlock Text="Ответ администратора:" FontWeight="Bold" />
+                    <TextBox Text="{Binding AdminReplyText, UpdateSourceTrigger=PropertyChanged}" 
+                            AcceptsReturn="True" Height="60" TextWrapping="Wrap"/>
+                    <Button Content="Ответить" Width="100" Margin="0,5,0,0"
+                            Command="{Binding SubmitAdminReplyCommand}"
+                            IsEnabled="{Binding CanReply}" />
+                    <Button Content="Удалить" Width="120" Margin="5,10,0,0"
+                            Command="{Binding DeleteReviewCommand}"
+                            IsEnabled="{Binding CanDelete}" />
+                </StackPanel>
+            </GroupBox>
+
+        </StackPanel>
     </Grid>
 </Window>

@@ -3,10 +3,8 @@ using Sportics.Helper;
 using Sportics.Model.Data;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Controls;
+using System.Runtime.Remoting.Contexts;
 
 namespace Sportics.Model
 {
@@ -64,6 +62,38 @@ namespace Sportics.Model
             }
         }
 
+        public static void UpdateUser(User user)
+        {
+            if (user == null) return;
+
+            using (var context = new ApplicationContext())
+            {
+                var dbUser = context.Users.FirstOrDefault(u => u.Id == user.Id);
+                if (dbUser != null)
+                {
+                    dbUser.Name = user.Name;
+                    dbUser.Email = user.Email;
+                    dbUser.PhoneNumber = user.PhoneNumber;
+                    dbUser.Status = user.Status;
+                    context.SaveChanges();
+                }
+            }
+        }
+
+        public static void DeleteUser(User user)
+        {
+            if (user == null) return;
+
+            using (var context = new ApplicationContext())
+            {
+                var dbUser = context.Users.FirstOrDefault(u => u.Id == user.Id);
+                if (dbUser != null)
+                {
+                    context.Users.Remove(dbUser);
+                    context.SaveChanges();
+                }
+            }
+        }
 
         public static bool CheckUser(string email, string password)
         {
@@ -142,6 +172,46 @@ namespace Sportics.Model
             }
         }
 
+
+        public static bool CancelUserSchedule(int userId, int scheduleId)
+        {
+            using (var context = new ApplicationContext())
+            {
+                var record = context.ClientSessionRecords
+                    .FirstOrDefault(r => r.ClientId == userId && r.ScheduleId == scheduleId);
+                if (record != null)
+                {
+                    context.ClientSessionRecords.Remove(record);
+                    context.SaveChanges();
+                    return true;
+                }
+                return false;
+            }
+        }
+
+
+
+        public static List<Schedule> LoadUserSchedules(int userId)
+        {
+            using (var context = new ApplicationContext())
+            {
+                var now = DateTime.Now;
+
+                var records = context.ClientSessionRecords
+                    .Include(r => r.Schedule)
+                        .ThenInclude(s => s.Coach)
+                    .Where(r => r.ClientId == userId &&
+                           (r.Schedule.Date > now.Date ||
+                           (r.Schedule.Date == now.Date && r.Schedule.Time >= now.TimeOfDay)))
+                    .ToList();
+
+
+                // Извлечь расписания из записей клиента
+                return records.Select(r => r.Schedule).ToList();
+            }
+        }
+
+
         #endregion
 
 
@@ -163,7 +233,8 @@ namespace Sportics.Model
                         Description = description,
                         Price = price,
                         Photo = photo,
-                        DurationInDays = durationInDays
+                        DurationInDays = durationInDays,
+                        IsWeeklyOffer = false
                     };
 
                     db.Memberships.Add(newMembership);
@@ -171,8 +242,6 @@ namespace Sportics.Model
                 }
             }
         }
-
-
 
         public static void DeleteMembership(Membership membership)
         {
@@ -182,7 +251,6 @@ namespace Sportics.Model
                 db.SaveChanges();
             }
         }
-
 
         public static void EditMembership(Membership oldMembership, string fullName, string shortName,
             string description, string category, decimal price, byte[] photo, int durationInDays)
@@ -198,6 +266,15 @@ namespace Sportics.Model
                 membership.Photo = photo;
                 membership.DurationInDays = durationInDays;
                 db.SaveChanges();
+            }
+        }
+
+        public static void UpdateMembership(Membership membership)
+        {
+            using (var context = new ApplicationContext())
+            {
+                context.Memberships.Update(membership);
+                context.SaveChanges();
             }
         }
 
@@ -481,6 +558,22 @@ namespace Sportics.Model
         }
 
 
+        public static void DeleteClientSessionRecord(ClientSessionRecord record)
+        {
+            if (record == null) return;
+
+            using (var context = new ApplicationContext())
+            {
+                var dbRecord = context.ClientSessionRecords.FirstOrDefault(r => r.Id == record.Id);
+                if (dbRecord != null)
+                {
+                    context.ClientSessionRecords.Remove(dbRecord);
+                    context.SaveChanges();
+                }
+            }
+        }
+
+
         #endregion
 
 
@@ -526,6 +619,21 @@ namespace Sportics.Model
             }
         }
 
+        public static bool DeleteCoachReview(int reviewId)
+        {
+            using (var context = new ApplicationContext())
+            {
+                var review = context.CoachReviews.FirstOrDefault(r => r.Id == reviewId);
+                if (review == null)
+                    return false;
+
+                context.CoachReviews.Remove(review);
+                context.SaveChanges();
+                return true;
+            }
+        }
+
+
         #endregion
 
 
@@ -536,10 +644,7 @@ namespace Sportics.Model
             using (var db = new ApplicationContext())
             {
                 return db.SessionReviews
-                                .Include(r => r.Schedule)
-                                    .ThenInclude(s => s.Coach)
-                                .Include(r => r.User)
-                                .ToList();
+                          .ToList();
             }
         }
 
@@ -565,16 +670,32 @@ namespace Sportics.Model
         {
             using (var context = new ApplicationContext())
             {
-                var review = context.CoachReviews.FirstOrDefault(r => r.Id == reviewId);
-                if (review != null)
-                {
-                    review.AdminReply = reply;
-                    context.SaveChanges();
-                    return true;
-                }
+                var review = context.SessionReviews.FirstOrDefault(r => r.Id == reviewId);
+                if (review == null)
+                    return false;
+
+                review.AdminReply = reply;
+                context.SaveChanges();
+                
             }
             return false;
         }
+
+
+        public static bool DeleteSessionReview(int reviewId)
+        {
+            using (var context = new ApplicationContext())
+            {
+                var review = context.SessionReviews.FirstOrDefault(r => r.Id == reviewId);
+                if (review == null)
+                    return false;
+
+                context.SessionReviews.Remove(review);
+                context.SaveChanges();
+                return true;
+            }
+        }
+
 
 
         #endregion

@@ -1,5 +1,6 @@
 ﻿using Sportics.Model;
 using Sportics.Model.Data;
+using Sportics.View;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,94 +12,210 @@ namespace Sportics.ViewModel
 {
     public class ReviewViewModel : BaseViewModel
     {
-        public ObservableCollection<CoachReview> Reviews { get; set; }
+        private readonly Coach _coach;
+        private readonly User _user;
 
-        public List<int> RatingOptions { get; } = new List<int> { 1, 2, 3, 4, 5 };
+        public ObservableCollection<CoachReview> Reviews { get; set; } = new ObservableCollection<CoachReview>();
 
-        public string NewComment { get; set; }
-        public int NewRating { get; set; }
+        public List<int> RatingOptions { get; } = new List<int>() { 1, 2, 3, 4, 5 };
+
+        private string _newComment;
+        public string NewComment
+        {
+            get => _newComment;
+            set
+            {
+                _newComment = value;
+                ValidateComment();
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(CanSubmit));
+            }
+        }
+
+        private int _newRating;
+        public int NewRating
+        {
+            get => _newRating;
+            set
+            {
+                _newRating = value;
+                ValidateRating();
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(CanSubmit));
+            }
+        }
 
         public string CommentValidationError { get; set; }
         public string RatingValidationError { get; set; }
 
-        public ICommand SubmitReviewCommand { get; }
-
-        private readonly Coach _coach;
-        private readonly User _user;
-
-        public bool CanSubmit => _user != null && !HasUserReviewed && string.IsNullOrEmpty(CommentValidationError) && string.IsNullOrEmpty(RatingValidationError);
-
-        public bool HasUserReviewed => Reviews.Any(r => r.UserId == _user.Id);
-
         public bool IsAdmin => Session.CurrentUser?.Role == "Администратор";
 
-        public string AdminReplyText { get; set; }
-        public CoachReview SelectedReview { get; set; }
+        private CoachReview _selectedReview;
+        public CoachReview SelectedReview
+        {
+            get => _selectedReview;
+            set
+            {
+                _selectedReview = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(CanReply));
+            }
+        }
+
+        private string _adminReplyText;
+        public string AdminReplyText
+        {
+            get => _adminReplyText;
+            set
+            {
+                _adminReplyText = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(CanReply));
+            }
+        }
+
+        public ICommand SubmitReviewCommand { get; }
         public ICommand SubmitAdminReplyCommand { get; }
+
+        public ICommand DeleteReviewCommand { get; }
+
+        public bool CanDelete =>
+            IsAdmin && SelectedReview != null;
+
+        public bool CanSubmit =>
+            _user != null &&
+            !HasUserReviewed &&
+            string.IsNullOrWhiteSpace(CommentValidationError) &&
+            string.IsNullOrWhiteSpace(RatingValidationError) &&
+            !string.IsNullOrWhiteSpace(NewComment) &&
+            NewRating > 0;
+
+        public bool CanReply =>
+            IsAdmin &&
+            SelectedReview != null &&
+            !string.IsNullOrWhiteSpace(AdminReplyText);
+
+        public bool HasUserReviewed =>
+            Reviews.Any(r => r.UserId == _user?.Id);
 
         public ReviewViewModel(Coach coach)
         {
             _coach = coach;
             _user = Session.CurrentUser;
 
-            Reviews = new ObservableCollection<CoachReview>(
-                DataWorker.LoadCoachReviews().Where(r => r.CoachId == coach.Id)
-            );
+            SubmitReviewCommand = new RelayCommand(_ => SubmitReview(), _ => CanSubmit);
+            SubmitAdminReplyCommand = new RelayCommand(_ => SubmitAdminReply(), _ => CanReply);
+            DeleteReviewCommand = new RelayCommand(_ => DeleteSelectedReview(), _ => CanDelete);
 
-            SubmitReviewCommand = new RelayCommand(obj => SubmitReview(), obj => CanSubmit);
-
-            SubmitAdminReplyCommand = new RelayCommand(obj => SubmitAdminReply(), obj => CanSubmitReply());
+            LoadCoachReviews();
         }
 
         public ReviewViewModel() { }
 
+        private void ValidateComment()
+        {
+            CommentValidationError = string.IsNullOrWhiteSpace(NewComment)
+                ? "Комментарий не может быть пустым"
+                : null;
+            OnPropertyChanged(nameof(CommentValidationError));
+        }
+
+        private void ValidateRating()
+        {
+            RatingValidationError = (NewRating < 1 || NewRating > 5)
+                ? "Оценка должна быть от 1 до 5"
+                : null;
+            OnPropertyChanged(nameof(RatingValidationError));
+        }
+
         private void SubmitReview()
         {
-
-            if (!string.IsNullOrEmpty(CommentValidationError) || !string.IsNullOrEmpty(RatingValidationError))
+            if (!CanSubmit)
                 return;
 
             var review = new CoachReview
             {
                 UserId = _user.Id,
                 CoachId = _coach.Id,
-                Rating = NewRating,
                 Comment = NewComment.Trim(),
+                Rating = NewRating,
                 Date = DateTime.Now
             };
 
             DataWorker.SaveCoachReview(review);
 
-            Reviews.Add(review);
-
-            // Очистка
+            // Очистка полей
             NewComment = string.Empty;
             NewRating = 0;
             OnPropertyChanged(nameof(NewComment));
             OnPropertyChanged(nameof(NewRating));
-            OnPropertyChanged(nameof(CanSubmit));
-        }
 
-
-        private bool CanSubmitReply()
-        {
-            return IsAdmin && SelectedReview != null && !string.IsNullOrWhiteSpace(AdminReplyText);
+            LoadCoachReviews();
         }
 
         private void SubmitAdminReply()
         {
-            if (SelectedReview == null || string.IsNullOrWhiteSpace(AdminReplyText))
+            if (!CanReply)
                 return;
 
             bool success = DataWorker.SaveAdminReply(SelectedReview.Id, AdminReplyText);
 
             if (success)
             {
-                SelectedReview.AdminReply = AdminReplyText; // обновляем локальную копию
-                OnPropertyChanged(nameof(SelectedReview));  // уведомляем UI
                 AdminReplyText = string.Empty;
                 OnPropertyChanged(nameof(AdminReplyText));
+                LoadCoachReviews();
             }
         }
+
+        private void DeleteSelectedReview()
+        {
+            if (SelectedReview == null) return;
+
+            bool success = DataWorker.DeleteCoachReview(SelectedReview.Id);
+            if (success)
+            {
+                Reviews.Remove(SelectedReview);
+                SelectedReview = null;
+                OnPropertyChanged(nameof(SelectedReview));
+                OnPropertyChanged(nameof(CanReply));
+                OnPropertyChanged(nameof(CanDelete));
+                LoadCoachReviews();
+
+                ShowMessage("Отзыв успешно удалён.");
+            }
+            else
+            {
+                ShowMessage("Ошибка при удалении отзыва.");
+            }
+        }
+
+
+        private void LoadCoachReviews()
+        {
+            var reviews = DataWorker.LoadCoachReviews()
+                                    .Where(r => r.CoachId == _coach.Id)
+                                    .ToList();
+
+            Reviews.Clear();
+            foreach (var review in reviews)
+                Reviews.Add(review);
+
+            OnPropertyChanged(nameof(Reviews));
+            OnPropertyChanged(nameof(HasUserReviewed));
+            OnPropertyChanged(nameof(CanSubmit));
+        }
+
+        private void ShowMessage(string message)
+        {
+            var messageWindow = new MessageWindow();
+            var viewModel = new MessageViewModel(message);
+            messageWindow.DataContext = viewModel;
+            viewModel.RequestClose += () => messageWindow.Close();
+            messageWindow.Owner = Application.Current.MainWindow;
+            messageWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            messageWindow.ShowDialog();
+        }
+
     }
 }

@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:svg="http://sharpvectors.codeplex.com/svgc/"
         xmlns:vm="clr-namespace:Sportics.ViewModel"
+        xmlns:helper="clr-namespace:Sportics.Helper"
         mc:Ignorable="d"
         Title="Sportics"
         MinHeight="500" MinWidth="800"
@@ -14,6 +15,10 @@
     <Window.DataContext>
         <vm:MainViewModel />
     </Window.DataContext>
+
+    <Window.Resources>
+        <helper:ImageSourceConverter x:Key="ImageConverter"/>
+    </Window.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -74,27 +79,45 @@
             <StackPanel Background="{DynamicResource MaterialDesignBackground}">
                 <Label Content="Предложения недели" FontSize="32" HorizontalAlignment="Center" Margin="0,20" Foreground="{DynamicResource MaterialDesignBody}"/>
 
-                <WrapPanel HorizontalAlignment="Center" Margin="0,20" ItemWidth="270" ItemHeight="Auto">
-                    <!-- Карточка 1 -->
-                    <Border Width="250" Background="{DynamicResource MaterialDesignPaper}" Margin="0,0,0,0">
-                        <StackPanel Margin="10">
-                            <Grid Height="120" Background="LightGray" Margin="5"/>
-                            <TextBlock Text="Месяц (24/7)" FontSize="16" FontWeight="SemiBold" TextAlignment="Center" Margin="0,10" Foreground="{DynamicResource MaterialDesignBody}"/>
-                            <TextBlock Text="90 руб." FontSize="16" FontWeight="Bold" TextAlignment="Center" Margin="0,5" Foreground="{DynamicResource MaterialDesignBody}"/>
-                            <Button Content="Подробнее" HorizontalAlignment="Center" Margin="0,10"/>
-                        </StackPanel>
-                    </Border>
+                <ItemsControl ItemsSource="{Binding WeeklyOffers}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel HorizontalAlignment="Center" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Width="250" Margin="30">
+                                <Border.Style>
+                                    <Style TargetType="Border">
+                                        <Setter Property="BorderBrush" Value="Transparent"/>
+                                        <Setter Property="BorderThickness" Value="2"/>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="BorderBrush" Value="DodgerBlue"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
 
-                    <!-- Карточка 2 -->
-                    <Border Width="250" Background="{DynamicResource MaterialDesignPaper}" Margin="0,0,0,0">
-                        <StackPanel Margin="10">
-                            <Grid Height="120" Background="LightGray" Margin="5"/>
-                            <TextBlock Text="Месяц (8:00 - 16:00)" FontSize="16" FontWeight="SemiBold" TextAlignment="Center" Margin="0,10" Foreground="{DynamicResource MaterialDesignBody}"/>
-                            <TextBlock Text="50 руб." FontSize="16" FontWeight="Bold" TextAlignment="Center" Margin="0,5" Foreground="{DynamicResource MaterialDesignBody}"/>
-                            <Button Content="Подробнее" HorizontalAlignment="Center" Margin="0,10"/>
-                        </StackPanel>
-                    </Border>
-                </WrapPanel>
+                                <Border Background="{DynamicResource MaterialDesignPaper}" BorderThickness="1">
+                                    <StackPanel Margin="10">
+                                        <Image Height="120" Stretch="Fill" Margin="5"
+                            Source="{Binding Photo, Converter={StaticResource ImageConverter}}"/>
+                                        <TextBlock Text="{Binding ShortName}" FontSize="16" FontWeight="SemiBold" TextAlignment="Center" Margin="0,10"/>
+                                        <TextBlock Text="{Binding Category}" FontSize="16" FontWeight="SemiBold" TextAlignment="Center" Margin="0,10"/>
+                                        <TextBlock Text="{Binding Price}" FontSize="16" FontWeight="Bold" TextAlignment="Center" Margin="0,5"/>
+                                        <Button Content="Подробнее"
+                                Command="{Binding DataContext.DetailsCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                CommandParameter="{Binding}" 
+                                Width="150" Margin="0,10" HorizontalAlignment="Center"/>
+                                    </StackPanel>
+                                </Border>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
             </StackPanel>
         </ScrollViewer>
 
