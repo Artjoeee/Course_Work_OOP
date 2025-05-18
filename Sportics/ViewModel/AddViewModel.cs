@@ -3,6 +3,7 @@ using Sportics.Model;
 using Sportics.View;
 using System;
 using System.ComponentModel;
+using System.Globalization;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows;
@@ -79,12 +80,24 @@ namespace Sportics.ViewModel
             }
         }
 
+        public string DurationInDays
+        {
+            get => durationInDays;
+            set
+            {
+                durationInDays = value;
+                OnPropertyChanged(nameof(DurationInDays));
+                IsValidationActive = false;
+            }
+        }
+
         private string fullName;
         private string shortName;
         private string category;
         private string description;
         private string price;
         private byte[] photoData;
+        private string durationInDays;
 
         private bool isValidationActive = false;
         public bool IsValidationActive
@@ -126,19 +139,29 @@ namespace Sportics.ViewModel
                     case nameof(Price):
                         if (string.IsNullOrWhiteSpace(Price))
                             return "Введите цену";
-                        if (!Regex.IsMatch(Price, @"^\d+$"))
-                            return "Допустимы только цифры";
-                        if (!int.TryParse(Price, out int val))
-                            return "Неверный формат";
-                        if (val <= 0)
+
+                        if (!Regex.IsMatch(Price, @"^\d+([.,]\d{1,2})?$"))
+                            return "Введите корректное число (до 2 знаков после запятой)";
+
+                        if (!decimal.TryParse(Price, NumberStyles.Number, CultureInfo.CurrentCulture, out decimal priceVal))
+                            return "Неверный формат цены";
+
+                        if (priceVal <= 0)
                             return "Цена должна быть больше 0";
-                        if (val > 1500)
+
+                        if (priceVal > 1500)
                             return "Максимум 1500";
+
                         break;
                     case nameof(PhotoData):
                         if (PhotoData == null || PhotoData.Length == 0)
                             return "Выберите фото";
-
+                        break;
+                    case nameof(DurationInDays):
+                        if (int.Parse(DurationInDays) <= 0)
+                            return "Длительность должна быть больше нуля";
+                        if (int.Parse(DurationInDays) >= 366)
+                            return "Слишком большая длительность";
                         break;
                 }
 
@@ -181,12 +204,15 @@ namespace Sportics.ViewModel
             OnPropertyChanged(nameof(Description));
             OnPropertyChanged(nameof(Price));
             OnPropertyChanged(nameof(PhotoData));
+            OnPropertyChanged(nameof(DurationInDays));
 
             if (!string.IsNullOrEmpty(this[nameof(FullName)]) ||
                 !string.IsNullOrEmpty(this[nameof(ShortName)]) ||
                 !string.IsNullOrEmpty(this[nameof(Category)]) ||
                 !string.IsNullOrEmpty(this[nameof(Description)]) ||
-                !string.IsNullOrEmpty(this[nameof(Price)]))
+                !string.IsNullOrEmpty(this[nameof(Price)]) ||
+                !string.IsNullOrEmpty(this[nameof(DurationInDays)]))
+                    
                 return;
 
             if (!string.IsNullOrEmpty(this[nameof(PhotoData)]))
@@ -203,7 +229,7 @@ namespace Sportics.ViewModel
                 return;
             }
 
-            DataWorker.AddMembership(FullName, ShortName, Category, Description, int.Parse(Price), PhotoData);
+            DataWorker.AddMembership(FullName, ShortName, Category, Description, decimal.Parse(Price), PhotoData, int.Parse(DurationInDays));
             RequestClose?.Invoke();
         }
     }

@@ -91,6 +91,7 @@ namespace Sportics.ViewModel
             {
                 User user = DataWorker.SelectUser(Email, Password);
                 Session.CurrentUser = user;
+                
 
                 if (user.Role == "Администратор")
                 {

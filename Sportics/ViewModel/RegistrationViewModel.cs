@@ -110,9 +110,12 @@ namespace Sportics.ViewModel
                 messageWindow.ShowDialog();
                 return;
             }
-            else if (DataWorker.CheckUser(Email, Password))
+            else
             {
                 DataWorker.AddUser(Name, Email, Phone, Password);
+
+                User user = DataWorker.SelectUser(Email, Password);
+                Session.CurrentUser = user;
 
                 MainWindow mainWindow = new MainWindow();
                 Application.Current.MainWindow = mainWindow;

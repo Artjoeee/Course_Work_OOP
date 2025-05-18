@@ -46,7 +46,6 @@
                 <Button Content="{DynamicResource Memberships}" FontSize="16" Margin="0,0,10,0" Width="150" Command="{Binding OpenMembershipsCommand}"/>
                 <Button Content="{DynamicResource Schedule}" FontSize="16" Margin="10,0" Width="150" Command="{Binding OpenSchedulesCommand}"/>
                 <Button Content="{DynamicResource Coaches}" FontSize="16" Margin="10,0" Width="150" Command="{Binding OpenCoachesCommand}"/>
-                <Button Content="{DynamicResource Add}" FontSize="16" Margin="10,0" Width="150"/>
             </StackPanel>
 
             <!-- Правая часть: иконки -->
@@ -93,6 +92,7 @@
                                 <DataGridTextColumn Header="Категория" Binding="{Binding Category}"/>
                                 <DataGridTextColumn Header="Описание" Binding="{Binding Description}"/>
                                 <DataGridTextColumn Header="Цена" Binding="{Binding Price}"/>
+                                <DataGridTextColumn Header="Продолжительность" Binding="{Binding DurationInDays}"/>
                             </DataGrid.Columns>
                         </DataGrid>
 
@@ -125,14 +125,13 @@
                             <TextBlock Text="{DynamicResource Coaches}" />
                         </TabItem.Header>
 
-                        <DataGrid AutoGenerateColumns="False" CanUserAddRows="False">
+                        <DataGrid AutoGenerateColumns="False" CanUserAddRows="False" ItemsSource="{Binding Coaches}">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="Id" />
-                                <DataGridTextColumn Header="Имя" />
-                                <DataGridTextColumn Header="Почта" />
-                                <DataGridTextColumn Header="Телефон" />
-                                <DataGridTextColumn Header="Специализация" />
-                                <DataGridTextColumn Header="Информация" />
+                                <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+                                <DataGridTextColumn Header="Имя" Binding="{Binding Name}"/>
+                                <DataGridTextColumn Header="Почта" Binding="{Binding Email}"/>
+                                <DataGridTextColumn Header="Телефон" Binding="{Binding PhoneNumber}"/>
+                                <DataGridTextColumn Header="Специализация" Binding="{Binding Specialization}"/>
                             </DataGrid.Columns>
                         </DataGrid>
                     </TabItem>
@@ -154,6 +153,8 @@
                                 <DataGridTextColumn Header="Название абонемента" Binding="{Binding MembershipName}" />
                                 <DataGridTextColumn Header="Id клиента" Binding="{Binding ClientId}" />
                                 <DataGridTextColumn Header="Имя клиента" Binding="{Binding ClientName}" />
+                                <DataGridTextColumn Header="Дата заказа" Binding="{Binding PurchaseDate, StringFormat='dd.MM.yyyy'}" />
+                                <DataGridTextColumn Header="Дата конца действия" Binding="{Binding EndDate, StringFormat='dd.MM.yyyy'}" />
                             </DataGrid.Columns>
                         </DataGrid>
                     </TabItem>
@@ -166,7 +167,7 @@
                                 <DataGridTextColumn Header="Категория" Binding="{Binding Category}" />
                                 <DataGridTextColumn Header="Id тренера" Binding="{Binding CoachId}" />
                                 <DataGridTextColumn Header="Имя тренера" Binding="{Binding Coach.Name}" />
-                                <DataGridTextColumn Header="Дата" Binding="{Binding Date}" />
+                                <DataGridTextColumn Header="Дата" Binding="{Binding Date, StringFormat='dd.MM.yyyy'}" />
                                 <DataGridTextColumn Header="Время" Binding="{Binding Time}" />
                             </DataGrid.Columns>
                         </DataGrid>
@@ -177,11 +178,11 @@
                         <DataGrid AutoGenerateColumns="False" CanUserAddRows="False" ItemsSource="{Binding ClientSessionRecords}" SelectedItem="{Binding SelectedClientSessionRecord}">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Id записи" Binding="{Binding Id}" />
-                                <DataGridTextColumn Header="Id клиента" Binding="{Binding UserId}" />
-                                <DataGridTextColumn Header="Имя клиента" Binding="{Binding User.Name}" />
+                                <DataGridTextColumn Header="Id клиента" Binding="{Binding ClientId}" />
+                                <DataGridTextColumn Header="Имя клиента" Binding="{Binding Client.Name}" />
                                 <DataGridTextColumn Header="Id занятия" Binding="{Binding ScheduleId}" />
                                 <DataGridTextColumn Header="Категория занятия" Binding="{Binding Schedule.Category}" />
-                                <DataGridTextColumn Header="Дата" Binding="{Binding Schedule.Date}" />
+                                <DataGridTextColumn Header="Дата" Binding="{Binding Schedule.Date, StringFormat='dd.MM.yyyy'}" />
                                 <DataGridTextColumn Header="Время" Binding="{Binding Schedule.Time}" />
                             </DataGrid.Columns>
                         </DataGrid>

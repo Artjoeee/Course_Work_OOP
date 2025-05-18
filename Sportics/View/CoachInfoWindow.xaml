@@ -32,6 +32,7 @@
                 <Button Content="Удалить" Height="30" Width="150" Margin="10" Command="{Binding DeleteCoachCommand}" />
                 <Button Content="Редактировать" Height="30" Width="150" Command="{Binding EditCoachCommand}" />
             </StackPanel>
+            <Button Content="Отзывы" Height="30" Width="150" Command="{Binding OpenReviewCommand}" />
         </StackPanel>
     </Grid>
 </Window>

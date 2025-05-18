@@ -20,6 +20,8 @@ namespace Sportics.Model
         public string Comment { get; set; }
 
         public DateTime Date { get; set; }
+
+        public string AdminReply { get; set; }
     }
 
 }

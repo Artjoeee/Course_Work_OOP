@@ -1,4 +1,5 @@
 ﻿using Sportics.Model;
+using Sportics.View;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -36,7 +37,7 @@ namespace Sportics.ViewModel
                 var user = Session.CurrentUser;
                 if (user == null)
                 {
-                    MessageBox.Show("Вы не авторизованы.");
+                    ShowMessage("Вы не авторизованы.");
                     return;
                 }
 
@@ -47,7 +48,7 @@ namespace Sportics.ViewModel
 
                 if (alreadyEnrolled)
                 {
-                    MessageBox.Show("Вы уже записаны на это занятие.");
+                    ShowMessage("Вы уже записаны на это занятие.");
                     return;
                 }
 
@@ -58,12 +59,12 @@ namespace Sportics.ViewModel
                 var matchingOrder = userOrders
                     .Where(order => order.Membership != null &&
                                     (order.Membership.Category == schedule.Category ||
-                                     order.Membership.ShortName == schedule.Category)) // по необходимости
+                                     order.Membership.ShortName == schedule.Category))
                     .FirstOrDefault();
 
                 if (matchingOrder == null)
                 {
-                    MessageBox.Show("У вас нет подходящего абонемента для этой тренировки.");
+                    ShowMessage("У вас нет подходящего абонемента для этой тренировки.");
                     return;
                 }
 
@@ -81,10 +82,21 @@ namespace Sportics.ViewModel
 
                 DataWorker.SaveClientSessionRecord(record);
 
-                MessageBox.Show("Вы успешно записались!");
+                ShowMessage("Вы успешно записались!");
+                RequestClose?.Invoke();
             }
         }
 
+        private void ShowMessage(string message)
+        {
+            var messageWindow = new MessageWindow();
+            var viewModel = new MessageViewModel(message);
+            messageWindow.DataContext = viewModel;
+            viewModel.RequestClose += () => messageWindow.Close();
+            messageWindow.Owner = Application.Current.MainWindow;
+            messageWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            messageWindow.ShowDialog();
+        }
 
         public event Action RequestClose;
     }

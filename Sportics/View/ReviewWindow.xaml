@@ -4,9 +4,15 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:Sportics.ViewModel"
+        xmlns:helper="clr-namespace:Sportics.Helper"
         mc:Ignorable="d"
-        Title="Отзывы о тренере" Height="600" Width="700"
+        Title="Отзывы о тренере" Height="600" Width="800"
         WindowStartupLocation="CenterScreen">
+
+    <Window.Resources>
+        <helper:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+        <helper:BoolToVisibilityInverseConverter x:Key="BoolToVisibilityInverseConverter"/>
+    </Window.Resources>
 
     <Window.DataContext>
         <vm:ReviewViewModel />
@@ -19,37 +25,59 @@
         </Grid.RowDefinitions>
 
         <!-- Таблица отзывов -->
-        <DataGrid ItemsSource="{Binding Reviews}" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True"
-                  Grid.Row="0" Margin="0,0,0,10">
+        <DataGrid ItemsSource="{Binding Reviews}"
+                SelectedItem="{Binding SelectedReview, Mode=TwoWay}"
+                AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True"
+                Grid.Row="0" Margin="0,0,0,10">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="50"/>
                 <DataGridTextColumn Header="Пользователь" Binding="{Binding User.Name}" Width="150"/>
                 <DataGridTextColumn Header="Комментарий" Binding="{Binding Comment}" Width="*"/>
                 <DataGridTextColumn Header="Оценка" Binding="{Binding Rating}" Width="80"/>
+                <DataGridTextColumn Header="Ответ администратора" Binding="{Binding AdminReply}" Width="200"/>
             </DataGrid.Columns>
         </DataGrid>
 
-        <!-- Добавление отзыва -->
-        <StackPanel Grid.Row="1" Margin="0" Orientation="Vertical">
-            <TextBlock Text="Оставьте отзыв:" FontWeight="Bold" Margin="0,0,0,5"/>
-            <TextBox Text="{Binding NewComment, UpdateSourceTrigger=PropertyChanged}" 
-                     AcceptsReturn="True" Height="60" TextWrapping="Wrap"/>
-            <TextBlock Text="{Binding CommentValidationError}" Foreground="Red" FontSize="12"/>
 
-            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                <TextBlock Text="Оценка:" VerticalAlignment="Center" Margin="0,0,5,0"/>
-                <ComboBox Width="80" SelectedItem="{Binding NewRating}">
-                    <ComboBoxItem Content="1" />
-                    <ComboBoxItem Content="2" />
-                    <ComboBoxItem Content="3" />
-                    <ComboBoxItem Content="4" />
-                    <ComboBoxItem Content="5" />
-                </ComboBox>
-                <TextBlock Text="{Binding RatingValidationError}" Foreground="Red" FontSize="12" Margin="10,0,0,0"/>
-            </StackPanel>
+        <!-- Нижняя панель -->
+        <StackPanel Grid.Row="1" Margin="0" Orientation="Vertical" >
 
-            <Button Content="Оставить отзыв" Width="150" Height="30" Margin="0,10,0,0"
-                    Command="{Binding SubmitReviewCommand}" IsEnabled="{Binding CanSubmit}" HorizontalAlignment="Left"/>
+            <!-- Добавление отзыва пользователем -->
+            <GroupBox Header="Оставьте отзыв"
+                    Visibility="{Binding IsAdmin, Converter={StaticResource BoolToVisibilityInverseConverter}, ConverterParameter=invert}">
+                <StackPanel>
+                    <TextBox Text="{Binding NewComment, UpdateSourceTrigger=PropertyChanged}" 
+                             AcceptsReturn="True" Height="60" TextWrapping="Wrap"/>
+                    <TextBlock Text="{Binding CommentValidationError}" Foreground="Red" FontSize="12" Margin="0,3,0,0"/>
+
+                    <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                        <TextBlock Text="Оценка:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                        <ComboBox Width="80"
+                                  SelectedItem="{Binding NewRating, UpdateSourceTrigger=PropertyChanged}"
+                                  ItemsSource="{Binding RatingOptions}" />
+                        <TextBlock Text="{Binding RatingValidationError}" Foreground="Red" FontSize="12" Margin="10,0,0,0"/>
+                    </StackPanel>
+
+                    <Button Content="Оставить отзыв" Width="150" Height="30" Margin="0,10,0,0"
+                            Command="{Binding SubmitReviewCommand}" HorizontalAlignment="Left"/>
+                </StackPanel>
+            </GroupBox>
+
+            <!-- Админская панель ответа -->
+            <GroupBox Header="Ответ администратора" Margin="0,0,0,0"
+                      Visibility="{Binding IsAdmin, Converter={StaticResource BoolToVisibilityConverter}}">
+                <StackPanel Margin="0,10,0,0"
+                            Visibility="{Binding IsAdmin, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <TextBlock Text="Ответ администратора:" FontWeight="Bold" />
+                    <TextBox Text="{Binding AdminReplyText, UpdateSourceTrigger=PropertyChanged}" 
+                            AcceptsReturn="True" Height="60" TextWrapping="Wrap"/>
+                    <Button Content="Ответить" Width="100" Margin="0,5,0,0"
+                            Command="{Binding SubmitAdminReplyCommand}"
+                            IsEnabled="{Binding SelectedReview}" />
+                </StackPanel>
+
+            </GroupBox>
+
         </StackPanel>
     </Grid>
 </Window>

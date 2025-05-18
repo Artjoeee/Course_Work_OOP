@@ -1,0 +1,30 @@
+﻿<Window x:Class="Sportics.View.ClientScheduleInfoWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:vm="clr-namespace:Sportics.ViewModel"
+        Title="Информация о занятии" Height="400" Width="500" WindowStartupLocation="CenterScreen">
+
+    <Window.DataContext>
+        <vm:ClientScheduleInfoViewModel />
+    </Window.DataContext>
+
+    <Grid Background="WhiteSmoke" Margin="20">
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="350">
+
+            <TextBlock Text="{Binding Schedule.Category}" FontSize="18" FontWeight="SemiBold" TextAlignment="Center" Margin="0,10"/>
+            <TextBlock Text="{Binding Schedule.Date, StringFormat='Дата: {0:dd.MM.yyyy}'}" FontSize="16" TextAlignment="Center" Margin="0,5"/>
+            <TextBlock Text="{Binding Schedule.Time, StringFormat='Время: {0:hh\\:mm}'}" FontSize="16" TextAlignment="Center" Margin="0,5"/>
+            <TextBlock Text="{Binding Schedule.Coach.Name, StringFormat='Тренер: {0}'}" FontSize="16" TextAlignment="Center" Margin="0,5"/>
+
+            <StackPanel Orientation="Horizontal" Margin="0,20,0,0" HorizontalAlignment="Center">
+                <Button Content="Записаться" Height="30" Width="150" Margin="10,0"
+                        Command="{Binding SignUpCommand}"/>
+                <Button Content="Оставить отзыв" Height="30" Width="150"
+                        Command="{Binding LeaveReviewCommand}" 
+                        IsEnabled="{Binding CanLeaveReview}" />
+            </StackPanel>
+
+        </StackPanel>
+    </Grid>
+</Window>

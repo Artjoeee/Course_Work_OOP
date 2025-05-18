@@ -9,7 +9,7 @@
         xmlns:local="clr-namespace:Sportics.View"
         mc:Ignorable="d"
         MinHeight="420" MinWidth="400"
-        Title="" Height="420" Width="400" WindowStartupLocation="CenterScreen">
+        Title="" Height="500" Width="400" WindowStartupLocation="CenterScreen">
     <Window.DataContext>
         <vm:AddViewModel />
     </Window.DataContext>
@@ -19,19 +19,20 @@
             <TextBlock Text="Добавить абонемент" FontSize="24" FontWeight="SemiBold" TextAlignment="Center"/>
             <TextBox materialDesign:HintAssist.Hint="Полное название"
                 Text="{Binding FullName, ValidatesOnDataErrors=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}"
-                Margin="0,10,0,0"/>
+                Margin="0,20,0,0"/>
 
             <TextBox materialDesign:HintAssist.Hint="Краткое название"
                 Text="{Binding ShortName, ValidatesOnDataErrors=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}"
-                Margin="0,10,0,0"/>
+                Margin="0,20,0,0"/>
 
             <TextBox materialDesign:HintAssist.Hint="Описание"
                 Text="{Binding Description, ValidatesOnDataErrors=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}"
-                Margin="0,10,0,0"/>
+                Margin="0,20,0,0"/>
 
             <ComboBox materialDesign:HintAssist.Hint="Категория"
-                SelectedValue="{Binding Category, ValidatesOnDataErrors=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}"
-                Margin="0,10,0,0">
+                    SelectedValue="{Binding Category, ValidatesOnDataErrors=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}"
+                    SelectedValuePath="Content"
+                    Margin="0,20,0,0">
                 <ComboBoxItem Content="Фитнес"/>
                 <ComboBoxItem Content="Йога"/>
                 <ComboBoxItem Content="Бассейн"/>
@@ -41,7 +42,11 @@
 
             <TextBox materialDesign:HintAssist.Hint="Цена"
                 Text="{Binding Price, ValidatesOnDataErrors=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}"
-                Margin="0,10,0,15"/>
+                Margin="0,20,0,0"/>
+
+            <TextBox materialDesign:HintAssist.Hint="Длительность (в днях)"
+                Text="{Binding DurationInDays, ValidatesOnDataErrors=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}"
+                Margin="0,20,0,20"/>
 
             <Button Content="Выбрать фото" Height="30" Width="150" Command="{Binding SelectPhotoCommand}"></Button>
 

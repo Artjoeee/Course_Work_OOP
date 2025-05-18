@@ -50,6 +50,7 @@
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1">
                 <Button Content="{DynamicResource Main}" FontSize="16" Margin="10,0" Width="150" Command="{Binding OpenMainCommand}"/>
                 <Button Content="{DynamicResource Schedule}" FontSize="16" Margin="10,0" Width="150" />
+                <Button Content="{DynamicResource Schedule}" FontSize="16" Margin="10,0" Width="150" />
             </StackPanel>
 
             <!-- Правая часть: иконки -->

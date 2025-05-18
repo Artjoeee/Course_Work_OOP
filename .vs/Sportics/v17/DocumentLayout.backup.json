@@ -3,16 +3,24 @@
   "WorkspaceRootPath": "C:\\Users\\HomeUser\\Desktop\\\u041A\u0443\u0440\u0441 2\\\u0421\u0435\u043C\u0435\u0441\u0442\u0440 2\\\u041A\u041F\\Sportics\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{CAE060A2-71A4-47B1-A060-15FE61B86CF5}|Sportics\\Sportics.csproj|c:\\users\\homeuser\\desktop\\\u043A\u0443\u0440\u0441 2\\\u0441\u0435\u043C\u0435\u0441\u0442\u0440 2\\\u043A\u043F\\sportics\\sportics\\view\\coachschedulewindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{CAE060A2-71A4-47B1-A060-15FE61B86CF5}|Sportics\\Sportics.csproj|solutionrelative:sportics\\view\\coachschedulewindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{CAE060A2-71A4-47B1-A060-15FE61B86CF5}|Sportics\\Sportics.csproj|C:\\Users\\HomeUser\\Desktop\\\u041A\u0443\u0440\u0441 2\\\u0421\u0435\u043C\u0435\u0441\u0442\u0440 2\\\u041A\u041F\\Sportics\\sportics\\view\\reviewschedulewindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{CAE060A2-71A4-47B1-A060-15FE61B86CF5}|Sportics\\Sportics.csproj|solutionrelative:sportics\\view\\reviewschedulewindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CAE060A2-71A4-47B1-A060-15FE61B86CF5}|Sportics\\Sportics.csproj|c:\\users\\homeuser\\desktop\\\u043A\u0443\u0440\u0441 2\\\u0441\u0435\u043C\u0435\u0441\u0442\u0440 2\\\u043A\u043F\\sportics\\sportics\\viewmodel\\coachscheduleviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CAE060A2-71A4-47B1-A060-15FE61B86CF5}|Sportics\\Sportics.csproj|solutionrelative:sportics\\viewmodel\\coachscheduleviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{CAE060A2-71A4-47B1-A060-15FE61B86CF5}|Sportics\\Sportics.csproj|C:\\Users\\HomeUser\\Desktop\\\u041A\u0443\u0440\u0441 2\\\u0421\u0435\u043C\u0435\u0441\u0442\u0440 2\\\u041A\u041F\\Sportics\\sportics\\viewmodel\\reviewscheduleviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CAE060A2-71A4-47B1-A060-15FE61B86CF5}|Sportics\\Sportics.csproj|solutionrelative:sportics\\viewmodel\\reviewscheduleviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CAE060A2-71A4-47B1-A060-15FE61B86CF5}|Sportics\\Sportics.csproj|c:\\users\\homeuser\\desktop\\\u043A\u0443\u0440\u0441 2\\\u0441\u0435\u043C\u0435\u0441\u0442\u0440 2\\\u043A\u043F\\sportics\\sportics\\model\\clientsessionrecord.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CAE060A2-71A4-47B1-A060-15FE61B86CF5}|Sportics\\Sportics.csproj|solutionrelative:sportics\\model\\clientsessionrecord.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{CAE060A2-71A4-47B1-A060-15FE61B86CF5}|Sportics\\Sportics.csproj|c:\\users\\homeuser\\desktop\\\u043A\u0443\u0440\u0441 2\\\u0441\u0435\u043C\u0435\u0441\u0442\u0440 2\\\u043A\u043F\\sportics\\sportics\\viewmodel\\reviewviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CAE060A2-71A4-47B1-A060-15FE61B86CF5}|Sportics\\Sportics.csproj|solutionrelative:sportics\\viewmodel\\reviewviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CAE060A2-71A4-47B1-A060-15FE61B86CF5}|Sportics\\Sportics.csproj|C:\\Users\\HomeUser\\Desktop\\\u041A\u0443\u0440\u0441 2\\\u0421\u0435\u043C\u0435\u0441\u0442\u0440 2\\\u041A\u041F\\Sportics\\sportics\\view\\reviewwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{CAE060A2-71A4-47B1-A060-15FE61B86CF5}|Sportics\\Sportics.csproj|solutionrelative:sportics\\view\\reviewwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CAE060A2-71A4-47B1-A060-15FE61B86CF5}|Sportics\\Sportics.csproj|c:\\users\\homeuser\\desktop\\\u043A\u0443\u0440\u0441 2\\\u0441\u0435\u043C\u0435\u0441\u0442\u0440 2\\\u043A\u043F\\sportics\\sportics\\model\\dataworker.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CAE060A2-71A4-47B1-A060-15FE61B86CF5}|Sportics\\Sportics.csproj|solutionrelative:sportics\\model\\dataworker.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,44 +30,69 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "ClientSessionRecord.cs",
-              "DocumentMoniker": "C:\\Users\\HomeUser\\Desktop\\\u041A\u0443\u0440\u0441 2\\\u0421\u0435\u043C\u0435\u0441\u0442\u0440 2\\\u041A\u041F\\Sportics\\Sportics\\Model\\ClientSessionRecord.cs",
-              "RelativeDocumentMoniker": "Sportics\\Model\\ClientSessionRecord.cs",
-              "ToolTip": "C:\\Users\\HomeUser\\Desktop\\\u041A\u0443\u0440\u0441 2\\\u0421\u0435\u043C\u0435\u0441\u0442\u0440 2\\\u041A\u041F\\Sportics\\Sportics\\Model\\ClientSessionRecord.cs",
-              "RelativeToolTip": "Sportics\\Model\\ClientSessionRecord.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 4,
+              "Title": "DataWorker.cs",
+              "DocumentMoniker": "C:\\Users\\HomeUser\\Desktop\\\u041A\u0443\u0440\u0441 2\\\u0421\u0435\u043C\u0435\u0441\u0442\u0440 2\\\u041A\u041F\\Sportics\\Sportics\\Model\\DataWorker.cs",
+              "RelativeDocumentMoniker": "Sportics\\Model\\DataWorker.cs",
+              "ToolTip": "C:\\Users\\HomeUser\\Desktop\\\u041A\u0443\u0440\u0441 2\\\u0421\u0435\u043C\u0435\u0441\u0442\u0440 2\\\u041A\u041F\\Sportics\\Sportics\\Model\\DataWorker.cs",
+              "RelativeToolTip": "Sportics\\Model\\DataWorker.cs",
+              "ViewState": "AgIAACMCAAAAAAAAAAAYwDsCAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-17T15:34:49.189Z",
+              "WhenOpened": "2025-05-18T03:55:07.568Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "CoachScheduleViewModel.cs",
-              "DocumentMoniker": "C:\\Users\\HomeUser\\Desktop\\\u041A\u0443\u0440\u0441 2\\\u0421\u0435\u043C\u0435\u0441\u0442\u0440 2\\\u041A\u041F\\Sportics\\Sportics\\ViewModel\\CoachScheduleViewModel.cs",
-              "RelativeDocumentMoniker": "Sportics\\ViewModel\\CoachScheduleViewModel.cs",
-              "ToolTip": "C:\\Users\\HomeUser\\Desktop\\\u041A\u0443\u0440\u0441 2\\\u0421\u0435\u043C\u0435\u0441\u0442\u0440 2\\\u041A\u041F\\Sportics\\Sportics\\ViewModel\\CoachScheduleViewModel.cs",
-              "RelativeToolTip": "Sportics\\ViewModel\\CoachScheduleViewModel.cs",
-              "ViewState": "AgIAACsAAAAAAAAAAAAvwCkAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 3,
+              "Title": "ReviewWindow.xaml",
+              "DocumentMoniker": "C:\\Users\\HomeUser\\Desktop\\\u041A\u0443\u0440\u0441 2\\\u0421\u0435\u043C\u0435\u0441\u0442\u0440 2\\\u041A\u041F\\Sportics\\Sportics\\View\\ReviewWindow.xaml",
+              "RelativeDocumentMoniker": "Sportics\\View\\ReviewWindow.xaml",
+              "ToolTip": "C:\\Users\\HomeUser\\Desktop\\\u041A\u0443\u0440\u0441 2\\\u0421\u0435\u043C\u0435\u0441\u0442\u0440 2\\\u041A\u041F\\Sportics\\Sportics\\View\\ReviewWindow.xaml",
+              "RelativeToolTip": "Sportics\\View\\ReviewWindow.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-05-18T00:10:50.226Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ReviewViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\HomeUser\\Desktop\\\u041A\u0443\u0440\u0441 2\\\u0421\u0435\u043C\u0435\u0441\u0442\u0440 2\\\u041A\u041F\\Sportics\\Sportics\\ViewModel\\ReviewViewModel.cs",
+              "RelativeDocumentMoniker": "Sportics\\ViewModel\\ReviewViewModel.cs",
+              "ToolTip": "C:\\Users\\HomeUser\\Desktop\\\u041A\u0443\u0440\u0441 2\\\u0421\u0435\u043C\u0435\u0441\u0442\u0440 2\\\u041A\u041F\\Sportics\\Sportics\\ViewModel\\ReviewViewModel.cs",
+              "RelativeToolTip": "Sportics\\ViewModel\\ReviewViewModel.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAxwCAAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-17T15:32:23.815Z",
+              "WhenOpened": "2025-05-18T00:11:10.434Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "CoachScheduleWindow.xaml",
-              "DocumentMoniker": "C:\\Users\\HomeUser\\Desktop\\\u041A\u0443\u0440\u0441 2\\\u0421\u0435\u043C\u0435\u0441\u0442\u0440 2\\\u041A\u041F\\Sportics\\Sportics\\View\\CoachScheduleWindow.xaml",
-              "RelativeDocumentMoniker": "Sportics\\View\\CoachScheduleWindow.xaml",
-              "ToolTip": "C:\\Users\\HomeUser\\Desktop\\\u041A\u0443\u0440\u0441 2\\\u0421\u0435\u043C\u0435\u0441\u0442\u0440 2\\\u041A\u041F\\Sportics\\Sportics\\View\\CoachScheduleWindow.xaml",
-              "RelativeToolTip": "Sportics\\View\\CoachScheduleWindow.xaml",
+              "Title": "ReviewScheduleWindow.xaml",
+              "DocumentMoniker": "C:\\Users\\HomeUser\\Desktop\\\u041A\u0443\u0440\u0441 2\\\u0421\u0435\u043C\u0435\u0441\u0442\u0440 2\\\u041A\u041F\\Sportics\\Sportics\\View\\ReviewScheduleWindow.xaml",
+              "RelativeDocumentMoniker": "Sportics\\View\\ReviewScheduleWindow.xaml",
+              "ToolTip": "C:\\Users\\HomeUser\\Desktop\\\u041A\u0443\u0440\u0441 2\\\u0421\u0435\u043C\u0435\u0441\u0442\u0440 2\\\u041A\u041F\\Sportics\\Sportics\\View\\ReviewScheduleWindow.xaml",
+              "RelativeToolTip": "Sportics\\View\\ReviewScheduleWindow.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-05-17T15:32:14.329Z",
+              "WhenOpened": "2025-05-17T22:13:17.901Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ReviewScheduleViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\HomeUser\\Desktop\\\u041A\u0443\u0440\u0441 2\\\u0421\u0435\u043C\u0435\u0441\u0442\u0440 2\\\u041A\u041F\\Sportics\\Sportics\\ViewModel\\ReviewScheduleViewModel.cs",
+              "RelativeDocumentMoniker": "Sportics\\ViewModel\\ReviewScheduleViewModel.cs",
+              "ToolTip": "C:\\Users\\HomeUser\\Desktop\\\u041A\u0443\u0440\u0441 2\\\u0421\u0435\u043C\u0435\u0441\u0442\u0440 2\\\u041A\u041F\\Sportics\\Sportics\\ViewModel\\ReviewScheduleViewModel.cs",
+              "RelativeToolTip": "Sportics\\ViewModel\\ReviewScheduleViewModel.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAsAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-17T23:23:08.503Z",
               "EditorCaption": ""
             }
           ]

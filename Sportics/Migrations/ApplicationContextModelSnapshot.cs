@@ -97,6 +97,9 @@ namespace Sportics.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("AdminReply")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("CoachId")
                         .HasColumnType("int");
 
@@ -134,6 +137,9 @@ namespace Sportics.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("DurationInDays")
+                        .HasColumnType("int");
+
                     b.Property<string>("FullName")
                         .HasColumnType("nvarchar(max)");
 
@@ -163,6 +169,9 @@ namespace Sportics.Migrations
 
                     b.Property<string>("ClientName")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("MembershipId")
                         .HasColumnType("int");
@@ -214,6 +223,9 @@ namespace Sportics.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("AdminReply")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Comment")
                         .HasColumnType("nvarchar(max)");

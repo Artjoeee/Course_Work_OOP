@@ -367,6 +367,8 @@ C:\Users\HomeUser\Desktop\Курс 2\Семестр 2\КП\Sportics\Sportics\obj
 C:\Users\HomeUser\Desktop\Курс 2\Семестр 2\КП\Sportics\Sportics\obj\Debug\View\ClientCoachInfoWindow.g.cs
 C:\Users\HomeUser\Desktop\Курс 2\Семестр 2\КП\Sportics\Sportics\obj\Debug\View\ClientMembershipInfoWindow.g.cs
 C:\Users\HomeUser\Desktop\Курс 2\Семестр 2\КП\Sportics\Sportics\obj\Debug\View\ClientMembershipsWindow.g.cs
+C:\Users\HomeUser\Desktop\Курс 2\Семестр 2\КП\Sportics\Sportics\obj\Debug\View\ClientScheduleInfoWindow.g.cs
+C:\Users\HomeUser\Desktop\Курс 2\Семестр 2\КП\Sportics\Sportics\obj\Debug\View\ClientSchedulesWindow.g.cs
 C:\Users\HomeUser\Desktop\Курс 2\Семестр 2\КП\Sportics\Sportics\obj\Debug\View\CoachesWindow.g.cs
 C:\Users\HomeUser\Desktop\Курс 2\Семестр 2\КП\Sportics\Sportics\obj\Debug\View\CoachInfoWindow.g.cs
 C:\Users\HomeUser\Desktop\Курс 2\Семестр 2\КП\Sportics\Sportics\obj\Debug\View\CoachScheduleWindow.g.cs
@@ -380,6 +382,7 @@ C:\Users\HomeUser\Desktop\Курс 2\Семестр 2\КП\Sportics\Sportics\obj
 C:\Users\HomeUser\Desktop\Курс 2\Семестр 2\КП\Sportics\Sportics\obj\Debug\View\MembershipsWindow.g.cs
 C:\Users\HomeUser\Desktop\Курс 2\Семестр 2\КП\Sportics\Sportics\obj\Debug\View\MessageWindow.g.cs
 C:\Users\HomeUser\Desktop\Курс 2\Семестр 2\КП\Sportics\Sportics\obj\Debug\View\RegistrationWindow.g.cs
+C:\Users\HomeUser\Desktop\Курс 2\Семестр 2\КП\Sportics\Sportics\obj\Debug\View\ReviewScheduleWindow.g.cs
 C:\Users\HomeUser\Desktop\Курс 2\Семестр 2\КП\Sportics\Sportics\obj\Debug\View\ReviewWindow.g.cs
 C:\Users\HomeUser\Desktop\Курс 2\Семестр 2\КП\Sportics\Sportics\obj\Debug\View\ScheduleInfoWindow.g.cs
 C:\Users\HomeUser\Desktop\Курс 2\Семестр 2\КП\Sportics\Sportics\obj\Debug\View\SchedulesWindow.g.cs
@@ -397,6 +400,8 @@ C:\Users\HomeUser\Desktop\Курс 2\Семестр 2\КП\Sportics\Sportics\obj
 C:\Users\HomeUser\Desktop\Курс 2\Семестр 2\КП\Sportics\Sportics\obj\Debug\View\ClientCoachInfoWindow.baml
 C:\Users\HomeUser\Desktop\Курс 2\Семестр 2\КП\Sportics\Sportics\obj\Debug\View\ClientMembershipInfoWindow.baml
 C:\Users\HomeUser\Desktop\Курс 2\Семестр 2\КП\Sportics\Sportics\obj\Debug\View\ClientMembershipsWindow.baml
+C:\Users\HomeUser\Desktop\Курс 2\Семестр 2\КП\Sportics\Sportics\obj\Debug\View\ClientScheduleInfoWindow.baml
+C:\Users\HomeUser\Desktop\Курс 2\Семестр 2\КП\Sportics\Sportics\obj\Debug\View\ClientSchedulesWindow.baml
 C:\Users\HomeUser\Desktop\Курс 2\Семестр 2\КП\Sportics\Sportics\obj\Debug\View\CoachesWindow.baml
 C:\Users\HomeUser\Desktop\Курс 2\Семестр 2\КП\Sportics\Sportics\obj\Debug\View\CoachInfoWindow.baml
 C:\Users\HomeUser\Desktop\Курс 2\Семестр 2\КП\Sportics\Sportics\obj\Debug\View\CoachScheduleWindow.baml
@@ -410,6 +415,7 @@ C:\Users\HomeUser\Desktop\Курс 2\Семестр 2\КП\Sportics\Sportics\obj
 C:\Users\HomeUser\Desktop\Курс 2\Семестр 2\КП\Sportics\Sportics\obj\Debug\View\MembershipsWindow.baml
 C:\Users\HomeUser\Desktop\Курс 2\Семестр 2\КП\Sportics\Sportics\obj\Debug\View\MessageWindow.baml
 C:\Users\HomeUser\Desktop\Курс 2\Семестр 2\КП\Sportics\Sportics\obj\Debug\View\RegistrationWindow.baml
+C:\Users\HomeUser\Desktop\Курс 2\Семестр 2\КП\Sportics\Sportics\obj\Debug\View\ReviewScheduleWindow.baml
 C:\Users\HomeUser\Desktop\Курс 2\Семестр 2\КП\Sportics\Sportics\obj\Debug\View\ReviewWindow.baml
 C:\Users\HomeUser\Desktop\Курс 2\Семестр 2\КП\Sportics\Sportics\obj\Debug\View\ScheduleInfoWindow.baml
 C:\Users\HomeUser\Desktop\Курс 2\Семестр 2\КП\Sportics\Sportics\obj\Debug\View\SchedulesWindow.baml

@@ -1,5 +1,7 @@
 ﻿using Sportics.Model;
+using Sportics.Model.Data;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
@@ -10,6 +12,8 @@ namespace Sportics.ViewModel
     public class ReviewViewModel : BaseViewModel
     {
         public ObservableCollection<CoachReview> Reviews { get; set; }
+
+        public List<int> RatingOptions { get; } = new List<int> { 1, 2, 3, 4, 5 };
 
         public string NewComment { get; set; }
         public int NewRating { get; set; }
@@ -26,6 +30,12 @@ namespace Sportics.ViewModel
 
         public bool HasUserReviewed => Reviews.Any(r => r.UserId == _user.Id);
 
+        public bool IsAdmin => Session.CurrentUser?.Role == "Администратор";
+
+        public string AdminReplyText { get; set; }
+        public CoachReview SelectedReview { get; set; }
+        public ICommand SubmitAdminReplyCommand { get; }
+
         public ReviewViewModel(Coach coach)
         {
             _coach = coach;
@@ -36,13 +46,14 @@ namespace Sportics.ViewModel
             );
 
             SubmitReviewCommand = new RelayCommand(obj => SubmitReview(), obj => CanSubmit);
+
+            SubmitAdminReplyCommand = new RelayCommand(obj => SubmitAdminReply(), obj => CanSubmitReply());
         }
 
         public ReviewViewModel() { }
 
         private void SubmitReview()
         {
-            Validate();
 
             if (!string.IsNullOrEmpty(CommentValidationError) || !string.IsNullOrEmpty(RatingValidationError))
                 return;
@@ -68,19 +79,26 @@ namespace Sportics.ViewModel
             OnPropertyChanged(nameof(CanSubmit));
         }
 
-        private void Validate()
+
+        private bool CanSubmitReply()
         {
-            CommentValidationError = string.IsNullOrWhiteSpace(NewComment)
-                ? "Комментарий не может быть пустым."
-                : null;
+            return IsAdmin && SelectedReview != null && !string.IsNullOrWhiteSpace(AdminReplyText);
+        }
 
-            RatingValidationError = NewRating < 1 || NewRating > 5
-                ? "Оценка должна быть от 1 до 5."
-                : null;
+        private void SubmitAdminReply()
+        {
+            if (SelectedReview == null || string.IsNullOrWhiteSpace(AdminReplyText))
+                return;
 
-            OnPropertyChanged(nameof(CommentValidationError));
-            OnPropertyChanged(nameof(RatingValidationError));
-            OnPropertyChanged(nameof(CanSubmit));
+            bool success = DataWorker.SaveAdminReply(SelectedReview.Id, AdminReplyText);
+
+            if (success)
+            {
+                SelectedReview.AdminReply = AdminReplyText; // обновляем локальную копию
+                OnPropertyChanged(nameof(SelectedReview));  // уведомляем UI
+                AdminReplyText = string.Empty;
+                OnPropertyChanged(nameof(AdminReplyText));
+            }
         }
     }
 }

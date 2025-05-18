@@ -1,4 +1,5 @@
 ﻿using Sportics.Helper;
+using Sportics.Model;
 using System;
 using System.Globalization;
 using System.IO;
@@ -22,6 +23,8 @@ namespace Sportics
             LocalizationManager.ChangeCulture("RU");
 
             base.OnStartup(e);
+
+            DataWorker.CleanupOldSchedules();
         }
     }
 }

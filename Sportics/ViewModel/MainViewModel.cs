@@ -49,11 +49,14 @@ namespace Sportics.ViewModel
 
         public ICommand OpenCoachesCommand { get; }
 
+        public ICommand OpenSchedulesCommand { get; }
+
         public MainViewModel()
         {
             OpenAccountCommand = new RelayCommand(obj => OpenAccount());
             OpenMembershipsCommand = new RelayCommand(obj => OpenMemberships());
             OpenCoachesCommand = new RelayCommand(obj => OpenCoaches());
+            OpenSchedulesCommand = new RelayCommand(obj => OpenSchedules());
         }
 
         private void OpenAccount()
@@ -80,6 +83,19 @@ namespace Sportics.ViewModel
         private void OpenCoaches()
         {
             ClientCoachesWindow window = new ClientCoachesWindow();
+            Application.Current.MainWindow = window;
+
+            Application.Current.Windows
+            .OfType<Window>()
+            .FirstOrDefault(w => w is MainWindow)?
+            .Close();
+
+            Application.Current.MainWindow.Show();
+        }
+
+        private void OpenSchedules()
+        {
+            ClientSchedulesWindow window = new ClientSchedulesWindow();
             Application.Current.MainWindow = window;
 
             Application.Current.Windows

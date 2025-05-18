@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows;
+using System.Runtime.InteropServices.ComTypes;
 
 namespace Sportics.ViewModel
 {
@@ -41,8 +42,11 @@ namespace Sportics.ViewModel
 
             Session.CurrentUser.Balance -= Membership.Price;
 
+            DateTime startDate = DateTime.Today;
+            DateTime endDate = startDate.AddDays(Membership.DurationInDays);
+
             // Добавляем заказ
-            DataWorker.SaveOrder(user.Id, user.Name, Membership.Id, Membership.FullName);
+            DataWorker.SaveOrder(user.Id, user.Name, Membership.Id, Membership.FullName, endDate);
 
             RequestClose?.Invoke();
         }

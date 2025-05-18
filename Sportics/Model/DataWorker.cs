@@ -35,11 +35,11 @@ namespace Sportics.Model
         }
 
 
-        public static async Task AddUser(string name, string email, string phoneNumber, string password)
+        public static void AddUser(string name, string email, string phoneNumber, string password)
         {
             using (ApplicationContext db = new ApplicationContext())
             {
-                bool checkIsExist = await db.Users.AnyAsync(user => user.Email == email);
+                bool checkIsExist = db.Users.Any(user => user.Email == email);
 
                 if (!checkIsExist)
                 {
@@ -54,11 +54,12 @@ namespace Sportics.Model
                         PasswordHash = hashedPassword,
                         PasswordSalt = salt,
                         Role = "Клиент",
+                        Balance = 0,
                         Status = "Активен"
                     };
 
-                    await db.Users.AddAsync(newUser);
-                    await db.SaveChangesAsync();
+                    db.Users.Add(newUser);
+                    db.SaveChanges();
                 }
             }
         }
@@ -146,7 +147,7 @@ namespace Sportics.Model
 
         #region Membership
 
-        public static void AddMembership(string fullName, string shortName, string category, string description, int price, byte[] photo)
+        public static void AddMembership(string fullName, string shortName, string category, string description, decimal price, byte[] photo, int durationInDays)
         {
             using (ApplicationContext db = new ApplicationContext())
             {
@@ -161,7 +162,8 @@ namespace Sportics.Model
                         Category = category,
                         Description = description,
                         Price = price,
-                        Photo = photo
+                        Photo = photo,
+                        DurationInDays = durationInDays
                     };
 
                     db.Memberships.Add(newMembership);
@@ -182,7 +184,8 @@ namespace Sportics.Model
         }
 
 
-        public static void EditMembership(Membership oldMembership, string fullName, string shortName, string description, string category, int price, byte[] photo)
+        public static void EditMembership(Membership oldMembership, string fullName, string shortName,
+            string description, string category, decimal price, byte[] photo, int durationInDays)
         {
             using (ApplicationContext db = new ApplicationContext())
             {
@@ -193,6 +196,7 @@ namespace Sportics.Model
                 membership.Category = category;
                 membership.Price = price;
                 membership.Photo = photo;
+                membership.DurationInDays = durationInDays;
                 db.SaveChanges();
             }
         }
@@ -310,7 +314,7 @@ namespace Sportics.Model
         }
 
 
-        public static void SaveOrder(int userId, string clientName, int membershipId, string membershipName)
+        public static void SaveOrder(int userId, string clientName, int membershipId, string membershipName, DateTime endDate)
         {
             using (var db = new ApplicationContext())
             {
@@ -320,7 +324,8 @@ namespace Sportics.Model
                     ClientId = userId,
                     MembershipName = membershipName,
                     MembershipId = membershipId,
-                    PurchaseDate = DateTime.Now
+                    PurchaseDate = DateTime.Now,
+                    EndDate = endDate
                 };
 
                 db.MembershipOrders.Add(order);
@@ -420,6 +425,35 @@ namespace Sportics.Model
         }
 
 
+        public static void CleanupOldSchedules()
+        {
+            using (var context = new ApplicationContext())
+            {
+                DateTime now = DateTime.Now;
+
+                var allSchedules = context.Schedules
+                    .Where(s => s.Date < now.Date.AddDays(-2))
+                    .ToList()
+                    .Where(s => s.Date.Add(s.Time) < now.AddDays(-2))
+                    .ToList();
+
+                foreach (var schedule in allSchedules)
+                {
+                    var relatedRecords = context.ClientSessionRecords
+                        .Where(r => r.ScheduleId == schedule.Id)
+                        .ToList();
+
+                    context.ClientSessionRecords.RemoveRange(relatedRecords);
+                    context.Schedules.Remove(schedule);
+                }
+
+                context.SaveChanges();
+            }
+        }
+
+
+
+
         #endregion
 
 
@@ -480,6 +514,18 @@ namespace Sportics.Model
             }
         }
 
+        internal static void UpdateCoachReview(CoachReview selectedReview)
+        {
+            using (var db = new ApplicationContext())
+            {
+                var reviewInDb = db.CoachReviews.FirstOrDefault(r => r.Id == selectedReview.Id);
+                if (reviewInDb != null)
+                {
+                    db.SaveChanges();
+                }
+            }
+        }
+
         #endregion
 
 
@@ -496,6 +542,40 @@ namespace Sportics.Model
                                 .ToList();
             }
         }
+
+        public static void SaveSessionReview(SessionReview review)
+        {
+            using (var db = new ApplicationContext())
+            {
+                db.SessionReviews.Add(review);
+                db.SaveChanges();
+            }
+        }
+
+        public static bool HasUserReviewedSession(int userId, int scheduleId)
+        {
+            using (var db = new ApplicationContext())
+            {
+                return db.SessionReviews.Any(r => r.UserId == userId && r.ScheduleId == scheduleId);
+            }
+        }
+
+
+        public static bool SaveAdminReply(int reviewId, string reply)
+        {
+            using (var context = new ApplicationContext())
+            {
+                var review = context.CoachReviews.FirstOrDefault(r => r.Id == reviewId);
+                if (review != null)
+                {
+                    review.AdminReply = reply;
+                    context.SaveChanges();
+                    return true;
+                }
+            }
+            return false;
+        }
+
 
         #endregion
     }

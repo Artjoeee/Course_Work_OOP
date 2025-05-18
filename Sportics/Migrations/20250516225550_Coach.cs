@@ -7,17 +7,12 @@ namespace Sportics.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<byte[]>(
-                name: "Photo",
-                table: "Coaches",
-                nullable: true);
+            
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "Photo",
-                table: "Coaches");
+            
         }
     }
 }

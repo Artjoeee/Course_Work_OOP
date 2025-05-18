@@ -221,6 +221,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Helper\BoolToVisibilityConverter.cs" />
+    <Compile Include="Helper\BoolToVisibilityInverseConverter.cs" />
     <Compile Include="Helper\HashHelper.cs" />
     <Compile Include="Helper\ImageSourceConverter.cs" />
     <Compile Include="Helper\LocalizationManager.cs" />
@@ -254,6 +256,14 @@
     <Compile Include="Migrations\20250516225550_Coach.Designer.cs">
       <DependentUpon>20250516225550_Coach.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20250517165624_Days.cs" />
+    <Compile Include="Migrations\20250517165624_Days.Designer.cs">
+      <DependentUpon>20250517165624_Days.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20250518021912_Admin.cs" />
+    <Compile Include="Migrations\20250518021912_Admin.Designer.cs">
+      <DependentUpon>20250518021912_Admin.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\ApplicationContextModelSnapshot.cs" />
     <Compile Include="Model\ClientSessionRecord.cs" />
     <Compile Include="Model\Coach.cs" />
@@ -276,6 +286,8 @@
     <Compile Include="ViewModel\ClientCoachInfoViewModel.cs" />
     <Compile Include="ViewModel\ClientMembershipInfoViewModel.cs" />
     <Compile Include="ViewModel\ClientMembershipsViewModel.cs" />
+    <Compile Include="ViewModel\ClientScheduleInfoViewModel.cs" />
+    <Compile Include="ViewModel\ClientSchedulesViewModel.cs" />
     <Compile Include="ViewModel\CoachesViewModel.cs" />
     <Compile Include="ViewModel\CoachInfoViewModel.cs" />
     <Compile Include="ViewModel\CoachScheduleViewModel.cs" />
@@ -288,6 +300,7 @@
     <Compile Include="ViewModel\MembershipsViewModel.cs" />
     <Compile Include="ViewModel\MessageViewModel.cs" />
     <Compile Include="ViewModel\RegistrationViewModel.cs" />
+    <Compile Include="ViewModel\ReviewScheduleViewModel.cs" />
     <Compile Include="ViewModel\ReviewViewModel.cs" />
     <Compile Include="ViewModel\ScheduleInfoViewModel.cs" />
     <Compile Include="ViewModel\SchedulesViewModel.cs" />
@@ -317,6 +330,12 @@
     </Compile>
     <Compile Include="View\ClientMembershipsWindow.xaml.cs">
       <DependentUpon>ClientMembershipsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ClientScheduleInfoWindow.xaml.cs">
+      <DependentUpon>ClientScheduleInfoWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ClientSchedulesWindow.xaml.cs">
+      <DependentUpon>ClientSchedulesWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\CoachesWindow.xaml.cs">
       <DependentUpon>CoachesWindow.xaml</DependentUpon>
@@ -353,6 +372,9 @@
     </Compile>
     <Compile Include="View\RegistrationWindow.xaml.cs">
       <DependentUpon>RegistrationWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ReviewScheduleWindow.xaml.cs">
+      <DependentUpon>ReviewScheduleWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ReviewWindow.xaml.cs">
       <DependentUpon>ReviewWindow.xaml</DependentUpon>
@@ -396,6 +418,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\ClientMembershipsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ClientScheduleInfoWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ClientSchedulesWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -458,6 +488,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\RegistrationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ReviewScheduleWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

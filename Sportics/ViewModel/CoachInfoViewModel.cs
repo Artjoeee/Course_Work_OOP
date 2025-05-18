@@ -14,11 +14,14 @@ namespace Sportics.ViewModel
         public ICommand DeleteCoachCommand { get; }
         public ICommand EditCoachCommand { get; }
 
+        public ICommand OpenReviewCommand { get; }
+
         public CoachInfoViewModel(Coach coach)
         {
             Coach = coach;
             DeleteCoachCommand = new RelayCommand(obj => DeleteCoach());
             EditCoachCommand = new RelayCommand(obj => OpenEditor(Coach));
+            OpenReviewCommand = new RelayCommand(obj => OpenReview());
         }
 
         public CoachInfoViewModel() { }
@@ -45,6 +48,15 @@ namespace Sportics.ViewModel
                 .OfType<Window>()
                 .FirstOrDefault(w => w is CoachInfoWindow)?
                 .Close();
+        }
+
+        private void OpenReview()
+        {
+            ReviewWindow reviewWindow = new ReviewWindow();
+            reviewWindow.DataContext = new ReviewViewModel(Coach);
+            reviewWindow.Owner = Application.Current.MainWindow;
+            reviewWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            reviewWindow.ShowDialog();
         }
     }
 }

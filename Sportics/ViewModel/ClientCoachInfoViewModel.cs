@@ -30,6 +30,7 @@ namespace Sportics.ViewModel
             var window = new CoachScheduleWindow();
             var viewModel = new CoachScheduleViewModel(coach);
             window.DataContext = viewModel;
+            viewModel.RequestClose += () => window.Close();
             window.Owner = Application.Current.MainWindow;
             window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             window.ShowDialog();
