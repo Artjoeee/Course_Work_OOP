@@ -128,7 +128,7 @@ namespace Sportics.ViewModel
 
             Application.Current.Windows
                 .OfType<Window>()
-                .FirstOrDefault(w => w is CoachesWindow)?
+                .FirstOrDefault(w => w is ClientCoachesWindow)?
                 .Close();
 
             Application.Current.MainWindow.Show();
@@ -177,7 +177,7 @@ namespace Sportics.ViewModel
 
             Application.Current.Windows
             .OfType<Window>()
-            .FirstOrDefault(w => w is ClientMembershipsWindow)?
+            .FirstOrDefault(w => w is ClientCoachesWindow)?
             .Close();
 
             Application.Current.MainWindow.Show();
@@ -191,7 +191,7 @@ namespace Sportics.ViewModel
 
             Application.Current.Windows
             .OfType<Window>()
-            .FirstOrDefault(w => w is ClientSchedulesWindow)?
+            .FirstOrDefault(w => w is ClientCoachesWindow)?
             .Close();
 
             Application.Current.MainWindow.Show();

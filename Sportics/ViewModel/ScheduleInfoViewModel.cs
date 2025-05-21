@@ -53,6 +53,7 @@ namespace Sportics.ViewModel
         private void LeaveReview()
         {
             ReviewScheduleWindow window = new ReviewScheduleWindow();
+            window.DataContext = new ReviewScheduleViewModel(Schedule);
             window.Owner = Application.Current.MainWindow;
             window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             window.ShowDialog();

@@ -60,10 +60,16 @@ namespace Sportics.ViewModel
                             return "Введите почту";
                         if (!Regex.IsMatch(Email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
                             return "Неверный формат почты.";
+                        if (Email.Length > 50)
+                            return "Длина строки превышает максимум.";
                         break;
 
                     case nameof(Password):
-                        return string.IsNullOrWhiteSpace(Password) ? "Введите пароль" : null;
+                        if(string.IsNullOrWhiteSpace(Password))  
+                            return "Введите пароль";
+                        if (Password.Length > 50)
+                            return "Длина строки превышает максимум.";
+                        break;
                 }
                 return null;
             }
@@ -90,8 +96,14 @@ namespace Sportics.ViewModel
             if (DataWorker.CheckUser(Email, Password))
             {
                 User user = DataWorker.SelectUser(Email, Password);
+
+                if (user.Status == "Заблокирован")
+                {
+                    ShowMessage("Ваша учетная запись заблокирована.");
+                    return;
+                }
+
                 Session.CurrentUser = user;
-                
 
                 if (user.Role == "Администратор")
                 {
@@ -99,9 +111,9 @@ namespace Sportics.ViewModel
                     Application.Current.MainWindow = adminWindow;
 
                     Application.Current.Windows
-                    .OfType<Window>()
-                    .FirstOrDefault(w => w is LoginWindow)?
-                    .Close();
+                        .OfType<Window>()
+                        .FirstOrDefault(w => w is LoginWindow)?
+                        .Close();
 
                     Application.Current.MainWindow.Show();
                 }
@@ -111,25 +123,16 @@ namespace Sportics.ViewModel
                     Application.Current.MainWindow = mainWindow;
 
                     Application.Current.Windows
-                    .OfType<Window>()
-                    .FirstOrDefault(w => w is LoginWindow)?
-                    .Close();
+                        .OfType<Window>()
+                        .FirstOrDefault(w => w is LoginWindow)?
+                        .Close();
 
                     Application.Current.MainWindow.Show();
                 }
             }
             else
             {
-                string message = "Неверный email или пароль";
-
-                MessageWindow messageWindow = new MessageWindow();
-                MessageViewModel viewModel = new MessageViewModel(message);
-                messageWindow.DataContext = viewModel;
-                viewModel.RequestClose += () => messageWindow.Close();
-                messageWindow.Owner = Application.Current.MainWindow;
-                messageWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-                messageWindow.ShowDialog();
-                return;
+                ShowMessage("Неверный email или пароль");
             }
         }
 
@@ -145,5 +148,17 @@ namespace Sportics.ViewModel
 
             Application.Current.MainWindow.Show();
         }
+
+        private void ShowMessage(string message)
+        {
+            MessageWindow messageWindow = new MessageWindow();
+            MessageViewModel viewModel = new MessageViewModel(message);
+            messageWindow.DataContext = viewModel;
+            viewModel.RequestClose += () => messageWindow.Close();
+            messageWindow.Owner = Application.Current.MainWindow;
+            messageWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            messageWindow.ShowDialog();
+        }
+
     }
 }

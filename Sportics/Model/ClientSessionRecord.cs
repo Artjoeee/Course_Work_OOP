@@ -20,11 +20,12 @@ namespace Sportics.Model
         public TimeSpan Time { get; set; }
         public DateTime Date { get; set; }
 
-        public int? MembershipId { get; set; }
-        public Membership Membership { get; set; }
+        public int MembershipOrderId { get; set; }
 
-        public int? MembershipOrderId { get; set; }
         public MembershipOrder MembershipOrder { get; set; }
+
+        public int MembershipId { get; set; }
+        public Membership Membership { get; set; }
     }
 
 }

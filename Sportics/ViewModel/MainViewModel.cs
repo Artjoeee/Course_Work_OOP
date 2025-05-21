@@ -45,6 +45,8 @@ namespace Sportics.ViewModel
             }
         }
 
+        public ICommand DetailsCommand { get; }
+
         public ICommand OpenAccountCommand { get; }
 
         public ICommand OpenMembershipsCommand { get; }
@@ -59,6 +61,7 @@ namespace Sportics.ViewModel
             OpenMembershipsCommand = new RelayCommand(obj => OpenMemberships());
             OpenCoachesCommand = new RelayCommand(obj => OpenCoaches());
             OpenSchedulesCommand = new RelayCommand(obj => OpenSchedules());
+            DetailsCommand = new RelayCommand(obj => GetDetails((Membership)obj));
 
             LoadWeeklyOffers();
         }
@@ -69,6 +72,18 @@ namespace Sportics.ViewModel
                 DataWorker.GetAllMemberships().Where(m => m.IsWeeklyOffer)
             );
         }
+
+        private void GetDetails(Membership membership)
+        {
+            ClientMembershipInfoWindow window = new ClientMembershipInfoWindow();
+            ClientMembershipInfoViewModel viewModel = new ClientMembershipInfoViewModel(membership);
+            window.DataContext = viewModel;
+            viewModel.RequestClose += () => window.Close();
+            window.Owner = Application.Current.MainWindow;
+            window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            window.ShowDialog();
+        }
+
         private void OpenAccount()
         {
             AccountWindow accountWindow = new AccountWindow();

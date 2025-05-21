@@ -93,22 +93,34 @@ namespace Sportics.ViewModel
 
         private void LoadSchedules()
         {
-            Schedules = DataWorker.GetAllSchedules();
+            DateTime now = DateTime.Now;
+
+            Schedules = DataWorker.GetAllSchedules()
+                .Where(s => s.Date.Date + s.Time + TimeSpan.FromDays(1) > now) // Сохраняем те, что еще не "просрочены"
+                .ToList();
+
             FilteredSchedules = new ObservableCollection<Schedule>(Schedules);
             OnPropertyChanged(nameof(Schedules));
             OnPropertyChanged(nameof(FilteredSchedules));
         }
 
+
+
         private void ApplyFilter()
         {
+            DateTime now = DateTime.Now;
+
             var filtered = Schedules.Where(s =>
                 (SelectedCategory == "Все категории" || s.Category == SelectedCategory) &&
-                (!SelectedDate.HasValue || s.Date.Date == SelectedDate.Value.Date)
+                (!SelectedDate.HasValue || s.Date.Date == SelectedDate.Value.Date) &&
+                (s.Date.Date + s.Time + TimeSpan.FromDays(1) > now) // Только не старше 1 дня после окончания
             ).ToList();
 
             FilteredSchedules = new ObservableCollection<Schedule>(filtered);
             OnPropertyChanged(nameof(FilteredSchedules));
         }
+
+
 
 
         private void OpenAddSchedule()

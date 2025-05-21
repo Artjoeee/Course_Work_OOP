@@ -144,7 +144,6 @@ namespace Sportics.ViewModel
 
             DataWorker.SaveCoachReview(review);
 
-            // Очистка полей
             NewComment = string.Empty;
             NewRating = 0;
             OnPropertyChanged(nameof(NewComment));

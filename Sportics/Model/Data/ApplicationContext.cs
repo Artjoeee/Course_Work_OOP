@@ -42,6 +42,18 @@ namespace Sportics.Model.Data
                 .WithMany(c => c.Schedules)
                 .HasForeignKey(s => s.CoachId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<ClientSessionRecord>()
+                .HasOne(s => s.MembershipOrder)
+                .WithMany(c => c.ClientSession)
+                .HasForeignKey(s => s.MembershipOrderId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<ClientSessionRecord>()
+                .HasOne(s => s.Schedule)
+                .WithMany(c => c.ClientSessionRecords)
+                .HasForeignKey(s => s.ScheduleId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

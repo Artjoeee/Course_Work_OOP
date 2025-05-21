@@ -14,11 +14,13 @@ namespace Sportics.Model
         public string MembershipName { get; set; }
         public int ClientId { get; set; }
         public string ClientName { get; set; }
+        public string Category { get; set; }
         public DateTime PurchaseDate { get; set; }
         public DateTime EndDate { get; set; }
-        public Membership Membership { get; set; }
 
+        public Membership Membership { get; set; }
         public User Client { get; set; }
+        public List<ClientSessionRecord> ClientSession { get; set; }
     }
 }
 

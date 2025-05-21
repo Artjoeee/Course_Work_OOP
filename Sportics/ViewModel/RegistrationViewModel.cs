@@ -94,40 +94,44 @@ namespace Sportics.ViewModel
 
         private void Register()
         {
-            isValidationActive = true;
-            OnPropertyChanged("");
+            IsValidationActive = true;
+
+            // Обновляем свойства, чтобы сработала IDataErrorInfo
+            OnPropertyChanged(nameof(Name));
+            OnPropertyChanged(nameof(Email));
+            OnPropertyChanged(nameof(Phone));
+            OnPropertyChanged(nameof(Password));
+            OnPropertyChanged(nameof(ConfirmPassword));
+
+            // Проверка всех полей на ошибки
+            var propertiesToCheck = new[] { nameof(Name), nameof(Email), nameof(Phone), nameof(Password), nameof(ConfirmPassword) };
+            bool hasErrors = propertiesToCheck.Any(prop => !string.IsNullOrWhiteSpace(this[prop]));
+
+            if (hasErrors)
+                return;
 
             if (!DataWorker.CheckEmailAndPhoneNumber(Email, Phone))
             {
-                string message = "Почта (телефон) уже зарегистрирована";
-
-                MessageWindow messageWindow = new MessageWindow();
-                MessageViewModel viewModel = new MessageViewModel(message);
-                messageWindow.DataContext = viewModel;
-                viewModel.RequestClose += () => messageWindow.Close();
-                messageWindow.Owner = Application.Current.MainWindow;
-                messageWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-                messageWindow.ShowDialog();
+                ShowMessage("Почта (телефон) уже зарегистрирована");
                 return;
             }
-            else
-            {
-                DataWorker.AddUser(Name, Email, Phone, Password);
 
-                User user = DataWorker.SelectUser(Email, Password);
-                Session.CurrentUser = user;
+            DataWorker.AddUser(Name, Email, Phone, Password);
 
-                MainWindow mainWindow = new MainWindow();
-                Application.Current.MainWindow = mainWindow;
+            User user = DataWorker.SelectUser(Email, Password);
+            Session.CurrentUser = user;
 
-                Application.Current.Windows
-                    .OfType<Window>()
-                    .FirstOrDefault(w => w is RegistrationWindow)?
-                    .Close();
+            MainWindow mainWindow = new MainWindow();
+            Application.Current.MainWindow = mainWindow;
 
-                Application.Current.MainWindow.Show();
-            }
+            Application.Current.Windows
+                .OfType<Window>()
+                .FirstOrDefault(w => w is RegistrationWindow)?
+                .Close();
+
+            Application.Current.MainWindow.Show();
         }
+
 
         private void OpenLogin()
         {
@@ -156,6 +160,8 @@ namespace Sportics.ViewModel
                     case nameof(Name):
                         if (string.IsNullOrWhiteSpace(Name))
                             return "Имя обязательно для заполнения.";
+                        if (Name.Length > 50)
+                            return "Длина строки превышает максимум.";
 
                         if (Regex.IsMatch(Name, @"\d"))
                             return "Имя не должно содержать цифры.";
@@ -171,18 +177,24 @@ namespace Sportics.ViewModel
                     case nameof(Email):
                         if (string.IsNullOrWhiteSpace(Email))
                             return "Почта обязательна.";
+                        if (Email.Length > 50)
+                            return "Длина строки превышает максимум.";
                         if (!Regex.IsMatch(Email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
                             return "Неверный формат почты.";
                         break;
                     case nameof(Phone):
                         if (string.IsNullOrWhiteSpace(Phone))
                             return "Телефон обязателен.";
+                        if (Phone.Length > 50)
+                            return "Длина строки превышает максимум.";
                         if (!Regex.IsMatch(Phone, @"^\+?\d{10,15}$"))
                             return "Неверный формат телефона.";
                         break;
                     case nameof(Password):
                         if (string.IsNullOrWhiteSpace(Password))
                             return "Пароль обязателен.";
+                        if (Password.Length > 50)
+                            return "Длина строки превышает максимум.";
 
                         if (!Regex.IsMatch(Password, @"^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}$"))
                             return "Пароль должен содержать 1 цифру, строчную и заглавную букву, длину не меньше 6.";
@@ -195,6 +207,17 @@ namespace Sportics.ViewModel
 
                 return null;
             }
+        }
+
+        private void ShowMessage(string message)
+        {
+            MessageWindow messageWindow = new MessageWindow();
+            MessageViewModel viewModel = new MessageViewModel(message);
+            messageWindow.DataContext = viewModel;
+            viewModel.RequestClose += () => messageWindow.Close();
+            messageWindow.Owner = Application.Current.MainWindow;
+            messageWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            messageWindow.ShowDialog();
         }
     }
 }

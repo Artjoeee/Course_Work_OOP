@@ -35,10 +35,10 @@ namespace Sportics.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("MembershipId")
+                    b.Property<int>("MembershipId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("MembershipOrderId")
+                    b.Property<int>("MembershipOrderId")
                         .HasColumnType("int");
 
                     b.Property<int>("ScheduleId")
@@ -167,6 +167,9 @@ namespace Sportics.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Category")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("ClientId")
                         .HasColumnType("int");
 
@@ -209,6 +212,9 @@ namespace Sportics.Migrations
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Status")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<TimeSpan>("Time")
                         .HasColumnType("time");
@@ -300,16 +306,20 @@ namespace Sportics.Migrations
 
                     b.HasOne("Sportics.Model.Membership", "Membership")
                         .WithMany()
-                        .HasForeignKey("MembershipId");
+                        .HasForeignKey("MembershipId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Sportics.Model.MembershipOrder", "MembershipOrder")
-                        .WithMany()
-                        .HasForeignKey("MembershipOrderId");
+                        .WithMany("ClientSession")
+                        .HasForeignKey("MembershipOrderId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("Sportics.Model.Schedule", "Schedule")
                         .WithMany("ClientSessionRecords")
                         .HasForeignKey("ScheduleId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 

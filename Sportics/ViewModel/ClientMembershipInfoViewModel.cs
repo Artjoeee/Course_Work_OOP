@@ -1,21 +1,14 @@
 ﻿using Sportics.Model;
 using Sportics.View;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows;
-using System.Runtime.InteropServices.ComTypes;
 
 namespace Sportics.ViewModel
 {
     public class ClientMembershipInfoViewModel: BaseViewModel
     {
         public Membership Membership { get; set; }
-
-        public bool CanBuy => Session.CurrentUser?.Balance >= Membership?.Price;
 
         public ICommand BuyMembershipCommand { get; }
 
@@ -33,23 +26,46 @@ namespace Sportics.ViewModel
 
         public event Action RequestClose;
 
+        public bool CanBuy =>
+            Session.CurrentUser?.Balance >= Membership?.Price &&
+            !DataWorker.HasActiveMembership(Session.CurrentUser.Id, Membership.Id);
+
         private void BuyMembership()
         {
             User user = Session.CurrentUser;
 
+            if (DataWorker.HasActiveMembership(user.Id, Membership.Id))
+            {
+                ShowMessage("У вас уже есть активный абонемент этого типа.");
+                return;
+            }
+
+            if (user.Balance < Membership.Price)
+            {
+                ShowMessage("Недостаточно средств для покупки абонемента.");
+                return;
+            }
+
             // Пытаемся списать баланс
             bool success = DataWorker.DeductBalance(user.Id, Membership.Price);
+            if (!success)
+            {
+                ShowMessage("Ошибка при списании средств.");
+                return;
+            }
 
-            Session.CurrentUser.Balance -= Membership.Price;
+            user.Balance -= Membership.Price;
 
             DateTime startDate = DateTime.Today;
             DateTime endDate = startDate.AddDays(Membership.DurationInDays);
 
             // Добавляем заказ
             DataWorker.SaveOrder(user.Id, user.Name, Membership.Id, Membership.FullName, endDate);
-
             RequestClose?.Invoke();
+
+            ShowMessage("Абонемент успешно оформлен");
         }
+
 
         private void OpenReview(Membership membership)
         {
@@ -59,6 +75,17 @@ namespace Sportics.ViewModel
             window.Owner = Application.Current.MainWindow;
             window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             window.ShowDialog();
+        }
+
+        private void ShowMessage(string message)
+        {
+            var messageWindow = new MessageWindow();
+            var viewModel = new MessageViewModel(message);
+            messageWindow.DataContext = viewModel;
+            viewModel.RequestClose += () => messageWindow.Close();
+            messageWindow.Owner = Application.Current.MainWindow;
+            messageWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            messageWindow.ShowDialog();
         }
     }
 }

@@ -52,6 +52,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>3668854-activities-dumbbell-gym-sport_108020.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="MaterialDesignColors, Version=5.2.1.0, Culture=neutral, PublicKeyToken=df2a72020bd7962a, processorArchitecture=MSIL">
       <HintPath>..\packages\MaterialDesignColors.5.2.1\lib\net462\MaterialDesignColors.dll</HintPath>
@@ -269,6 +272,38 @@
     <Compile Include="Migrations\20250518143853_Offer.cs" />
     <Compile Include="Migrations\20250518143853_Offer.Designer.cs">
       <DependentUpon>20250518143853_Offer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20250519093302_Data.cs" />
+    <Compile Include="Migrations\20250519093302_Data.Designer.cs">
+      <DependentUpon>20250519093302_Data.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20250519170321_Relation.cs" />
+    <Compile Include="Migrations\20250519170321_Relation.Designer.cs">
+      <DependentUpon>20250519170321_Relation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20250520182335_Membership.cs" />
+    <Compile Include="Migrations\20250520182335_Membership.Designer.cs">
+      <DependentUpon>20250520182335_Membership.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20250520213712_ClientSession.cs" />
+    <Compile Include="Migrations\20250520213712_ClientSession.Designer.cs">
+      <DependentUpon>20250520213712_ClientSession.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20250520214951_Category.cs" />
+    <Compile Include="Migrations\20250520214951_Category.Designer.cs">
+      <DependentUpon>20250520214951_Category.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20250521092256_Delete.cs" />
+    <Compile Include="Migrations\20250521092256_Delete.Designer.cs">
+      <DependentUpon>20250521092256_Delete.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20250521094722_Restrict.cs" />
+    <Compile Include="Migrations\20250521094722_Restrict.Designer.cs">
+      <DependentUpon>20250521094722_Restrict.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20250521134823_NewRestrict.cs" />
+    <Compile Include="Migrations\20250521134823_NewRestrict.Designer.cs">
+      <DependentUpon>20250521134823_NewRestrict.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\ApplicationContextModelSnapshot.cs" />
     <Compile Include="Model\ClientSessionRecord.cs" />
@@ -578,7 +613,12 @@
   <ItemGroup>
     <Resource Include="Resources\cursor.cur" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="dumbbell_sport_3663.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="3668854-activities-dumbbell-gym-sport_108020.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Data.SqlClient.SNI.1.1.0\build\net46\Microsoft.Data.SqlClient.SNI.targets" Condition="Exists('..\packages\Microsoft.Data.SqlClient.SNI.1.1.0\build\net46\Microsoft.Data.SqlClient.SNI.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -129,12 +129,14 @@ namespace Sportics.ViewModel
         public ICommand OpenMainCommand { get; }
         public ICommand OpenCoachesCommand { get; }
         public ICommand OpenSchedulesCommand { get; }
+        public ICommand OpenAccountCommand { get; }
 
         public ClientMembershipsViewModel()
         {
             OpenMainCommand = new RelayCommand(obj => OpenMain());
             OpenCoachesCommand = new RelayCommand(obj => OpenCoaches());
             OpenSchedulesCommand = new RelayCommand(obj => OpenSchedules());
+            OpenAccountCommand = new RelayCommand(obj => OpenAccount());
             DetailsCommand = new RelayCommand(obj => GetDetails((Membership)obj));
             ApplyFilterCommand = new RelayCommand(obj => ApplyFilter());
 
@@ -221,6 +223,16 @@ namespace Sportics.ViewModel
 
             Application.Current.MainWindow.Show();
 
+        }
+
+        private void OpenAccount()
+        {
+            AccountWindow accountWindow = new AccountWindow
+            {
+                Owner = Application.Current.MainWindow,
+                WindowStartupLocation = WindowStartupLocation.CenterOwner
+            };
+            accountWindow.ShowDialog();
         }
     }
 }

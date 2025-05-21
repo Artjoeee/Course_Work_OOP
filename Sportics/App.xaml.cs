@@ -22,9 +22,9 @@ namespace Sportics
 
             LocalizationManager.ChangeCulture("RU");
 
-            base.OnStartup(e);
-
             DataWorker.CleanupOldSchedules();
+
+            base.OnStartup(e);
         }
     }
 }

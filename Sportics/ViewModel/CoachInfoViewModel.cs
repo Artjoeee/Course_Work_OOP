@@ -30,8 +30,15 @@ namespace Sportics.ViewModel
 
         private void DeleteCoach()
         {
-            DataWorker.DeleteCoach(Coach);
-            RequestClose?.Invoke();
+            if (Coach.Schedules == null) 
+            {
+                DataWorker.DeleteCoach(Coach);
+                RequestClose?.Invoke();
+            }
+            else
+            {
+                ShowMessage("У тренера остались незаконченные занятия");
+            }
         }
 
         private void OpenEditor(Coach coach)
@@ -57,6 +64,17 @@ namespace Sportics.ViewModel
             reviewWindow.Owner = Application.Current.MainWindow;
             reviewWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             reviewWindow.ShowDialog();
+        }
+
+        private void ShowMessage(string message)
+        {
+            var messageWindow = new MessageWindow();
+            var viewModel = new MessageViewModel(message);
+            messageWindow.DataContext = viewModel;
+            viewModel.RequestClose += () => messageWindow.Close();
+            messageWindow.Owner = Application.Current.MainWindow;
+            messageWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            messageWindow.ShowDialog();
         }
     }
 }

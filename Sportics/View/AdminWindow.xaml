@@ -59,12 +59,10 @@
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0" Grid.Column="2">
                 <ToggleButton Content="🌙"
                         IsChecked="{Binding IsDarkTheme, Mode=TwoWay}"
-                        ToolTip="Темная тема"
+                        ToolTip="Тема"
                         Width="40" Height="40"
                         VerticalAlignment="Center"
                         Margin="10,0,10,0"/>
-                <ComboBox ItemsSource="{Binding Languages}"
-                        SelectedItem="{Binding SelectedLanguage}" Width="50" Foreground="{DynamicResource MaterialDesignBody}"/>
 
                 <Border Background="{DynamicResource MaterialDesignPaper}" Margin="10">
                     <Border.InputBindings>
@@ -123,7 +121,6 @@
                         <TabItem.ContextMenu>
                             <ContextMenu>
                                 <MenuItem Header="Заблокировать" Command="{Binding BlockUserCommand}" />
-                                <MenuItem Header="Удалить" Command="{Binding DeleteUserCommand}" />
                             </ContextMenu>
                         </TabItem.ContextMenu>
 
@@ -177,6 +174,7 @@
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Id заказа" Binding="{Binding Id}" />
                                 <DataGridTextColumn Header="Название абонемента" Binding="{Binding MembershipName}" />
+                                <DataGridTextColumn Header="Категория" Binding="{Binding Category}" />
                                 <DataGridTextColumn Header="Id клиента" Binding="{Binding ClientId}" />
                                 <DataGridTextColumn Header="Имя клиента" Binding="{Binding ClientName}" />
                                 <DataGridTextColumn Header="Дата заказа" Binding="{Binding PurchaseDate, StringFormat='dd.MM.yyyy'}" />
@@ -220,7 +218,7 @@
 
                         <TabItem.ContextMenu>
                             <ContextMenu>
-                                <MenuItem Header="Удалить запись" Command="{Binding DeleteClientSessionRecordCommand}" />
+                                <MenuItem Header="Отменить запись" Command="{Binding DeleteClientSessionRecordCommand}" />
                             </ContextMenu>
                         </TabItem.ContextMenu>
 

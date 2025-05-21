@@ -52,6 +52,24 @@ namespace Sportics.ViewModel
             if (user == null)
                 return;
 
+            DateTime sessionDateTime = Schedule.Date.Date + Schedule.Time;
+            if (DateTime.Now > sessionDateTime)
+            {
+                ShowMessage("Нельзя записаться на прошедшее занятие.");
+                return;
+            }
+
+            // Проверка: уже записан на это занятие?
+            bool alreadyEnrolled = DataWorker
+                .GetAllClientSessionRecords()
+                .Any(r => r.ClientId == user.Id && r.ScheduleId == Schedule.Id);
+
+            if (alreadyEnrolled)
+            {
+                ShowMessage("Вы уже записаны на это занятие.");
+                return;
+            }
+
             var orders = DataWorker.GetUserMembershipOrders(user.Id);
 
             MembershipOrder matchingOrder = orders.FirstOrDefault(o =>
@@ -75,12 +93,15 @@ namespace Sportics.ViewModel
                 MembershipOrderId = matchingOrder.Id
             };
 
-            DataWorker.SaveClientSessionRecord(record);
-            ShowMessage("Вы успешно записались!");
-
             CanLeaveReview = false;
             OnPropertyChanged(nameof(CanLeaveReview));
+
+            DataWorker.SaveClientSessionRecord(record);
+
+            RequestClose?.Invoke();
+            ShowMessage("Вы успешно записались!");
         }
+
 
         private void LeaveReview()
         {

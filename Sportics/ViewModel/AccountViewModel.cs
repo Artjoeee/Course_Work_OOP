@@ -32,6 +32,17 @@ namespace Sportics.ViewModel
             }
         }
 
+        private ObservableCollection<UserMembershipInfo> _userMemberships;
+        public ObservableCollection<UserMembershipInfo> UserMemberships
+        {
+            get => _userMemberships;
+            set
+            {
+                _userMemberships = value;
+                OnPropertyChanged();
+            }
+        }
+
 
         private Schedule _selectedSchedule;
         public Schedule SelectedSchedule
@@ -58,10 +69,31 @@ namespace Sportics.ViewModel
         private void LoadUserSchedules()
         {
             var userId = Session.CurrentUser?.Id ?? 0;
+
+            // Удаляем просроченные записи
+            var allRecords = DataWorker.GetAllClientSessionRecords()
+                .Where(r => r.ClientId == userId)
+                .ToList();
+
+            foreach (var record in allRecords)
+            {
+                var sessionDateTime = record.Date.Date + record.Time;
+                if (sessionDateTime.AddDays(1) < DateTime.Now)
+                {
+                    DataWorker.DeleteClientSessionRecord(record); // Удаляем запись через день после занятия
+                }
+            }
+
+            // Загружаем актуальные занятия после удаления старых
             var schedules = DataWorker.LoadUserSchedules(userId);
             UserSchedules = new ObservableCollection<Schedule>(schedules);
+
+            UserMemberships = new ObservableCollection<UserMembershipInfo>(
+                DataWorker.GetUserMemberships(Session.CurrentUser));
+
             OnPropertyChanged(nameof(UserSchedules));
         }
+
 
         private void CancelSchedule(object obj)
         {
@@ -93,6 +125,11 @@ namespace Sportics.ViewModel
 
             LoginWindow loginWindow = new LoginWindow();
             Application.Current.MainWindow = loginWindow;
+
+            Application.Current.Windows
+                .OfType<Window>()
+                .FirstOrDefault(w => w is AccountWindow)?
+                .Close();
 
             Application.Current.Windows
                 .OfType<Window>()
@@ -130,5 +167,11 @@ namespace Sportics.ViewModel
         {
             Session.BalanceUpdated -= OnBalanceUpdated;
         }
+    }
+
+    public class UserMembershipInfo
+    {
+        public Membership Membership { get; set; }
+        public DateTime EndDate { get; set; }
     }
 }

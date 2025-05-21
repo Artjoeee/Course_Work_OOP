@@ -11,7 +11,7 @@ namespace Sportics.ViewModel
     {
         public List<string> Categories { get; } = new List<string>
         {
-            "Фитнес", "Йога", "Танцы", "Плавание", "Тренажерный зал"
+            "Фитнес", "Йога", "Танцы", "Бассейн", "Тренажерный зал"
         };
 
         public List<string> Coaches { get; } = DataWorker.GetCoachNames();

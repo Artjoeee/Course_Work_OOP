@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Sportics.Helper;
 using Sportics.Model.Data;
+using Sportics.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -189,6 +190,23 @@ namespace Sportics.Model
             }
         }
 
+        public static List<UserMembershipInfo> GetUserMemberships(User user)
+        {
+            if (user == null)
+                return new List<UserMembershipInfo>();
+
+            using (var context = new ApplicationContext())
+            {
+                return context.MembershipOrders
+                .Where(order => order.ClientId == user.Id)
+                .Select(order => new UserMembershipInfo
+                {
+                    Membership = order.Membership,
+                    EndDate = order.EndDate
+                })
+                .ToList();
+                }
+        }
 
 
         public static List<Schedule> LoadUserSchedules(int userId)
@@ -209,6 +227,21 @@ namespace Sportics.Model
                 // Извлечь расписания из записей клиента
                 return records.Select(r => r.Schedule).ToList();
             }
+        }
+
+
+        public static bool HasActiveMembership(int userId, int membershipId)
+        {
+            using (var context = new ApplicationContext())
+            {
+                var activeOrder = context.MembershipOrders
+                .FirstOrDefault(o => o.ClientId == userId
+                                     && o.MembershipId == membershipId
+                                     && o.EndDate >= DateTime.Today);
+
+                return activeOrder != null;
+            }
+                
         }
 
 
@@ -361,7 +394,8 @@ namespace Sportics.Model
         {
             using (ApplicationContext db = new ApplicationContext())
             {
-                return db.Coaches.ToList();
+                return db.Coaches
+                    .ToList();
             }
         }
 
@@ -375,7 +409,9 @@ namespace Sportics.Model
         {
             using (ApplicationContext db = new ApplicationContext())
             {
-                return db.MembershipOrders.ToList();
+                return db.MembershipOrders
+                    .Include(o => o.ClientSession)
+                    .ToList();
             }
         }
 
@@ -395,14 +431,20 @@ namespace Sportics.Model
         {
             using (var db = new ApplicationContext())
             {
+                var membership = db.Memberships.FirstOrDefault(c => c.Id == membershipId);
+                var client = db.Users.FirstOrDefault(u => u.Id == userId);
+
                 var order = new MembershipOrder
                 {
                     ClientName = clientName,
                     ClientId = userId,
+                    Category = membership.Category,
                     MembershipName = membershipName,
                     MembershipId = membershipId,
                     PurchaseDate = DateTime.Now,
-                    EndDate = endDate
+                    EndDate = endDate,
+                    Membership = membership,
+                    Client = client
                 };
 
                 db.MembershipOrders.Add(order);
@@ -430,6 +472,7 @@ namespace Sportics.Model
             {
                 return db.Schedules
                          .Include(s => s.Coach)
+                         .Include(o => o.ClientSessionRecords)
                          .ToList();
             }
         }
@@ -446,7 +489,8 @@ namespace Sportics.Model
                     Date = date.Date,
                     Time = time,
                     CoachId = coach.Id,
-                    Coach = coach
+                    Coach = coach,
+                    Status = "Ожидается"
                 };
 
                 context.Schedules.Add(schedule);
@@ -509,9 +553,9 @@ namespace Sportics.Model
                 DateTime now = DateTime.Now;
 
                 var allSchedules = context.Schedules
-                    .Where(s => s.Date < now.Date.AddDays(-2))
+                    .Where(s => s.Date < now.Date.AddDays(-1))
                     .ToList()
-                    .Where(s => s.Date.Add(s.Time) < now.AddDays(-2))
+                    .Where(s => s.Date.Add(s.Time) < now.AddDays(-1))
                     .ToList();
 
                 foreach (var schedule in allSchedules)
@@ -527,9 +571,6 @@ namespace Sportics.Model
                 context.SaveChanges();
             }
         }
-
-
-
 
         #endregion
 
@@ -644,6 +685,8 @@ namespace Sportics.Model
             using (var db = new ApplicationContext())
             {
                 return db.SessionReviews
+                          .Include(r => r.User)
+                          .Include(r => r.Schedule)
                           .ToList();
             }
         }
@@ -695,8 +738,6 @@ namespace Sportics.Model
                 return true;
             }
         }
-
-
 
         #endregion
     }

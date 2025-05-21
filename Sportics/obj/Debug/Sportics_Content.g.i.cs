@@ -8,6 +8,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/arrow.cur")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("3668854-activities-dumbbell-gym-sport_108020.ico")]
 
 

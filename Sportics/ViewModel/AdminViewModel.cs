@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 
 namespace Sportics.ViewModel
@@ -97,8 +98,6 @@ namespace Sportics.ViewModel
 
         public ICommand BlockUserCommand { get; }
 
-        public ICommand DeleteUserCommand { get; }
-
         public ICommand OpenAccountCommand { get; }
 
         public ICommand OpenMembershipsCommand { get; }
@@ -127,34 +126,70 @@ namespace Sportics.ViewModel
             OpenMembershipsCommand = new RelayCommand(obj => OpenMemberships());
             OpenCoachesCommand = new RelayCommand(obj => OpenCoaches());
             OpenSchedulesCommand = new RelayCommand(obj => OpenSchedules());
+
             DeleteMembershipCommand = new RelayCommand(obj => DeleteMembership());
             DeleteOrderCommand = new RelayCommand(obj => DeleteOrder());
+            DeleteCoachCommand = new RelayCommand(obj => DeleteCoach());
+            DeleteScheduleCommand = new RelayCommand(obj => DeleteSchedule());
+            DeleteClientSessionRecordCommand = new RelayCommand(obj => DeleteClientSessionRecord());
+
             EditorCommand = new RelayCommand(obj => OpenEditor(SelectedMembership));
+            EditCoachCommand = new RelayCommand(obj => EditCoach(SelectedCoach));
+            EditScheduleCommand = new RelayCommand(obj => EditSchedule(SelectedSchedule));
+
             Coaches = new ObservableCollection<Coach>(DataWorker.GetAllCoaches());
             MembershipOrders = new ObservableCollection<MembershipOrder>(DataWorker.GetAllMembershipOrders());
             Schedules = new ObservableCollection<Schedule>(DataWorker.GetAllSchedules());
             ClientSessionRecords = new ObservableCollection<ClientSessionRecord>(DataWorker.GetAllClientSessionRecords());
             CoachReviews = new ObservableCollection<CoachReview>(DataWorker.LoadCoachReviews());
             SessionReviews = new ObservableCollection<SessionReview>(DataWorker.LoadSessionReviews());
-            BlockUserCommand = new RelayCommand(obj => BlockUser());
-            DeleteUserCommand = new RelayCommand(obj => DeleteUser());
-            DeleteCoachCommand = new RelayCommand(obj => DeleteCoach());
-            EditCoachCommand = new RelayCommand(obj => EditCoach(SelectedCoach));
-            EditScheduleCommand = new RelayCommand(obj => EditSchedule(SelectedSchedule));
-            DeleteScheduleCommand = new RelayCommand(obj => DeleteSchedule());
-            DeleteClientSessionRecordCommand = new RelayCommand(obj => DeleteClientSessionRecord());
-            SetAsWeeklyOfferCommand = new RelayCommand(obj => SetAsWeeklyOffer(SelectedMembership));
 
+            BlockUserCommand = new RelayCommand(obj => BlockUser());
+
+            SetAsWeeklyOfferCommand = new RelayCommand(obj => SetAsWeeklyOffer(SelectedMembership));
 
             AllMemberships();
             AllUsers();
             AllOrders();
+            AllCoaches();
+            AllSchedules();
+            AllClientSessionRecords();
         }
 
         private void AllUsers()
         {
             Users = DataWorker.GetAllUsers();
             OnPropertyChanged(nameof(Users));
+        }
+
+        private void AllCoaches()
+        {
+            Coaches = new ObservableCollection<Coach>(DataWorker.GetAllCoaches());
+            OnPropertyChanged(nameof(Coaches));
+        }
+
+        private void AllSchedules()
+        {
+            Schedules = new ObservableCollection<Schedule>(DataWorker.GetAllSchedules());
+            OnPropertyChanged(nameof(Schedules));
+        }
+
+        private void AllClientSessionRecords()
+        {
+            ClientSessionRecords = new ObservableCollection<ClientSessionRecord>(DataWorker.GetAllClientSessionRecords());
+            OnPropertyChanged(nameof(ClientSessionRecords));
+        }
+
+        private void AllMemberships()
+        {
+            Memberships = DataWorker.GetAllMemberships();
+            OnPropertyChanged(nameof(Memberships));
+        }
+
+        private void AllOrders()
+        {
+            MembershipOrders = new ObservableCollection<MembershipOrder>(DataWorker.GetAllMembershipOrders());
+            OnPropertyChanged(nameof(MembershipOrders));
         }
 
         private void BlockUser()
@@ -167,23 +202,18 @@ namespace Sportics.ViewModel
             }
         }
 
-        private void DeleteUser()
-        {
-            if (SelectedUser != null)
-            {
-                DataWorker.DeleteUser(SelectedUser);
-                AllUsers();
-            }
-        }
-
-
         private void DeleteCoach()
         {
-            if (SelectedCoach != null)
+            if (SelectedCoach != null && (SelectedCoach.Schedules?.Count ?? 0) == 0)
             {
                 DataWorker.DeleteCoach(SelectedCoach);
                 Coaches = new ObservableCollection<Coach>(DataWorker.GetAllCoaches());
                 OnPropertyChanged(nameof(Coaches));
+                AllCoaches();
+            }
+            else
+            {
+                ShowMessage("У тренера ещё запланированы занятия");
             }
         }
 
@@ -206,6 +236,7 @@ namespace Sportics.ViewModel
 
                 Coaches = new ObservableCollection<Coach>(DataWorker.GetAllCoaches());
                 OnPropertyChanged(nameof(Coaches));
+                AllCoaches();
             }
         }
 
@@ -234,17 +265,22 @@ namespace Sportics.ViewModel
                 ShowMessage($"{membership.ShortName} удалён из предложений недели.");
             }
 
-            AllMemberships(); // обновляем список
+            AllMemberships();
         }
 
 
         private void DeleteSchedule()
         {
-            if (SelectedSchedule != null)
+            if (SelectedSchedule != null && (SelectedSchedule.ClientSessionRecords?.Count ?? 0) == 0)
             {
                 DataWorker.DeleteSchedule(SelectedSchedule);
                 Schedules = new ObservableCollection<Schedule>(DataWorker.GetAllSchedules());
                 OnPropertyChanged(nameof(Schedules));
+                AllSchedules();
+            }
+            else
+            {
+                ShowMessage("На занятие ещё записаны люди");
             }
         }
 
@@ -265,6 +301,7 @@ namespace Sportics.ViewModel
 
                 Schedules = new ObservableCollection<Schedule>(DataWorker.GetAllSchedules());
                 OnPropertyChanged(nameof(Schedules));
+                AllSchedules();
             }
         }
 
@@ -275,24 +312,13 @@ namespace Sportics.ViewModel
                 DataWorker.DeleteClientSessionRecord(SelectedClientSessionRecord);
                 ClientSessionRecords = new ObservableCollection<ClientSessionRecord>(DataWorker.GetAllClientSessionRecords());
                 OnPropertyChanged(nameof(ClientSessionRecords));
+                AllClientSessionRecords();
             }
-        }
-
-        private void AllMemberships()
-        {
-            Memberships = DataWorker.GetAllMemberships();
-            OnPropertyChanged(nameof(Memberships));
-        }
-
-        private void AllOrders()
-        {
-            MembershipOrders = new ObservableCollection<MembershipOrder>(DataWorker.GetAllMembershipOrders());
-            OnPropertyChanged(nameof(MembershipOrders));
         }
 
         private void DeleteMembership()
         {
-            if (SelectedTab.Name == "Memberships")
+            if (SelectedMembership != null)
             {
                 DataWorker.DeleteMembership(SelectedMembership);
                 AllMemberships();
@@ -301,10 +327,14 @@ namespace Sportics.ViewModel
 
         private void DeleteOrder()
         {
-            if (SelectedTab.Name == "Orders")
+            if (SelectedOrder != null && (SelectedOrder.ClientSession?.Count ?? 0) == 0)
             {
                 DataWorker.DeleteOrder(SelectedOrder);
                 AllOrders();
+            }
+            else
+            {
+                ShowMessage("Пользователь ещё записан на занятия");
             }
         }
 
