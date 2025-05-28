@@ -157,7 +157,7 @@ namespace Sportics.ViewModel
             if (!CanReply)
                 return;
 
-            bool success = DataWorker.SaveAdminReply(SelectedReview.Id, AdminReplyText);
+            bool success = DataWorker.SaveAdminCoachReply(SelectedReview.Id, AdminReplyText);
 
             if (success)
             {
@@ -165,6 +165,8 @@ namespace Sportics.ViewModel
                 OnPropertyChanged(nameof(AdminReplyText));
                 LoadCoachReviews();
             }
+
+            LoadCoachReviews();
         }
 
         private void DeleteSelectedReview()

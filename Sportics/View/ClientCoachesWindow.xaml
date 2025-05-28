@@ -10,6 +10,7 @@
         Title="Sportics"
         MinHeight="500" MinWidth="850"
         Width="1250" Height="650"
+        WindowState="Maximized"
         WindowStartupLocation="CenterScreen">
     <Window.DataContext>
         <vm:ClientCoachesViewModel />

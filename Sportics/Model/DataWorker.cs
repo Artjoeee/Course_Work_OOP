@@ -395,6 +395,7 @@ namespace Sportics.Model
             using (ApplicationContext db = new ApplicationContext())
             {
                 return db.Coaches
+                    .Include(c => c.Schedules)
                     .ToList();
             }
         }
@@ -460,6 +461,20 @@ namespace Sportics.Model
                 db.SaveChanges();
             }
         }
+
+        public static void DeleteExpiredOrders()
+        {
+            using (var db = new ApplicationContext())
+            {
+                var expiredOrders = db.MembershipOrders
+                    .Where(o => o.EndDate < DateTime.Now)
+                    .ToList();
+
+                db.MembershipOrders.RemoveRange(expiredOrders);
+                db.SaveChanges();
+            }
+        }
+
 
         #endregion
 
@@ -541,6 +556,25 @@ namespace Sportics.Model
                     schedule.Time = time;
 
                     db.SaveChanges();
+                }
+            }
+        }
+
+        public static void UpdateSchedule(Schedule schedule)
+        {
+            if (schedule == null) return;
+
+            using (var context = new ApplicationContext())
+            {
+                var dbUser = context.Schedules.FirstOrDefault(u => u.Id == schedule.Id);
+                if (dbUser != null)
+                {
+                    dbUser.Category = schedule.Category;
+                    dbUser.CoachId = schedule.CoachId;
+                    dbUser.Date = schedule.Date;
+                    dbUser.Time = schedule.Time;
+                    dbUser.Status = schedule.Status;
+                    context.SaveChanges();
                 }
             }
         }
@@ -720,6 +754,21 @@ namespace Sportics.Model
                 review.AdminReply = reply;
                 context.SaveChanges();
                 
+            }
+            return false;
+        }
+
+        public static bool SaveAdminCoachReply(int reviewId, string reply)
+        {
+            using (var context = new ApplicationContext())
+            {
+                var review = context.CoachReviews.FirstOrDefault(r => r.Id == reviewId);
+                if (review == null)
+                    return false;
+
+                review.AdminReply = reply;
+                context.SaveChanges();
+
             }
             return false;
         }

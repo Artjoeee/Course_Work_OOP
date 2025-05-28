@@ -9,7 +9,7 @@
         mc:Ignorable="d"
         MinHeight="700" MinWidth="500"
         Title="Личный кабинет"
-        Height="700" Width="750" WindowStartupLocation="CenterScreen">
+        Height="700" Width="800" WindowStartupLocation="CenterScreen">
 
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis"/>
@@ -20,7 +20,7 @@
     </Window.DataContext>
 
     <Grid Background="{DynamicResource MaterialDesignPaper}" Margin="20">
-        <StackPanel VerticalAlignment="Top" HorizontalAlignment="Center" Width="600">
+        <StackPanel VerticalAlignment="Top" HorizontalAlignment="Center" Width="700">
             <TextBlock Text="Личный кабинет" FontSize="24" FontWeight="SemiBold" TextAlignment="Center" Margin="0,10" Foreground="{DynamicResource MaterialDesignBody}"/>
             <TextBlock Text="{Binding UserName}" FontSize="14" FontWeight="SemiBold" TextAlignment="Center" Margin="0,10" Foreground="{DynamicResource MaterialDesignBody}"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,20">
@@ -37,54 +37,56 @@
                     <Button Content="Пополнить баланс" Height="35" Margin="0,15,5,0" Command="{Binding BalanceCommand}" Width="180"/>
                 </StackPanel>
 
-                <TabControl Margin="0,20,0,0">
-                    <!-- Вкладка с записями на тренировки -->
-                    <TabItem Header="Записи на тренировки">
-                        <StackPanel>
-                            <TextBlock Text="Ваши записи на тренировки:" FontSize="16" FontWeight="Bold" Margin="0,10" Foreground="{DynamicResource MaterialDesignBody}"/>
-                            <DataGrid ItemsSource="{Binding UserSchedules}" AutoGenerateColumns="False" CanUserAddRows="False">
-                                <DataGrid.Columns>
-                                    <DataGridTextColumn Header="Дата" Binding="{Binding Date, StringFormat=d}" Width="*"/>
-                                    <DataGridTextColumn Header="Время" Binding="{Binding Time}" Width="*"/>
-                                    <DataGridTextColumn Header="Категория" Binding="{Binding Category}" Width="*"/>
-                                    <DataGridTextColumn Header="Тренер" Binding="{Binding Coach.Name}" Width="*"/>
-                                    <DataGridTemplateColumn Header="Действия" Width="*">
-                                        <DataGridTemplateColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <Button Content="Отменить" 
-                                        Command="{Binding DataContext.CancelScheduleCommand, RelativeSource={RelativeSource AncestorType=Window}}"
-                                        CommandParameter="{Binding}"/>
-                                            </DataTemplate>
-                                        </DataGridTemplateColumn.CellTemplate>
-                                    </DataGridTemplateColumn>
-                                </DataGrid.Columns>
-                            </DataGrid>
-                        </StackPanel>
-                    </TabItem>
+                <ScrollViewer>
+                    <TabControl Margin="0,20,0,0">
+                        <!-- Вкладка с записями на тренировки -->
+                        <TabItem Header="Записи на тренировки">
+                            <StackPanel>
+                                <TextBlock Text="Ваши записи на тренировки:" FontSize="16" FontWeight="Bold" Margin="0,10" Foreground="{DynamicResource MaterialDesignBody}"/>
+                                <DataGrid ItemsSource="{Binding UserSchedules}" AutoGenerateColumns="False" CanUserAddRows="False">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="Дата" Binding="{Binding Date, StringFormat=d}" Width="*"/>
+                                        <DataGridTextColumn Header="Время" Binding="{Binding Time}" Width="*"/>
+                                        <DataGridTextColumn Header="Категория" Binding="{Binding Category}" Width="*"/>
+                                        <DataGridTextColumn Header="Тренер" Binding="{Binding Coach.Name}" Width="*"/>
+                                        <DataGridTemplateColumn Header="Действия" Width="*">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <Button Content="Отменить" 
+                                                        Command="{Binding DataContext.CancelScheduleCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                                        CommandParameter="{Binding}"/>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </StackPanel>
+                        </TabItem>
 
-                    <!-- Вкладка с абонементами -->
-                    <TabItem Header="Мои абонементы">
-                        <StackPanel>
-                            <TextBlock Text="Ваши абонементы:" FontSize="16" FontWeight="Bold" Margin="0,10" Foreground="{DynamicResource MaterialDesignBody}"/>
-                            <DataGrid ItemsSource="{Binding UserMemberships}" AutoGenerateColumns="False" CanUserAddRows="False">
-                                <DataGrid.Columns>
-                                    <DataGridTextColumn Header="Название" Binding="{Binding Membership.ShortName}" Width="*"/>
-                                    <DataGridTextColumn Header="Дата окончания" Binding="{Binding EndDate, StringFormat=d}" Width="*"/>
-                                    <DataGridTextColumn Header="Категория" Binding="{Binding Membership.Category}" Width="*"/>
-                                    <DataGridTemplateColumn Header="Действия" Width="*">
-                                        <DataGridTemplateColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <Button Content="Отменить" 
-                                                Command="{Binding DataContext.CancelScheduleCommand, RelativeSource={RelativeSource AncestorType=Window}}"
-                                                CommandParameter="{Binding}"/>
-                                            </DataTemplate>
-                                        </DataGridTemplateColumn.CellTemplate>
-                                    </DataGridTemplateColumn>
-                                </DataGrid.Columns>
-                            </DataGrid>
-                        </StackPanel>
-                    </TabItem>
-                </TabControl>
+                        <!-- Вкладка с абонементами -->
+                        <TabItem Header="Мои абонементы">
+                            <StackPanel>
+                                <TextBlock Text="Ваши абонементы:" FontSize="16" FontWeight="Bold" Margin="0,10" Foreground="{DynamicResource MaterialDesignBody}"/>
+                                <DataGrid ItemsSource="{Binding UserMemberships}" AutoGenerateColumns="False" CanUserAddRows="False">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="Название" Binding="{Binding Membership.ShortName}" Width="*"/>
+                                        <DataGridTextColumn Header="Дата окончания" Binding="{Binding EndDate, StringFormat=d}" Width="*"/>
+                                        <DataGridTextColumn Header="Категория" Binding="{Binding Membership.Category}" Width="*"/>
+                                        <DataGridTemplateColumn Header="Действия" Width="*">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <Button Content="Отменить" 
+                                                        Command="{Binding DataContext.CancelMembershipCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                                        CommandParameter="{Binding}"/>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </StackPanel>
+                        </TabItem>
+                    </TabControl>
+                </ScrollViewer>
 
             </StackPanel>
         </StackPanel>

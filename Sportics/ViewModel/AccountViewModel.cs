@@ -20,6 +20,7 @@ namespace Sportics.ViewModel
         public ICommand BalanceCommand { get; }
         public ICommand CancelRegistrationCommand { get; }
         public ICommand CancelScheduleCommand { get; }
+        public ICommand CancelMembershipCommand { get; }
 
         private ObservableCollection<Schedule> _userSchedules;
         public ObservableCollection<Schedule> UserSchedules
@@ -55,11 +56,23 @@ namespace Sportics.ViewModel
             }
         }
 
+        private UserMembershipInfo _selectedMembership;
+        public UserMembershipInfo SelectedMembership
+        {
+            get => _selectedMembership;
+            set
+            {
+                _selectedMembership = value;
+                OnPropertyChanged();
+            }
+        }
+
         public AccountViewModel()
         {
             ExitCommand = new RelayCommand(_ => Exit());
             BalanceCommand = new RelayCommand(_ => OpenBalance());
             CancelScheduleCommand = new RelayCommand(obj => CancelSchedule(obj));
+            CancelMembershipCommand = new RelayCommand(obj => CancelMembership(obj));
 
             Session.BalanceUpdated += OnBalanceUpdated;
 
@@ -92,6 +105,7 @@ namespace Sportics.ViewModel
                 DataWorker.GetUserMemberships(Session.CurrentUser));
 
             OnPropertyChanged(nameof(UserSchedules));
+            OnPropertyChanged(nameof(UserMemberships));
         }
 
 
@@ -113,6 +127,37 @@ namespace Sportics.ViewModel
             }
         }
 
+        private void CancelMembership(object obj)
+        {
+            if (obj is UserMembershipInfo membershipInfo)
+            {
+                if (membershipInfo == null)
+                return;
+
+                var membershipOrder = DataWorker
+                    .GetUserMembershipOrders(Session.CurrentUser.Id)
+                    .FirstOrDefault(o => o.MembershipId == membershipInfo.Membership.Id);
+
+                if (membershipOrder == null)
+                {
+                    ShowMessage("Не удалось найти заказ на абонемент.");
+                    return;
+                }
+
+                // Проверка: нет ли записей на занятия по этому абонементу
+                if (membershipOrder.ClientSession?.Count > 0)
+                {
+                    ShowMessage("Невозможно. Пользователь ещё записан на занятия.");
+                    return;
+                }
+
+                DataWorker.DeleteOrder(membershipOrder);
+                UserMemberships.Remove(membershipInfo);
+                OnPropertyChanged(nameof(UserMemberships));
+
+                ShowMessage("Абонемент успешно отменён.");
+            }
+        }
 
         private void OnBalanceUpdated()
         {

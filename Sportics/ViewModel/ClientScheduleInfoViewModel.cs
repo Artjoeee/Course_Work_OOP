@@ -43,6 +43,12 @@ namespace Sportics.ViewModel
             DateTime now = DateTime.Now;
 
             CanLeaveReview = isEnrolled && now > dateTime && now <= dateTime.AddDays(1);
+
+            if (now > dateTime)
+            {
+                Schedule.Status = "Завершено";
+                DataWorker.UpdateSchedule(Schedule);
+            }
         }
 
         private void SignUp()

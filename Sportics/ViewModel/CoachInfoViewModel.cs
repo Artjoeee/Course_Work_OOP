@@ -30,7 +30,7 @@ namespace Sportics.ViewModel
 
         private void DeleteCoach()
         {
-            if (Coach.Schedules == null) 
+            if ((Coach.Schedules?.Count ?? 0) == 0) 
             {
                 DataWorker.DeleteCoach(Coach);
                 RequestClose?.Invoke();

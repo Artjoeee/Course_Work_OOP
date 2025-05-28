@@ -154,6 +154,8 @@ namespace Sportics.ViewModel
             AllCoaches();
             AllSchedules();
             AllClientSessionRecords();
+
+            DeleteExpiredOrders();
         }
 
         private void AllUsers()
@@ -196,8 +198,17 @@ namespace Sportics.ViewModel
         {
             if (SelectedUser != null)
             {
-                SelectedUser.Status = "Заблокирован";
-                DataWorker.UpdateUser(SelectedUser);
+                if (SelectedUser.Status == "Активен") 
+                {
+                    SelectedUser.Status = "Заблокирован";
+                    DataWorker.UpdateUser(SelectedUser);
+                }
+                else
+                {
+                    SelectedUser.Status = "Активен";
+                    DataWorker.UpdateUser(SelectedUser);
+                }
+
                 AllUsers();
             }
         }
@@ -216,6 +227,63 @@ namespace Sportics.ViewModel
                 ShowMessage("У тренера ещё запланированы занятия");
             }
         }
+
+        private void DeleteSchedule()
+        {
+            if (SelectedSchedule != null && (SelectedSchedule.ClientSessionRecords?.Count ?? 0) == 0)
+            {
+                DataWorker.DeleteSchedule(SelectedSchedule);
+                Schedules = new ObservableCollection<Schedule>(DataWorker.GetAllSchedules());
+                OnPropertyChanged(nameof(Schedules));
+                AllSchedules();
+                AllCoaches();
+            }
+            else
+            {
+                ShowMessage("На занятие ещё записаны люди");
+            }
+        }
+
+        private void DeleteClientSessionRecord()
+        {
+            if (SelectedClientSessionRecord != null)
+            {
+                DataWorker.DeleteClientSessionRecord(SelectedClientSessionRecord);
+                ClientSessionRecords = new ObservableCollection<ClientSessionRecord>(DataWorker.GetAllClientSessionRecords());
+                OnPropertyChanged(nameof(ClientSessionRecords));
+                AllClientSessionRecords();
+                AllOrders();
+            }
+        }
+
+        private void DeleteMembership()
+        {
+            if (SelectedMembership != null)
+            {
+                DataWorker.DeleteMembership(SelectedMembership);
+                AllMemberships();
+            }
+        }
+
+        private void DeleteOrder()
+        {
+            if (SelectedOrder != null && (SelectedOrder.ClientSession?.Count ?? 0) == 0)
+            {
+                DataWorker.DeleteOrder(SelectedOrder);
+                AllOrders();
+            }
+            else
+            {
+                ShowMessage("Пользователь ещё записан на занятия");
+            }
+        }
+
+        private void DeleteExpiredOrders()
+        {
+            DataWorker.DeleteExpiredOrders();
+            AllOrders();
+        }
+
 
         private void EditCoach(Coach coach)
         {
@@ -237,6 +305,28 @@ namespace Sportics.ViewModel
                 Coaches = new ObservableCollection<Coach>(DataWorker.GetAllCoaches());
                 OnPropertyChanged(nameof(Coaches));
                 AllCoaches();
+            }
+        }
+
+
+        private void EditSchedule(Schedule schedule)
+        {
+            if (SelectedSchedule != null)
+            {
+                if (SelectedTab.Name == "Schedule")
+                {
+                    EditScheduleWindow window = new EditScheduleWindow();
+                    EditScheduleViewModel viewModel = new EditScheduleViewModel(schedule);
+                    window.DataContext = viewModel;
+                    viewModel.RequestClose += () => window.Close();
+                    window.Owner = Application.Current.MainWindow;
+                    window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+                    window.ShowDialog();
+                }
+
+                Schedules = new ObservableCollection<Schedule>(DataWorker.GetAllSchedules());
+                OnPropertyChanged(nameof(Schedules));
+                AllSchedules();
             }
         }
 
@@ -266,76 +356,6 @@ namespace Sportics.ViewModel
             }
 
             AllMemberships();
-        }
-
-
-        private void DeleteSchedule()
-        {
-            if (SelectedSchedule != null && (SelectedSchedule.ClientSessionRecords?.Count ?? 0) == 0)
-            {
-                DataWorker.DeleteSchedule(SelectedSchedule);
-                Schedules = new ObservableCollection<Schedule>(DataWorker.GetAllSchedules());
-                OnPropertyChanged(nameof(Schedules));
-                AllSchedules();
-            }
-            else
-            {
-                ShowMessage("На занятие ещё записаны люди");
-            }
-        }
-
-        private void EditSchedule(Schedule schedule)
-        {
-            if (SelectedSchedule != null)
-            {
-                if (SelectedTab.Name == "Schedule")
-                {
-                    EditScheduleWindow window = new EditScheduleWindow();
-                    EditScheduleViewModel viewModel = new EditScheduleViewModel(schedule);
-                    window.DataContext = viewModel;
-                    viewModel.RequestClose += () => window.Close();
-                    window.Owner = Application.Current.MainWindow;
-                    window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-                    window.ShowDialog();
-                }
-
-                Schedules = new ObservableCollection<Schedule>(DataWorker.GetAllSchedules());
-                OnPropertyChanged(nameof(Schedules));
-                AllSchedules();
-            }
-        }
-
-        private void DeleteClientSessionRecord()
-        {
-            if (SelectedClientSessionRecord != null)
-            {
-                DataWorker.DeleteClientSessionRecord(SelectedClientSessionRecord);
-                ClientSessionRecords = new ObservableCollection<ClientSessionRecord>(DataWorker.GetAllClientSessionRecords());
-                OnPropertyChanged(nameof(ClientSessionRecords));
-                AllClientSessionRecords();
-            }
-        }
-
-        private void DeleteMembership()
-        {
-            if (SelectedMembership != null)
-            {
-                DataWorker.DeleteMembership(SelectedMembership);
-                AllMemberships();
-            }
-        }
-
-        private void DeleteOrder()
-        {
-            if (SelectedOrder != null && (SelectedOrder.ClientSession?.Count ?? 0) == 0)
-            {
-                DataWorker.DeleteOrder(SelectedOrder);
-                AllOrders();
-            }
-            else
-            {
-                ShowMessage("Пользователь ещё записан на занятия");
-            }
         }
 
         private void OpenAccount()

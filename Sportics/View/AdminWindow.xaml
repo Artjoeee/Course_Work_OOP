@@ -10,6 +10,7 @@
         Title="Sportics"
         MinHeight="500" MinWidth="1160"
         Width="1250" Height="650"
+        WindowState="Maximized"
         WindowStartupLocation="CenterScreen">
 
     <Window.Resources>
@@ -120,7 +121,7 @@
 
                         <TabItem.ContextMenu>
                             <ContextMenu>
-                                <MenuItem Header="Заблокировать" Command="{Binding BlockUserCommand}" />
+                                <MenuItem Header="Изменить статус" Command="{Binding BlockUserCommand}" />
                             </ContextMenu>
                         </TabItem.ContextMenu>
 
@@ -205,6 +206,7 @@
                                 <DataGridTextColumn Header="Имя тренера" Binding="{Binding Coach.Name}" />
                                 <DataGridTextColumn Header="Дата" Binding="{Binding Date, StringFormat='dd.MM.yyyy'}" />
                                 <DataGridTextColumn Header="Время" Binding="{Binding Time}" />
+                                <DataGridTextColumn Header="Статус" Binding="{Binding Status}" />
                             </DataGrid.Columns>
                         </DataGrid>
                     </TabItem>

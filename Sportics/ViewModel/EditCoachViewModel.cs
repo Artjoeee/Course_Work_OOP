@@ -18,7 +18,7 @@ namespace Sportics.ViewModel
         {
             "Фитнес",
             "Йога",
-            "Плавание",
+            "Бассейн",
             "Тренажерный зал",
             "Танцы"
         };
@@ -200,7 +200,7 @@ namespace Sportics.ViewModel
                 !string.IsNullOrEmpty(this[nameof(PhotoData)]))
                 return;
 
-            DataWorker.EditCoach(Coach, Name, Specialization, PhoneNumber, Email, Information, PhotoData);
+            DataWorker.EditCoach(Coach, Name, Email, PhoneNumber, Specialization, Information, PhotoData);
             RequestClose?.Invoke();
         }
     }

@@ -114,6 +114,9 @@ namespace Sportics.ViewModel
                     case nameof(Time):
                         if (string.IsNullOrWhiteSpace(Time) || !Regex.IsMatch(Time, @"^\d{2}:\d{2}$"))
                             return "Формат времени: чч:мм";
+                        var parsedTime = TimeSpan.Parse(Time);
+                        if (Date.Value.Date < DateTime.Today && parsedTime < DateTime.Now.TimeOfDay)
+                            return "Не может быть прошедшее время";
                         break;
                     case nameof(Coach):
                         if (string.IsNullOrWhiteSpace(Coach))

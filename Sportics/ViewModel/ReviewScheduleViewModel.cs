@@ -163,6 +163,8 @@ namespace Sportics.ViewModel
                 OnPropertyChanged(nameof(AdminReplyText));
                 LoadScheduleReviews();
             }
+
+            LoadScheduleReviews();
         }
 
         private void DeleteSelectedReview()
